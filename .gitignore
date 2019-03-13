@@ -6,3 +6,5 @@
 projet/.classpath
 projet/.project
 projet/.settings/org.eclipse.jdt.core.prefs
+*.class
+*.class
