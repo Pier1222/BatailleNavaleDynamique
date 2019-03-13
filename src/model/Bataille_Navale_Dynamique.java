@@ -1,3 +1,4 @@
+package model;
 
 public class Bataille_Navale_Dynamique {
 
