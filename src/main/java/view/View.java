@@ -44,9 +44,6 @@ public class View extends JFrame {
     protected ActionListener aL;
 
     protected ControlMenu cm;
-		
-    private final int LINES = 8;
-    private final int COLUMNS = 8;
     
     public View(Bataille_navale_model model, Game game, Son son) {
 
