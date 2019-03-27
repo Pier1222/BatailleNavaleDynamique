@@ -25,7 +25,21 @@ public class Equipe {
 	
 	private void initNavires() {
 		navires = new Navire[NB_CUIRASSE + NB_CROISEURS + NB_TORPILLEURS + NB_SOUS_MARINS];
-		//Initialiser les navires avec les boucles
+		int numeroNavireActu = 0;
+		for(int i = 0; i < NB_CUIRASSE; i++) {
+			navires[numeroNavireActu] = new Cuirasse(i+1);
+			numeroNavireActu++;
+		}
+		for(int i = 0; i < NB_CROISEURS; i++) {
+			navires[numeroNavireActu] = new Croiseur(i+1);
+			numeroNavireActu++;
+		}
+		for(int i = 0; i < NB_TORPILLEURS; i++) {
+			navires[numeroNavireActu] = new Torpilleur(i+1);
+			numeroNavireActu++;
+		}
+		for(int i = 0; i < NB_SOUS_MARINS; i++) {
+			navires[numeroNavireActu] = new Sous_Marin(i+1);
+		}
 	}
-
 }

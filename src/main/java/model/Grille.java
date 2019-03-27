@@ -11,17 +11,35 @@ public class Grille {
         this.cases = new Case[LINES][COLUMNS];
     }
     
+    public void verifContourCase() {
+    	
+    }
+    
     public Case[][] getCases() {
         return this.cases;
     }
     
-    public void effectueDeplacement(Navire navire, int posX, int posY) {
-    	if(navire.estEndommage()) //Un navire endommag� ne peut pas faire de d�placement
-    		return;
-    	
-    	
-    	
+    public void printGrille() {
+    	//Les noms des navires sont constitués de 3 caractères (2 premiers + un chiffre)
+    	String nomNavireActu  = "";
+    	Case caseActu         = null;
+    	PieceNavire pieceActu = null;
+    	for(int x = 0; x < LINES; x++) {
+    		System.out.print("|");
+    		for(int y = 0; y < COLUMNS; y++) {
+    			caseActu = cases[x][y];
+    			if(caseActu == null) {
+    				nomNavireActu = "Err"; //Signifie qu'il y a un problème
+    			} else {
+    				pieceActu = caseActu.getPiecePose();
+    				if(pieceActu != null)
+    					nomNavireActu = pieceActu.getNavireAttache().getNom();
+    				else
+    					nomNavireActu = "   "; //Aucun Navire, la case est vide
+    			}
+    			System.out.print(" " + nomNavireActu + " |");
+    		}
+    		System.out.println(); //On change de ligne
+    	}
     }
-    
-
 }

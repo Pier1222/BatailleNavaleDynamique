@@ -12,15 +12,12 @@ public class ControlGroup {
     public ControlMenu controlMenu;
     private Son son;
     
-    
-    
-    
     public ControlGroup(Bataille_navale_model model, Game game) throws Exception {
 
     	son = new Son("musique.mp3");
     	view = new View(model, game, son);
 
-        controlButton = new ControlButton(model, game,view);
+        controlButton = new ControlButton(model, game, view);
         view.display();
     }
 
