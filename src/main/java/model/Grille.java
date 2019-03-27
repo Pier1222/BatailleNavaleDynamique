@@ -2,10 +2,13 @@ package model;
 
 public class Grille {
 	
+    private final int LINES = 10;
+    private final int COLUMNS = 10;
+	
 	private Case[][] cases;
 
-    public Grille(Case[][] cases) {
-        this.cases = cases;
+    public Grille() {
+        this.cases = new Case[LINES][COLUMNS];
     }
     
     public Case[][] getCases() {
@@ -13,7 +16,7 @@ public class Grille {
     }
     
     public void effectueDeplacement(Navire navire, int posX, int posY) {
-    	if(navire.estEndommage()) //Un navire endommagé ne peut pas faire de déplacement
+    	if(navire.estEndommage()) //Un navire endommagï¿½ ne peut pas faire de dï¿½placement
     		return;
     	
     	
