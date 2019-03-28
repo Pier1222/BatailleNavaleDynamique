@@ -54,8 +54,14 @@ public abstract class Navire {
 		estHorizontal = !estHorizontal;
 	}
 	
-	public void placeNavire() {
-		
+	/**
+	 * Permet de "poser" un navire (utilisé par l'Amiral)
+	 * @param grille
+	 * @param posXTete
+	 * @param posYTete
+	 */
+	public void placeNavire(Grille grille, int posXTete, int posYTete) {
+		changePositionNavire(grille, posXTete, posYTete, false);
 	}
 	
 	/**
@@ -67,8 +73,25 @@ public abstract class Navire {
 		}
 	}
 	
-	public void changePositionPiece(Grille grille, int posXTete, int posYTete) {
-		if(!verificationDeplacement(grille, posXTete, posYTete))
+	/**
+	 * Permet de déplacer d'une case maximum le navire (utilisé par un Matelot défensif)
+	 * @param grille
+	 * @param posXTete
+	 * @param posYTete
+	 */
+	public void deplacementNavire(Grille grille, int posXTete, int posYTete) {
+		changePositionNavire(grille, posXTete, posYTete, true);
+	}
+	
+	/**
+	 * 
+	 * @param grille
+	 * @param posXTete
+	 * @param posYTete
+	 * @param deplacement Détermine si ce changement de position est pour l'Amiral (false) ou pour un Matelot Défensif (true)
+	 */
+	private void changePositionNavire(Grille grille, int posXTete, int posYTete, boolean deplacement) {
+		if(!verificationChangementPosition(grille, posXTete, posYTete, deplacement))
 			return;
 		
 		int posXActu = posXTete;
@@ -84,31 +107,36 @@ public abstract class Navire {
 		}
 	}
 	
-	private boolean verificationDeplacement(Grille grille, int posXTete, int posYTete) {
+	private boolean verificationChangementPosition(Grille grille, int posXTete, int posYTete, boolean deplacement) {
 		//Vérification 1: Est-ce que le navire est endommagé ?
 		if(estEndommage()) {
 			System.out.println("Navire '" + nom + "' endommagé, déplacement impossible");
     		return false;
 		}
 		
-    	
-		//Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ? (à faire)
+    	if(deplacement) {
+		    //Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ? (à faire)
+    	}
 		
-		int nbLignes = grille.getCases().length;
-		int nbColonnes = grille.getCases()[0].length;
 		int posXActu = posXTete;
 		int posYActu = posYTete;
 		PieceNavire pieceOccupante = null;
 		
 		//Vérification 3: Est-ce qu'on ne sort pas des limites de la grille et est-ce que aucune case n'est déjà occupé par une autre pièce ?
-    	for(int i = 0; i < getNBPieces(); i++) {
-    	    if(posXActu >= nbLignes || posYActu >= nbColonnes || posXActu < 0 || posYActu < 0) {
+    	//+Vérification 4 si placement Amiral: est-ce qu'il y a aucun navire autour de la position donnée ?
+		for(int i = 0; i < getNBPieces(); i++) {
+    	    if(!grille.ifPostionValide(posXActu, posYActu)) {
     	    	System.out.println("Position [" + posXActu + ", " + posYActu + "] invalide");
     		    return false;
     	    }
     	    pieceOccupante = grille.getCases()[posXActu][posYActu].getPiecePose();
     	    if(pieceOccupante != null) {
     	    	System.out.println("La position [" + posXActu + ", " + posYActu + "] est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
+    	    	return false;
+    	    }
+    	    
+    	    if(!deplacement && grille.ifNavireAutourCase(posXActu, posYActu)) {
+    	    	System.out.println("Il y a un navire autour de la position [" + posXActu + ", " + posYActu + " ] ");
     	    	return false;
     	    }
     	    
@@ -122,6 +150,8 @@ public abstract class Navire {
 	}
 	
 	public void tirer(Case cible) {
+		if(!peutTirer())
+			return;
 	
 		tempsRechargement = TEMPS_RECHARGEMENT_MAX;
 	}

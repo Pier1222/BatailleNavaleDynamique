@@ -13,6 +13,7 @@ public class Equipe {
 	
 	private ArrayList<Matelot> matelots;
 	private Amiral amiral;
+	private Grille grille;
 	private Navire[] navires;
 	
 	public Equipe(String nom, String couleur, Amiral amiral) {
@@ -20,6 +21,7 @@ public class Equipe {
 		this.couleur = couleur;
 		matelots = new ArrayList<Matelot>();
 		this.amiral = amiral;
+		grille = new Grille();
 		initNavires();
 	}
 	
@@ -41,5 +43,21 @@ public class Equipe {
 		for(int i = 0; i < NB_SOUS_MARINS; i++) {
 			navires[numeroNavireActu] = new Sous_Marin(i+1);
 		}
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public Grille getGrille() {
+		return grille;
+	}
+
+	public Navire[] getNavires() {
+		return navires;
 	}
 }

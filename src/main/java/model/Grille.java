@@ -8,11 +8,61 @@ public class Grille {
 	private Case[][] cases;
 
     public Grille() {
-        this.cases = new Case[LINES][COLUMNS];
+        initCases();
     }
     
-    public void verifContourCase() {
+    private void initCases() {
+    	cases = new Case[LINES][COLUMNS];
+    	for(int x = 0; x < LINES; x++) {
+    		for(int y = 0; y < COLUMNS; y++) {
+    			cases[x][y] = new Case(x, y);
+    		}
+    	}
+    }
+    
+    /**
+     * Vérifie si il existe au moins un navire autour de la case qui se situe à la position X/Y donnée.
+     * Attention, cette méthode ne vérifie QUE le contour de la position donnée et pas le contenu de la position elle-même
+     * @param posX
+     * @param posY
+     * @return Vrai si on a trouvé au moins un navire, faux sinon
+     */
+    public boolean ifNavireAutourCase(int posX, int posY) {
+    	int[][] positionsEntourantes = new int[][] {
+    		{posX-1, posY},   //Au dessus
+    		{posX-1, posY+1}, //Diagonal haut/droite
+    		{posX, posY+1},   //A droite
+    		{posX+1, posY+1}, //Diagonal bas/droite
+    		{posX+1, posY},   //En dessous
+    		{posX+1, posY-1}, //Diagonal bas/gauche
+    		{posX, posY-1},   //A gauche
+    		{posX-1, posY-1}  //Diagonal haut/gauche
+    	};
+    	Case caseEntouranteActu = null;
+    	int posXActu = -1;
+    	int posYActu = -1;
+    	for(int i = 0; i < positionsEntourantes.length; i++) {
+    		posXActu = positionsEntourantes[i][0];
+    		posYActu = positionsEntourantes[i][1];
+    		if(ifPostionValide(posXActu, posYActu))
+    			caseEntouranteActu = cases[posXActu][posYActu];
+    		else
+    			caseEntouranteActu = null; //Cela signifie que la case d'origine est au bord du plateau
+    		if(caseEntouranteActu != null && caseEntouranteActu.getPiecePose() != null)
+    			return true; //Une pièce à été trouvé
+    	}
     	
+    	return false;
+    }
+    
+    /**
+     * Vérifie si la position X/Y donnée peut bien faire partiede la grille
+     * @param posX
+     * @param posY
+     * @return Vrai si posX et posY sont valides, faux sinon
+     */
+    public boolean ifPostionValide(int posX, int posY) {
+    	return (posX < LINES && posY < COLUMNS && posX >= 0 && posY >= 0);
     }
     
     public Case[][] getCases() {
@@ -21,6 +71,7 @@ public class Grille {
     
     public void printGrille() {
     	//Les noms des navires sont constitués de 3 caractères (2 premiers + un chiffre)
+    	System.out.println();
     	String nomNavireActu  = "";
     	Case caseActu         = null;
     	PieceNavire pieceActu = null;
@@ -41,5 +92,6 @@ public class Grille {
     		}
     		System.out.println(); //On change de ligne
     	}
+    	System.out.println();
     }
 }

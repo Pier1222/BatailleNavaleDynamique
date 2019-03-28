@@ -17,6 +17,9 @@ public class PieceNavire {
 	 * @param caseAAffecter
 	 */
 	public void changePosition(Case caseAAffecter) {
+		//On retire à la position actuelle la référence à cette pièce si elle existe
+		if(position != null)
+			position.setPiecePose(null);
 	    position = caseAAffecter;
 	    caseAAffecter.setPiecePose(this);
 	}
