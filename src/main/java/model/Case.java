@@ -2,9 +2,9 @@ package model;
 
 public class Case {
 
-	PieceNavire piecePose;
-	int positionX;
-	int positionY;
+	private PieceNavire piecePose;
+	private int positionX;
+	private int positionY;
 	
 	public Case(int positionX, int positionY) {
 		this.positionX = positionX;
@@ -38,7 +38,7 @@ public class Case {
 	
 	/**
 	 * Transforme la position Y en lettre
-	 * @return La lettre associée à la position de la case
+	 * @return La lettre associciÃ©e la position de la case
 	 */
 	public String getStringPositionY() {
 		if(positionY < 0 || positionY > 25)

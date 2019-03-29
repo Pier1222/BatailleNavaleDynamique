@@ -10,7 +10,7 @@ public class Bataille_navale_model {
 		grilleEquipe.printGrille();
 		uneEquipe.getNavires()[0].placeNavire(grilleEquipe, 0, 5);
 		grilleEquipe.printGrille();
-		uneEquipe.getNavires()[0].deplacementNavire(grilleEquipe, 1, 5);
+		uneEquipe.getNavires()[0].deplacementNavire(grilleEquipe, 0, 4);
 		grilleEquipe.printGrille();
 		uneEquipe.getNavires()[0].retireNavire();
 		grilleEquipe.printGrille();

@@ -116,6 +116,17 @@ public abstract class Navire {
 		
     	if(deplacement) {
 		    //Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ? (à faire)
+    		Case positionTeteActu = tete.getPosition();
+    		int positionXTeteActu = positionTeteActu.getPositionX();
+    		int positionYTeteActu = positionTeteActu.getPositionY();
+    		int differenceX = Math.abs(positionXTeteActu - posXTete);
+    		int differenceY = Math.abs(positionYTeteActu - posYTete);
+    		if(differenceX > 1 || differenceY > 1 || (differenceX == 1 && differenceY == 1)) { //Interdiction de se déplacer de plus d'une case en X/Y ou en diagonale
+    			System.out.println("Navire de plus d'une case non autorisé: " + 
+    		    "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: [" + posXTete + ", " + posYTete +"] menant à une différence de [" + differenceX + ", " + differenceY +"]");
+    			return false;
+    		}
+    		
     	}
 		
 		int posXActu = posXTete;

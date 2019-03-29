@@ -2,9 +2,9 @@ package model;
 
 public class PieceNavire {
 	
-	Case position;
-	boolean estEndommage;
-	Navire navireAttache; //C'est le navire
+	private Case position;
+	private boolean estEndommage;
+	private Navire navireAttache; //C'est le navire
 	
 	public PieceNavire(Navire navireAttache) {
 		position           = null;
