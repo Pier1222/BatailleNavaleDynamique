@@ -1,7 +1,10 @@
 /target/
+
 *.class
 .settings/org.eclipse.jdt.core.prefs
 .classpath
 *.properties
 *.lst
-*.lst
+*.class
+*.class
+*.class

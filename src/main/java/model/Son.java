@@ -1,30 +1,41 @@
 package model;
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Son extends Thread {
-        private URL u1;//l'url de ton fichier son
-        private AudioClip s1;//le son créé depuis ton url
+        private AudioClip clip;//le son créé depuis ton url
 
         public Son(String nomFichier) {
-            try {
-                u1 = getClass().getResource(nomFichier);
-            } catch(NullPointerException e) {
-                System.out.println("FICHIER SON NON TROUVE!");
-            }
+        	URL url = null;
+        	try {
+        		File file = new File(nomFichier);
 
-            s1 = Applet.newAudioClip(u1);;
+        		if (file.canRead())
+        			url = file.toURI().toURL();
+        	} catch (MalformedURLException e) {
+        		throw new IllegalArgumentException("could not play '" + nomFichier + "'", e);
+        	}
+
+        	// URL url = StdAudio.class.getResource(filename);
+        	if (url == null) {
+        		throw new IllegalArgumentException("could not play url '" + nomFichier + "'");
+        	}
+
+        	clip = Applet.newAudioClip(url);
         }
+        
         public void jouer() {
-            s1.play();
+        	clip.play();	
         }
 
         public void jouerEnBoucle() {
-            s1.loop();
+        	clip.loop();
         }
 
         public void arreter() {
-            s1.stop();
+        	clip.stop();
         }
 }

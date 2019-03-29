@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
@@ -33,9 +35,10 @@ public class View extends JFrame {
 	protected JPanel gridPanel; 
 	protected GridLayout gridLayout;
 
-    protected JButton launchButton;
+    public JButton launchButton;
     protected JButton resetButton;
     
+    protected JLabel titleAmiral;
     protected JLabel title;
     
     protected JMenuItem menuItem;
@@ -45,37 +48,65 @@ public class View extends JFrame {
 
     protected ControlMenu cm;
     
-    public View(Bataille_navale_model model, Game game, Son son) {
+    public View(Bataille_navale_model model) {
 
         this.model = model;
-        this.game = game;
-        this.son = son;
+  
         
         initAttribut();
-        pack();
+        createMenu();
+        createView();
+        setSize(1024,700);
         setResizable(false);
         setTitle("Jeu de bataille navale");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addWindowListener(new FrameListener());
+
         setLocationRelativeTo(null);
     }
     
 
 	public void initAttribut() {
     	
+    	launchButton = new JButton("haha");
+   
+    }
+	
+	public void initAttributAmiral() {
     	
-
+    	launchButton = new JButton("haha");
+   
     }
     
     public void createMenu() {
     	
     		
     }
+    
+    public void createView(){
+    	  JPanel pWidget = new JPanel();
+    	  
+    	  pWidget.add(launchButton);
+    	  
+    	  setContentPane(pWidget);
+    
+    }
 	
+    public void setButtonControler(ActionListener listener) {
+    	launchButton.addActionListener(listener);
+    }
     public void display() {
         setVisible(true);
     }
 
     public void undisplay() {
         setVisible(false);
+    }
+    
+    class FrameListener extends WindowAdapter
+    {
+       public void windowClosing(WindowEvent e)
+      {
+        System.exit(0);
+      }
     }
 }
