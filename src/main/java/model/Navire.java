@@ -167,6 +167,26 @@ public abstract class Navire {
 		tempsRechargement = TEMPS_RECHARGEMENT_MAX;
 	}
 	
+	public boolean checkPosition(Grille grille, int positionXTete, int positionYTete) {
+		int posXActu        = positionXTete;
+		int posYActu        = positionYTete;
+		Case positionActu   = null; //Du côté de la pièce du navire
+		Case caseGrilleActu = null; //Du côté de la grille donnée en paramètre
+		
+		for(int i = 0; i < getNBPieces(); i++) {
+			positionActu = pieces[i].getPosition();
+			caseGrilleActu = grille.getCases()[posXActu][posYActu];
+			if(positionActu != caseGrilleActu) //C'est censé être exactement le même objet Case
+			    return false;
+			
+			if(estHorizontal)
+				posYActu--; //On décale d'un cran vers la droite
+			else
+				posXActu++; //On décale d'un cran vers le bas
+		}
+		return true;
+	}
+	
 	/**
 	 * Vérifie si le navire peut tirer (il n'est pas coulé et son temps de chargement est écoulé)
 	 * @return Vrai si il le peut, faux sinon

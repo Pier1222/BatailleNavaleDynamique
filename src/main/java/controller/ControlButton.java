@@ -20,7 +20,7 @@ public class ControlButton implements ActionListener {
         this.view = view;
         this.son = son;
         
-        son.jouer();
+        son.jouerEnBoucle();
         
 		view.setButtonControler(this);
 	

@@ -15,7 +15,8 @@ public class ControlGroup {
     public ControlGroup(Bataille_navale_model model) throws Exception {
 
     	this.model = model;
-    	son = new Son("aaa.wav");
+    	//son = new Son("aaa.wav");
+    	son = new Son("Hydrocity.wav"); //...Quoi ? Au moins cette musique possède l'eau comme thème (vous voyez... Bateau/Eau... Tout ça...)
     	
     	view = new View(model);
     	
