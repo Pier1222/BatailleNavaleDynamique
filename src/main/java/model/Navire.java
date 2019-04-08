@@ -96,6 +96,7 @@ public abstract class Navire {
 		
 		int posXActu = posXTete;
 		int posYActu = posYTete;
+		retireNavire(); //Empêche que les pièces du navire se gène (déplacement à gauche avec navire à l'horizontal par exemple)
 		for(int i = 0; i < getNBPieces(); i++) {
 			pieces[i].changePosition(grille.getCases()[posXActu][posYActu]);
 			
@@ -106,6 +107,7 @@ public abstract class Navire {
 			
 		}
 	}
+	
 	
 	private boolean verificationChangementPosition(Grille grille, int posXTete, int posYTete, boolean deplacement) {
 		//Vérification 1: Est-ce que le navire est endommagé ?
@@ -122,7 +124,7 @@ public abstract class Navire {
     		int differenceX = Math.abs(positionXTeteActu - posXTete);
     		int differenceY = Math.abs(positionYTeteActu - posYTete);
     		if(differenceX > 1 || differenceY > 1 || (differenceX == 1 && differenceY == 1)) { //Interdiction de se déplacer de plus d'une case en X/Y ou en diagonale
-    			System.out.println("Navire de plus d'une case non autorisé: " + 
+    			System.out.println("Déplacement de plus d'une case non autorisé: " + 
     		    "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: [" + posXTete + ", " + posYTete +"] menant à une différence de [" + differenceX + ", " + differenceY +"]");
     			return false;
     		}
@@ -134,19 +136,19 @@ public abstract class Navire {
 		PieceNavire pieceOccupante = null;
 		
 		//Vérification 3: Est-ce qu'on ne sort pas des limites de la grille et est-ce que aucune case n'est déjà occupé par une autre pièce ?
-    	//+Vérification 4 si placement Amiral: est-ce qu'il y a aucun navire autour de la position donnée ?
+    	//+Vérification 4: si placement Amiral: est-ce qu'il y a aucun navire autour de la position donnée ?
 		for(int i = 0; i < getNBPieces(); i++) {
     	    if(!grille.ifPostionValide(posXActu, posYActu)) {
     	    	System.out.println("Position [" + posXActu + ", " + posYActu + "] invalide");
     		    return false;
     	    }
     	    pieceOccupante = grille.getCases()[posXActu][posYActu].getPiecePose();
-    	    if(pieceOccupante != null) {
+    	    if(pieceOccupante != null && !isPiecePresente(pieceOccupante)) {
     	    	System.out.println("La position [" + posXActu + ", " + posYActu + "] est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
     	    	return false;
     	    }
     	    
-    	    if(!deplacement && grille.ifNavireAutourCase(posXActu, posYActu)) {
+    	    if(!deplacement && grille.ifNavireAutourCase(posXActu, posYActu, this)) { //Si on souhaite placer le navire mais qu'il y en a déjà un autre autour
     	    	System.out.println("Il y a un navire autour de la position [" + posXActu + ", " + posYActu + " ] ");
     	    	return false;
     	    }
@@ -160,6 +162,19 @@ public abstract class Navire {
     	return true;
 	}
 	
+	/**
+	 * Permet de savoir l'instance de pièce donnée se situe dans le navire
+	 * @param piece
+	 * @return Vrai si l'instance de pièce appartient à ce navire, faux sinon
+	 */
+	public boolean isPiecePresente(PieceNavire piece) {
+		for(int i = 0; i < pieces.length; i++) {
+			if(pieces[i] == piece)
+				return true;
+		}
+		return false;
+	}
+	
 	public void tirer(Case cible) {
 		if(!peutTirer())
 			return;
@@ -167,16 +182,39 @@ public abstract class Navire {
 		tempsRechargement = TEMPS_RECHARGEMENT_MAX;
 	}
 	
+	/**
+	 * Permet de vérifier si, à partir de la tête, les pièces du navire sont à la position donnée en paramètre
+	 * @param grille
+	 * @param positionXTete
+	 * @param positionYTete
+	 * @return Vrai si le navire est à cette position
+	 */
 	public boolean checkPosition(Grille grille, int positionXTete, int positionYTete) {
 		int posXActu        = positionXTete;
 		int posYActu        = positionYTete;
-		Case positionActu   = null; //Du côté de la pièce du navire
-		Case caseGrilleActu = null; //Du côté de la grille donnée en paramètre
+		
+		//On effectue la vérification à double sens: Est-ce qu'une pièce à la bonne case de référence et est-ce que la case à la bonne pièce ?
+		PieceNavire pieceActu           = null; //Du côté de la pièce du navire
+		PieceNavire pieceCaseGrilleActu = null; //Du côté de la grille donnée en paramètre
+		
+		Case positionActu               = null; //Du côté de la pièce du navire
+		Case caseGrilleActu             = null; //Du côté de la grille donnée en paramètre
 		
 		for(int i = 0; i < getNBPieces(); i++) {
-			positionActu = pieces[i].getPosition();
+			pieceActu      = pieces[i];
 			caseGrilleActu = grille.getCases()[posXActu][posYActu];
-			if(positionActu != caseGrilleActu) //C'est censé être exactement le même objet Case
+			
+			if(pieceActu != null) //Ne devrait pas arriver mais on ne sait jamais
+			    positionActu = pieceActu.getPosition();
+			else
+				positionActu = null;
+				
+			if(caseGrilleActu != null) //Ne devrait pas arriver mais on ne sait jamais
+			    pieceCaseGrilleActu = caseGrilleActu.getPiecePose();
+			else
+				pieceCaseGrilleActu = null;
+			
+			if(positionActu != caseGrilleActu || pieceActu != pieceCaseGrilleActu) //C'est censé être exactement le même objet Case et le même objet Piece
 			    return false;
 			
 			if(estHorizontal)
