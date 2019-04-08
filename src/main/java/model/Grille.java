@@ -2,8 +2,9 @@ package model;
 
 public class Grille {
 	
-    private final int LINES = 10;
-    private final int COLUMNS = 10;
+    private final static int LINES = 10;
+    private final static int COLUMNS = 10;
+    private final static int CODE_ASCII_A = 65;
 	
 	private Case[][] cases;
 
@@ -80,11 +81,9 @@ public class Grille {
     	PieceNavire pieceActu = null;
     	
     	//Placer les lettres
-    	String lettreActu = "A";
     	System.out.print(" " + " |");
     	for(int l = 0; l < COLUMNS; l++) {
-    		System.out.print("  " + lettreActu + "  |");
-    		//Modifier la lettre actuelle
+    		System.out.print("  " + getlettreColonne(l) + "  |");
     	}
     	
     	System.out.println();
@@ -107,5 +106,19 @@ public class Grille {
     		System.out.println(); //On change de ligne
     	}
     	System.out.println();
+    }
+    
+    /**
+     * Permet d'obtenir la lettre du numéro de colonne donné en paramètre
+     * @param numeroColonne
+     * @return Une chaine de caractère contenant seulement le caractère trouvé
+     */
+    public static String getlettreColonne(int numeroColonne) {
+    	if(numeroColonne < 0 || numeroColonne >= COLUMNS)
+    		return "ERR"; //Numéro de colonne non valide
+    	
+    	int codeAscii = CODE_ASCII_A + numeroColonne;
+    	char lettre = (char) codeAscii;
+    	return "" + lettre;
     }
 }
