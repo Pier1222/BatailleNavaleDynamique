@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Equipe {
+public class Equipe implements Serializable {
 	private static int NB_CUIRASSE    = 1;
 	private static int NB_CROISEURS   = 2;
 	private static int NB_TORPILLEURS = 3;

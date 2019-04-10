@@ -1,6 +1,8 @@
 package model;
 
-public class Grille {
+import java.io.Serializable;
+
+public class Grille implements Serializable {
 	
     private final static int LINES = 10;
     private final static int COLUMNS = 10;

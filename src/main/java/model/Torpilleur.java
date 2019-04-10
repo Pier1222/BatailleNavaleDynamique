@@ -14,4 +14,9 @@ public class Torpilleur extends Navire {
 	public String getDebutNom() {
 		return "TO"; //Torpilleur
 	}
+	
+	@Override
+    public int getIdTypeNavire() {
+		return 1;
+	}
 }

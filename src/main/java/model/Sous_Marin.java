@@ -14,5 +14,9 @@ public class Sous_Marin extends Navire {
 	public String getDebutNom() {
 		return "SM";
 	}
-    
+	
+	@Override
+    public int getIdTypeNavire() {
+		return 0;
+	}   
 }

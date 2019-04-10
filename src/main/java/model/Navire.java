@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Navire {
+import java.io.Serializable;
+
+public abstract class Navire implements Serializable {
 
 	private final static int TEMPS_RECHARGEMENT_MAX = 60; //1 minute entre 2 tirs
 	
@@ -240,6 +242,12 @@ public abstract class Navire {
 	public abstract int getNBPieces();
 	
 	public abstract String getDebutNom();
+	
+	/**
+	 * Renvoie l'id du type de navire (sous-marin à cuirasse)  (pour créer des statistiques)
+	 * @return L'id du type de navire
+	 */
+	public abstract int getIdTypeNavire();
 
 	public String getNom() {
 		return nom;

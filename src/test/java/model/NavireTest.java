@@ -333,7 +333,48 @@ public class NavireTest {
 	      assertTrue(cuirasse.checkPosition(grille, 6, 2));
 	  }
 	  
-	  //Faire les versions où ils se mangent des navires
+	  @Test
+	  public void testDeplacementSurAutreNavireHorizontal() {
+		  System.out.println("testDeplacementSurAutreNavireHorizontal");
+		  Grille grille     = new Grille();
+		  Cuirasse cuirasse = new Cuirasse(1);
+		  Sous_Marin sousMarin = new Sous_Marin(1);
+          
+		  //Place les deux navires de manière correct
+          sousMarin.placeNavire(grille, 5, 3);
+          cuirasse.placeNavire(grille, 7, 5);
+          
+          //Pour essayer de percuter le Sous-Marin, on a besoin d'au moins deux déplacements
+          cuirasse.deplacementNavire(grille, 6, 5);
+          //Doit échouer
+          cuirasse.deplacementNavire(grille, 5, 5);
+          
+          grille.printGrille();
+          assertTrue(sousMarin.checkPosition(grille, 5, 3));
+          assertTrue(cuirasse.checkPosition(grille, 6, 5));
+	  }
+	  
+	  @Test
+	  public void testDeplacementSurAutreNavireVertical() {
+		  System.out.println("testDeplacementSurAutreNavireVertical");
+		  Grille grille     = new Grille();
+		  Cuirasse cuirasse = new Cuirasse(1);
+		  Sous_Marin sousMarin = new Sous_Marin(1);
+          cuirasse.tourne();
+		  
+		  //Place les deux navires de manière correct
+          sousMarin.placeNavire(grille, 2, 7);
+          cuirasse.placeNavire(grille, 0, 9);
+          
+          //Pour essayer de percuter le Sous-Marin, on a besoin d'au moins deux déplacements
+          cuirasse.deplacementNavire(grille, 0, 8);
+          //Doit échouer
+          cuirasse.deplacementNavire(grille, 0, 7);
+          
+          grille.printGrille();
+          assertTrue(sousMarin.checkPosition(grille, 2, 7));
+          assertTrue(cuirasse.checkPosition(grille, 0, 8));
+	  }
 	  
 	  @Test
 	  public void testDeplacementPlus2CasesHorizontal() {
@@ -354,8 +395,78 @@ public class NavireTest {
               torpilleur.deplacementNavire(grille, mauvaiseDeplacement[0], mauvaiseDeplacement[1]);
               
 		      //On vérifie que le navire n'a pas bougé
+              assertTrue(torpilleur.checkPosition(grille, posXOriginal, posYOriginal));		      
+		  }
+	  }
+	  
+	  @Test
+	  public void testDeplacementDiagCasesHorizontal() {
+		  System.out.println("testDeplacementDiagCasesHorizontal");
+		  Grille grille     = new Grille();
+		  Torpilleur torpilleur = new Torpilleur(1); //A beaucoup moins de chance de déborder
+		  
+		  int posXOriginal = 5;
+		  int posYOriginal = 5;
+		  
+		  int[][] mauvaisDeplacement = new int[][] {{posXOriginal+1, posYOriginal+1}, {posXOriginal+1, posYOriginal-1}, {posXOriginal-1, posYOriginal+1}, {posXOriginal-1, posYOriginal-1}};
+          int[] mauvaiseDeplacement = null;
+          
+		  torpilleur.placeNavire(grille, posXOriginal, posYOriginal);
+          
+		  for(int i = 0; i < mauvaisDeplacement.length; i++) {
+              mauvaiseDeplacement = mauvaisDeplacement[i];
+              torpilleur.deplacementNavire(grille, mauvaiseDeplacement[0], mauvaiseDeplacement[1]);
+              
+		      //On vérifie que le navire n'a pas bougé
               assertTrue(torpilleur.checkPosition(grille, posXOriginal, posYOriginal));
-		      
+		  }
+	  }
+	  
+	  @Test
+	  public void testDeplacementPlus2CasesVertical() {
+		  System.out.println("testDeplacementPlus2CasesVertical");
+		  Grille grille     = new Grille();
+		  Torpilleur torpilleur = new Torpilleur(1); //A beaucoup moins de chance de déborder
+		  torpilleur.tourne();
+		  
+		  int posXOriginal = 1;
+		  int posYOriginal = 3;
+		  
+		  int[][] mauvaisDeplacement = new int[][] {{posXOriginal+2, posYOriginal}, {posXOriginal, posYOriginal+2}, {posXOriginal-2, posYOriginal}, {posXOriginal, posYOriginal-2}};
+          int[] mauvaiseDeplacement = null;
+          
+		  torpilleur.placeNavire(grille, posXOriginal, posYOriginal);
+          
+		  for(int i = 0; i < mauvaisDeplacement.length; i++) {
+              mauvaiseDeplacement = mauvaisDeplacement[i];
+              torpilleur.deplacementNavire(grille, mauvaiseDeplacement[0], mauvaiseDeplacement[1]);
+              
+		      //On vérifie que le navire n'a pas bougé
+              assertTrue(torpilleur.checkPosition(grille, posXOriginal, posYOriginal));
+		  }
+	  }
+	  
+	  @Test
+	  public void testDeplacementDiagCasesVertical() {
+		  System.out.println("testDeplacementDiagCasesVertical");
+		  Grille grille     = new Grille();
+		  Torpilleur torpilleur = new Torpilleur(1); //A beaucoup moins de chance de déborder
+		  torpilleur.tourne();
+		  
+		  int posXOriginal = 1;
+		  int posYOriginal = 3;
+		  
+		  int[][] mauvaisDeplacement = new int[][] {{posXOriginal+1, posYOriginal+1}, {posXOriginal+1, posYOriginal-1}, {posXOriginal-1, posYOriginal+1}, {posXOriginal-1, posYOriginal-1}};
+          int[] mauvaiseDeplacement = null;
+          
+		  torpilleur.placeNavire(grille, posXOriginal, posYOriginal);
+          
+		  for(int i = 0; i < mauvaisDeplacement.length; i++) {
+              mauvaiseDeplacement = mauvaisDeplacement[i];
+              torpilleur.deplacementNavire(grille, mauvaiseDeplacement[0], mauvaiseDeplacement[1]);
+              
+		      //On vérifie que le navire n'a pas bougé
+              assertTrue(torpilleur.checkPosition(grille, posXOriginal, posYOriginal));
 		  }
 	  }
 }
