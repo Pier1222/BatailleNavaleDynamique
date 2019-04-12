@@ -37,6 +37,11 @@ public class Bataille_Client_Requester {
 	    ois = new ObjectInputStream(commReq.getInputStream());
 	}
 	
+	public void handshake() throws IOException {
+		oos.writeObject(joueur);
+		oos.flush();
+    }
+	
 	public void requestLoop() throws IOException {
 		
 	}
@@ -50,28 +55,31 @@ public class Bataille_Client_Requester {
 		String titreRequete     = requeteDecoupe[0];
 		
 		boolean needToShow      = false; //Permet de savoir si on doit relancer une requête "Showing" juste après celle qu'on a exécuté
-		//Penser à vérifier à chaque fois la taille de 
-		if(titreRequete.equals(SHOWING_REQ)) {
-			requestShowing();
-		} else if(titreRequete.equals(MOVING_REQ)) {
-			requestMoving();
-			needToShow = true;
-		} else if(titreRequete.equals(FIRE_REQ)) {
-			requestFire();
-			needToShow = true;
-		} else if(titreRequete.equals(DISPLAY_REQ)) {
-			requestDisplay();
-			needToShow = true;
-		} else if(titreRequete.equals(DESTROY_REQ)) {
-			requestDestroy();
-			needToShow = true;
-		}
 		
-		if(needToShow)
-			getRequete(SHOWING_REQ); //
+		try {
+		    if(titreRequete.equals(SHOWING_REQ)) {
+			    requestShowing();
+		    } else if(titreRequete.equals(MOVING_REQ)) {
+			    doMoving(requeteDecoupe);
+			    needToShow = true;
+		    } else if(titreRequete.equals(FIRE_REQ)) {
+			    requestFire();
+			    needToShow = true;
+		    } else if(titreRequete.equals(DISPLAY_REQ)) {
+			    requestDisplay();
+			    needToShow = true;
+		    } else if(titreRequete.equals(DESTROY_REQ)) {
+			    //requestDestroy();
+			    needToShow = true;
+		    }
+		    if(needToShow)
+			    getRequete(SHOWING_REQ); //
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void requestShowing() {
+	private void requestShowing() throws IOException {
 		/*
 		 * - Envoie au client destnaitre connu de Vector, le message Showing du nouvel état du jeu
 		 * - Compte le nombre de navires dans chaque camp
@@ -83,24 +91,35 @@ public class Bataille_Client_Requester {
 		 *   => "Gagnant à l'autre camp
 		 * - Eventuellemennt, mémorise l'état du jeu
 		 */
+		oos.writeObject("Showing");
 		
 	}
 	
-	private void requestMoving() {
+	private void doMoving(String[] requeteDecoupe) {
+		if(requeteDecoupe.length < 4) {
+			return;
+		}
+		
+		
+		
+		//requestMoving();
+	}
+	
+	private void requestMoving(Navire navire, int positionXTete, int positionYTete) throws IOException {
 		/*
 		 * Envoie au client destinataire cible connu de Vector, le message Moving donnant
 		 * la position du nouveau navire (évntuellement, sa position de départ en cas de
-		 * mouvement
+		 * mouvement)
 		 */
-		
+		oos.writeObject("Moving");
 	}
 	
-	private void requestFire() {
+	private void requestFire() throws IOException {
 		/*
 		 * Envoie au client destinataire cible connu de Vector, le message Fire donnant la
 		 * position du tir
 		 */
-		
+		oos.writeObject("Fire");
 	}
 	
 	private void requestDisplay() {
@@ -108,14 +127,13 @@ public class Bataille_Client_Requester {
 		 * Envoie au client destinataire cible et à l'Amiral, tous les 2 connus de Vector, le
 		 * message Displaying donnant le résultat du tir ("Fail" ou "Touch")
 		 */
-		
 	}
 	
-	private void requestDestroy() {
+	private void requestDestroy(Navire navireADetruire) throws IOException {
 	    /*
 	     * Envoie au client destinataire cible et à l'Amiral, tous les 2 connus de Vector, le
 	     * message Destroyed donnant la position du navire à effacer	
 	     */
-		
+		oos.writeObject("Destroyed");
 	}
 }

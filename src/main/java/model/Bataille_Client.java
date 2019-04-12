@@ -9,20 +9,12 @@ public class Bataille_Client {
 	String adresseIp;
 	int numeroPort;
 	
-	public Bataille_Client(Joueur joueur, String adresseIp, int numeroPort) {
+	public Bataille_Client(Joueur joueur, String adresseIp, int numeroPort) throws IOException {
         this.joueur    = joueur;
         this.adresseIp = adresseIp;
         this.numeroPort = numeroPort;
+        requester = new Bataille_Client_Requester(joueur, adresseIp, numeroPort);
+	    requester.handshake();
+	    //requester.requestLoop();
 	}
-	
-	public boolean connect() {
-		try {
-			requester = new Bataille_Client_Requester(joueur, adresseIp, numeroPort);
-		} catch(IOException e) {
-			System.err.println("Erreur lors de la connexion à l'adressIP" + adresseIp + " au port " + numeroPort + ": \n " + e.getMessage());
-			return false;
-		}
-		return true;
-	}
-	
 }
