@@ -29,13 +29,16 @@ public class View extends JFrame {
 
 	protected Bataille_navale_model model;
 	protected Game game;
-	protected Son son;
+	public Son sonDeFond;
+	public Son sonAlternatif;
 	
 	protected JPanel controlPanel;
 	protected JPanel gridPanel; 
 	protected GridLayout gridLayout;
 
-    public JButton launchButton;
+    public JButton testSon;
+    public JButton testSon2;
+    public JButton testStop;
     protected JButton resetButton;
     
     protected JLabel titleAmiral;
@@ -43,15 +46,20 @@ public class View extends JFrame {
     
     protected JMenuItem menuItem;
 
-    protected MouseListener mL;
-    protected ActionListener aL;
+    //protected MouseListener mL;
+    //protected ActionListener aL;
 
-    protected ControlMenu cm;
+    //protected ControlMenu cm;
+    
+    protected JTextField nomField;
+    protected JTextField adresseIpField;
+    protected JTextField portField;
+    public JButton launchInvite;
+    public JButton launchCreateur;
     
     public View(Bataille_navale_model model) {
 
         this.model = model;
-  
         
         initAttribut();
         createMenu();
@@ -65,41 +73,147 @@ public class View extends JFrame {
     }
     
 
-	public void initAttribut() {
+	private void initAttribut() {
+        //Éléments de test
+    	testSon       = new JButton("Test Son");
+    	testSon2      = new JButton("Test Son numéro 2");
+    	testStop      = new JButton("Stop");
+    	sonAlternatif = new Son("aaa.wav");
+    	sonDeFond     = new Son("Hydrocity.wav"); //...Quoi ? Au moins cette musique possède l'eau comme thème (vous voyez... Bateau/Eau... Tout ça...)
     	
-    	launchButton = new JButton("haha");
+    	//Éléments pour créer/rejoindre Une Partie
+        nomField       = new JTextField();
+        adresseIpField = new JTextField();
+        portField      = new JTextField();
+        launchInvite   = new JButton("Rejoindre une partie");
+        launchCreateur = new JButton("Créer une partie");
    
     }
 	
+    public void setButtonControler(ActionListener listener) {
+    	testSon.addActionListener(listener);
+    	testSon2.addActionListener(listener);
+    	testStop.addActionListener(listener);
+    	launchInvite.addActionListener(listener);
+    	launchCreateur.addActionListener(listener);
+    }
+	
+    /**
+     * Permet d'obtenir le numéro de port donné par l'utilisateur
+     * @return Le numéro de port obtenu ou -1 si l'utilisateur n'a pas donné de nombre
+     */
+    private int getPortDonnee() {
+    	try {
+    		return Integer.parseInt(portField.getText());
+    	} catch(NumberFormatException e) {
+    		return -1;
+    	}
+    }
+    
+    public String getIpDonnee() {
+    	//Ajouter une vérification
+    	return adresseIpField.getText();
+    }
+	
+	public void createPartie() {
+		String nom     = nomField.getText();
+		int numeroPort = getPortDonnee();
+		
+		if(nom == null) {
+			creerDialogueErreur("Aucun nom n'a été trouvé.", "Erreur de nom");
+			return;
+		}
+		if(numeroPort < 0) {
+			creerDialogueErreur("Le numéro de port est incorrect", "Mauvais numéro de port");
+			return;
+		}
+		
+		model.createGame(nom, numeroPort);
+		
+	}
+	
+	
+	public void rejoindrePartie() {
+		String nom     = nomField.getText();
+		int numeroPort = getPortDonnee();
+		String ip      = getIpDonnee();
+		
+		if(nom == null) {
+			creerDialogueErreur("Aucun nom n'a été trouvé.", "Erreur de nom");
+			return;
+		}
+		if(numeroPort < 0) {
+			creerDialogueErreur("Le numéro de port est incorrect", "Mauvais numéro de port");
+			return;
+		}
+		if(ip == null) {
+			creerDialogueErreur("Aucune adresse IP n'a été trouvée.", "Erreur d'IP");
+			return;
+		}
+		
+		model.joinGame(nom, ip, numeroPort);
+	}
+	
+	
 	public void initAttributAmiral() {
     	
-    	launchButton = new JButton("haha");
+    	testSon = new JButton("haha");
    
     }
     
-    public void createMenu() {
+    private void createMenu() {
     	
     		
     }
     
-    public void createView(){
-    	  JPanel pWidget = new JPanel();
+    public void stopAllSong() {
+    	sonDeFond.arreter();
+    	sonAlternatif.arreter();
+    }
+    
+    private void createView(){
+    	  JPanel pWidget = new JPanel(new GridLayout(10, 1));
     	  
-    	  pWidget.add(launchButton);
+    	  JPanel ligneTest = new JPanel();
+    	  ligneTest.setLayout(new BoxLayout(ligneTest, BoxLayout.X_AXIS));
+    	  
+    	  JPanel ligneChamps = new JPanel();
+    	  ligneChamps.setLayout(new BoxLayout(ligneChamps, BoxLayout.X_AXIS)); 
+    	  
+    	  JPanel ligneBouttons = new JPanel();
+    	  ligneBouttons.setLayout(new BoxLayout(ligneBouttons, BoxLayout.X_AXIS));
+    	  
+    	  ligneTest.add(testSon);
+    	  ligneTest.add(testSon2);
+    	  ligneTest.add(testStop);
+    	  
+    	  ligneChamps.add(nomField);
+    	  ligneChamps.add(portField);
+    	  ligneChamps.add(adresseIpField);
+    	  
+    	  ligneBouttons.add(launchCreateur);
+    	  ligneBouttons.add(launchInvite);
+    	  
+    	  pWidget.add(ligneTest);
+    	  pWidget.add(ligneChamps);
+    	  pWidget.add(ligneBouttons);
     	  
     	  setContentPane(pWidget);
     
     }
 	
-    public void setButtonControler(ActionListener listener) {
-    	launchButton.addActionListener(listener);
-    }
     public void display() {
         setVisible(true);
     }
 
     public void undisplay() {
         setVisible(false);
+    }
+    
+    public void creerDialogueErreur(String messageErreur, String titreErreur) {
+    	JOptionPane erreur = new JOptionPane();
+    	erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
+    	JDialog fenErreur = erreur.createDialog(this, titreErreur);
     }
     
     class FrameListener extends WindowAdapter

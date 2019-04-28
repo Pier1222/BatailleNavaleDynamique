@@ -12,10 +12,17 @@ public class Joueur implements Serializable {
 	private Stats_Joueur statistiques;
 	
 	public Joueur() {
-		id     = -1;
-		nom    = DEFAULT_NAME;
-		equipe = null;
+		id           = -1;
+		nom          = DEFAULT_NAME;
+		equipe       = null;
 		statistiques = new Stats_Joueur();
+	}
+	
+	public Joueur(String nom) {
+		id           = -1;
+		this.nom     = nom;
+		equipe       = null;
+		statistiques = new Stats_Joueur(); //Voir comment récupérer les stats dans ce cas
 	}
 	
 	public boolean creerPartie(int numeroPort) {
@@ -58,5 +65,13 @@ public class Joueur implements Serializable {
 
 	public Stats_Joueur getStatistiques() {
 		return statistiques;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

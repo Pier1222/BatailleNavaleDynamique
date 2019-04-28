@@ -19,9 +19,24 @@ public class Game {
 	
 	public synchronized void ajouteJoueur(Joueur joueur) {
 		joueursEnAttentes.add(joueur);
+		changeIdJoueur();
+		getListJoueur();
 	}
 	
+	private void changeIdJoueur() {
+		int idActu = 1;
+		for(Joueur j: joueursEnAttentes) {
+			j.setId(idActu);
+			idActu++;
+		}
+	}
 	
+	public synchronized void getListJoueur() {
+		System.out.println("Liste des joueurs de la partie:");
+		for(Joueur j: joueursEnAttentes) {
+			System.out.println(j.getId() + ": " + j.getNom());
+		}
+	}
 	
 	
 }
