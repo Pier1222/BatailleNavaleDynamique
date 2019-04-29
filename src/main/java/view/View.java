@@ -54,6 +54,9 @@ public class View extends JFrame {
     protected JTextField nomField;
     protected JTextField adresseIpField;
     protected JTextField portField;
+    protected JLabel nomLabel;
+    protected JLabel adresseIpLabel;
+    protected JLabel portLabel;
     public JButton launchInvite;
     public JButton launchCreateur;
     
@@ -85,6 +88,11 @@ public class View extends JFrame {
         nomField       = new JTextField();
         adresseIpField = new JTextField();
         portField      = new JTextField();
+        
+        nomLabel       = new JLabel("Nom: ");
+        adresseIpLabel = new JLabel("IP: ");
+        portLabel      = new JLabel("Port: ");
+        
         launchInvite   = new JButton("Rejoindre une partie");
         launchCreateur = new JButton("Créer une partie");
    
@@ -187,11 +195,15 @@ public class View extends JFrame {
     	  ligneTest.add(testSon2);
     	  ligneTest.add(testStop);
     	  
+    	  ligneChamps.add(nomLabel);
     	  ligneChamps.add(nomField);
+    	  ligneChamps.add(portLabel);
     	  ligneChamps.add(portField);
+    	  ligneChamps.add(adresseIpLabel);
     	  ligneChamps.add(adresseIpField);
     	  
     	  ligneBouttons.add(launchCreateur);
+    	  ligneBouttons.add(new JPanel());
     	  ligneBouttons.add(launchInvite);
     	  
     	  pWidget.add(ligneTest);
