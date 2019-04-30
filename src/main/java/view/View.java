@@ -28,13 +28,12 @@ import model.Son;
 public class View extends JFrame {
 
 	protected Bataille_navale_model model;
-	protected Game game;
+	//Classe que j'ai créé moi-même pour faire du son
 	public Son sonDeFond;
 	public Son sonAlternatif;
 	
 	protected JPanel controlPanel;
 	protected JPanel gridPanel; 
-	protected GridLayout gridLayout;
 
     public JButton testSon;
     public JButton testSon2;
@@ -45,9 +44,6 @@ public class View extends JFrame {
     protected JLabel title;
     
     protected JMenuItem menuItem;
-
-    //protected MouseListener mL;
-    //protected ActionListener aL;
 
     //protected ControlMenu cm;
     
@@ -66,10 +62,14 @@ public class View extends JFrame {
         
         initAttribut();
         createMenu();
+        
+        //Permet de mettre en place tous les éléments crées dans InitAttribut
         createView();
         setSize(1024,700);
         setResizable(false);
         setTitle("Jeu de bataille navale");
+        
+        //(Encore un truc que je ne connais pas)
         addWindowListener(new FrameListener());
 
         setLocationRelativeTo(null);
@@ -228,6 +228,7 @@ public class View extends JFrame {
     	JDialog fenErreur = erreur.createDialog(this, titreErreur);
     }
     
+    //Ne me demande pas ce que fait ça...
     class FrameListener extends WindowAdapter
     {
        public void windowClosing(WindowEvent e)

@@ -1,6 +1,8 @@
 package model;
 
-public class Stats_Joueur {
+import java.io.Serializable;
+
+public class Stats_Joueur implements Serializable {
 	private static final int NB_TYPE_NAVIRE = 4;
 	
 	private int nbVictoires;

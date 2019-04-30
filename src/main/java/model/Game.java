@@ -23,7 +23,7 @@ public class Game {
 		getListJoueur();
 	}
 	
-	private void changeIdJoueur() {
+	private synchronized void changeIdJoueur() {
 		int idActu = 1;
 		for(Joueur j: joueursEnAttentes) {
 			j.setId(idActu);
@@ -37,6 +37,4 @@ public class Game {
 			System.out.println(j.getId() + ": " + j.getNom());
 		}
 	}
-	
-	
 }

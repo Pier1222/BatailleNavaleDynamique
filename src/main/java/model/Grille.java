@@ -111,7 +111,7 @@ public class Grille implements Serializable {
     }
     
     /**
-     * Permet d'obtenir la lettre du numéro de colonne donné en paramètre
+     * Permet d'obtenir la lettre du numéro de colonne donnée en paramètre
      * @param numeroColonne
      * @return Une chaine de caractère contenant seulement le caractère trouvé
      */

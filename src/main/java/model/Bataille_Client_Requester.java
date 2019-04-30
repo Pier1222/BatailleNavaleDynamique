@@ -31,6 +31,7 @@ public class Bataille_Client_Requester {
 		
 		//Création d'un Tread pour les messages ?
 		
+		
 		//Créations d'autres Threads
 	    oos = new ObjectOutputStream(commReq.getOutputStream());
 	    oos.flush();
@@ -40,6 +41,10 @@ public class Bataille_Client_Requester {
 	public void handshake() throws IOException {
 		oos.writeObject(joueur);
 		oos.flush();
+		
+		//Permet d'être sûr que le serveur a finit sa moulinette et de recopier le changement qu'il a fait sur l'ID du joueur
+		joueur.setId(ois.readInt());
+		System.out.println("Mon id est " + joueur.getId());
     }
 	
 	public void requestLoop() throws IOException {

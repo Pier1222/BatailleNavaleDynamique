@@ -13,7 +13,6 @@ public class ControlButton implements ActionListener {
 	View view;
 	
 
-
 	public ControlButton(Bataille_navale_model model, View view) {
 		this.model = model;
         this.view = view;
