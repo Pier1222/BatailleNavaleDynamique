@@ -10,20 +10,17 @@ public class ControlGroup {
 	protected View view;
     public ControlButton controlButton;
     public ControlMenu controlMenu;
-    protected Son son;
     
-    public ControlGroup(Bataille_navale_model model) throws Exception {
-
+    public ControlGroup(Bataille_navale_model model) {
+        //Affectation du modèle donnée en paramètre
     	this.model = model;
-    	son = new Son("aaa.wav");
     	
+    	//Utilisation de ce même modèle pour le vue
     	view = new View(model);
     	
-        controlButton = new ControlButton(model,son,view);
-        controlMenu = new ControlMenu(view);
+    	//Utilisation de cette vue et de ce modèle dans tous les contrôleurs
+        controlButton = new ControlButton(model, view);
+        controlMenu = new ControlMenu(model, view);
         view.display();
-
-
     }
-
 }

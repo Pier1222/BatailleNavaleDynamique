@@ -15,4 +15,8 @@ public class Croiseur extends Navire {
 		return "CR";
 	}
 
+	@Override
+    public int getIdTypeNavire() {
+		return 2;
+	}
 }

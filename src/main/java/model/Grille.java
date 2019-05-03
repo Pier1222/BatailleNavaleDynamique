@@ -1,9 +1,12 @@
 package model;
 
-public class Grille {
+import java.io.Serializable;
+
+public class Grille implements Serializable {
 	
-    private final int LINES = 10;
-    private final int COLUMNS = 10;
+    private final static int LINES = 10;
+    private final static int COLUMNS = 10;
+    private final static int CODE_ASCII_A = 65;
 	
 	private Case[][] cases;
 
@@ -25,9 +28,10 @@ public class Grille {
      * Attention, cette méthode ne vérifie QUE le contour de la position donnée et pas le contenu de la position elle-même
      * @param posX
      * @param posY
+     * @param navireAutorise Navire étant accepté autour de la case
      * @return Vrai si on a trouvé au moins un navire, faux sinon
      */
-    public boolean ifNavireAutourCase(int posX, int posY) {
+    public boolean ifNavireAutourCase(int posX, int posY, Navire navireAutorise) {
     	int[][] positionsEntourantes = new int[][] {
     		{posX-1, posY},   //Au dessus
     		{posX-1, posY+1}, //Diagonal haut/droite
@@ -48,8 +52,10 @@ public class Grille {
     			caseEntouranteActu = cases[posXActu][posYActu];
     		else
     			caseEntouranteActu = null; //Cela signifie que la case d'origine est au bord du plateau
-    		if(caseEntouranteActu != null && caseEntouranteActu.getPiecePose() != null)
-    			return true; //Une pièce à été trouvé
+    		
+    		//Si il y a un navire autour de la case et que ce navire n'est pas le navire autorisé
+    		if(caseEntouranteActu != null && caseEntouranteActu.getPiecePose() != null && navireAutorise != null && !navireAutorise.isPiecePresente(caseEntouranteActu.getPiecePose()))
+    			return true; //Une pièce à été trouvée
     	}
     	
     	return false;
@@ -75,8 +81,17 @@ public class Grille {
     	String nomNavireActu  = "";
     	Case caseActu         = null;
     	PieceNavire pieceActu = null;
+    	
+    	//Placer les lettres
+    	System.out.print(" " + " |");
+    	for(int l = 0; l < COLUMNS; l++) {
+    		System.out.print("  " + getlettreColonne(l) + "  |");
+    	}
+    	
+    	System.out.println();
+    	
     	for(int x = 0; x < LINES; x++) {
-    		System.out.print("|");
+    		System.out.print(x + " |");
     		for(int y = 0; y < COLUMNS; y++) {
     			caseActu = cases[x][y];
     			if(caseActu == null) {
@@ -93,5 +108,19 @@ public class Grille {
     		System.out.println(); //On change de ligne
     	}
     	System.out.println();
+    }
+    
+    /**
+     * Permet d'obtenir la lettre du numéro de colonne donnée en paramètre
+     * @param numeroColonne
+     * @return Une chaine de caractère contenant seulement le caractère trouvé
+     */
+    public static String getlettreColonne(int numeroColonne) {
+    	if(numeroColonne < 0 || numeroColonne >= COLUMNS)
+    		return "ERR"; //Numéro de colonne non valide
+    	
+    	int codeAscii = CODE_ASCII_A + numeroColonne;
+    	char lettre = (char) codeAscii;
+    	return "" + lettre;
     }
 }
