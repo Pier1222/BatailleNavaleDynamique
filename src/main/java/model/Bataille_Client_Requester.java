@@ -14,6 +14,13 @@ public class Bataille_Client_Requester {
 	private final static String DISPLAY_REQ = "Displaying";
 	private final static String DESTROY_REQ = "Destroyed";
 	
+	private final static int SHOWING_ID     = 1;
+	private final static int MOVING_ID      = 2;
+	private final static int FIRE_ID        = 3;
+	private final static int DISPLAY_ID     = 4;
+	private final static int DESTROY_ID     = 5;
+	
+	
 	private String ipServeur;
 	private int portServeur;
 	private Joueur joueur;
@@ -80,6 +87,7 @@ public class Bataille_Client_Requester {
 		    if(needToShow)
 			    getRequete(SHOWING_REQ); //
 		} catch(IOException e) {
+			System.err.println("Une erreur s'est déroulé durant le traitement d'une requête");
 			e.printStackTrace();
 		}
 	}
@@ -116,7 +124,7 @@ public class Bataille_Client_Requester {
 		 * la position du nouveau navire (évntuellement, sa position de départ en cas de
 		 * mouvement)
 		 */
-		oos.writeObject("Moving");
+		oos.writeInt(MOVING_ID);
 	}
 	
 	private void requestFire() throws IOException {
@@ -124,14 +132,15 @@ public class Bataille_Client_Requester {
 		 * Envoie au client destinataire cible connu de Vector, le message Fire donnant la
 		 * position du tir
 		 */
-		oos.writeObject("Fire");
+		oos.writeInt(FIRE_ID);
 	}
 	
-	private void requestDisplay() {
+	private void requestDisplay() throws IOException {
 		/*
 		 * Envoie au client destinataire cible et à l'Amiral, tous les 2 connus de Vector, le
 		 * message Displaying donnant le résultat du tir ("Fail" ou "Touch")
 		 */
+		oos.writeInt(DISPLAY_ID);
 	}
 	
 	private void requestDestroy(Navire navireADetruire) throws IOException {
@@ -139,6 +148,6 @@ public class Bataille_Client_Requester {
 	     * Envoie au client destinataire cible et à l'Amiral, tous les 2 connus de Vector, le
 	     * message Destroyed donnant la position du navire à effacer	
 	     */
-		oos.writeObject("Destroyed");
+		oos.writeInt(DESTROY_ID);
 	}
 }

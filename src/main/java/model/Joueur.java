@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Joueur implements Serializable {
 	private final static String DEFAULT_NAME = "Invité";
+	private final static String DEFAULT_IP = "localhost"; //Connecté sur son propre PC
 	
 	private int id;
 	private String nom;
@@ -29,13 +30,13 @@ public class Joueur implements Serializable {
 		Bataille_Server serveur;
 		try {
 			serveur = new Bataille_Server(numeroPort, this);
-		    serveur.mainLoop();
+		    serveur.start();
 		} catch (IOException e) {
 			System.out.println("Problème demande connexion au serveur au port " + numeroPort + " : " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
-		return true;
+		return rejoindrePartie(DEFAULT_IP, numeroPort);
 	}
 	
 	/**

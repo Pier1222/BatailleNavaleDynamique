@@ -3,7 +3,7 @@ package model;
 import java.io.*;
 import java.net.*;
 
-public class Bataille_Server {
+public class Bataille_Server extends Thread {
     ServerSocket conn;
     Socket comm;
 	int port = -1;
@@ -16,8 +16,12 @@ public class Bataille_Server {
 	  map = new Game(hebergeur);
 	  sp = new StreamPool();
 	}
+	
+	public void run() {
+		mainLoop();
+	}
 
-	public void mainLoop() throws IOException {
+	private void mainLoop() {
 	  while (true) {
 	      try {
 		      comm = conn.accept();

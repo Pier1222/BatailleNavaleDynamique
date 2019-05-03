@@ -14,7 +14,7 @@ public class Game {
 		equipeBleu  = null;
 		this.createur = createur;
 		joueursEnAttentes = new ArrayList<Joueur>();
-		ajouteJoueur(createur);
+		//ajouteJoueur(createur);
 	}
 	
 	public synchronized void ajouteJoueur(Joueur joueur) {

@@ -9,8 +9,8 @@ import view.View;
 
 public class ControlButton implements ActionListener {
 	
-	Bataille_navale_model model;
-	View view;
+	protected Bataille_navale_model model;
+	protected View view;
 	
 
 	public ControlButton(Bataille_navale_model model, View view) {
@@ -18,7 +18,6 @@ public class ControlButton implements ActionListener {
         this.view = view;
         
 		view.setButtonControler(this);
-	
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -37,11 +36,13 @@ public class ControlButton implements ActionListener {
 			
 		} else if(e.getSource() == view.launchCreateur) {
 			System.out.println("Création partie");
-			view.createPartie();
+			//view.createPartie();
+			view.threadCreation.execute();
 			
 		} else if(e.getSource() == view.launchInvite) {
 			System.out.println("Rejoindre partie");
-			view.rejoindrePartie();
+			//view.rejoindrePartie();
+			view.threadJoin.execute();
 			
 		}
 		

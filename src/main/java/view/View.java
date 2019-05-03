@@ -9,16 +9,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import java.awt.Dimension;
-import javax.swing.JPanel;
-import java.awt.Rectangle;
-import javax.swing.BorderFactory;
-import javax.swing.border.EtchedBorder;
-
+import controller.ControlGroupAttente;
 import controller.ControlMenu;
 
-import javax.swing.JLabel;
-import java.awt.Color;
 import java.io.IOException;
 
 import model.Bataille_navale_model;
@@ -43,6 +36,10 @@ public class View extends JFrame {
     protected JLabel titleAmiral;
     protected JLabel title;
     
+    //Les threads
+    public ThreadCreationServ threadCreation;
+    public ThreadJoinServ threadJoin;
+    
     protected JMenuItem menuItem;
 
     //protected ControlMenu cm;
@@ -56,6 +53,8 @@ public class View extends JFrame {
     public JButton launchInvite;
     public JButton launchCreateur;
     
+    protected ControlGroupAttente groupAttente; //Permet de faire apparaître la fenêtre attente
+    
     public View(Bataille_navale_model model) {
 
         this.model = model;
@@ -67,9 +66,9 @@ public class View extends JFrame {
         createView();
         setSize(1024,700);
         setResizable(false);
-        setTitle("Jeu de bataille navale");
+        setTitle("Menu de bataille navale");
         
-        //(Encore un truc que je ne connais pas)
+        //Permet apparement de centrer l'ecran et de l'arrêter quand on le ferme
         addWindowListener(new FrameListener());
 
         setLocationRelativeTo(null);
@@ -95,7 +94,17 @@ public class View extends JFrame {
         
         launchInvite   = new JButton("Rejoindre une partie");
         launchCreateur = new JButton("Créer une partie");
-   
+        
+        creerThreadServeur();
+        creerThreadJoin();
+    }
+	
+    private void creerThreadServeur() {
+    	threadCreation = new ThreadCreationServ(this);
+    }
+    
+    private void creerThreadJoin() {
+    	threadJoin = new ThreadJoinServ(this);
     }
 	
     public void setButtonControler(ActionListener listener) {
@@ -122,8 +131,13 @@ public class View extends JFrame {
     	//Ajouter une vérification
     	return adresseIpField.getText();
     }
+    
+    public void useCreateThread() {
+    	createPartie();
+    	creerThreadServeur();
+    }
 	
-	public void createPartie() {
+	private void createPartie() {
 		String nom     = nomField.getText();
 		int numeroPort = getPortDonnee();
 		
@@ -137,11 +151,18 @@ public class View extends JFrame {
 		}
 		
 		model.createGame(nom, numeroPort);
-		
+		apparitionVueAttente();
 	}
 	
+	public void useJoinThread() {
+		rejoindrePartie();
+		creerThreadJoin();
+	}
 	
-	public void rejoindrePartie() {
+	/**
+	 * Va créer si possible la partie avant de la rejoindre (la machine fera donc office de serveur et de client en même temps)
+	 */
+	private void rejoindrePartie() {
 		String nom     = nomField.getText();
 		int numeroPort = getPortDonnee();
 		String ip      = getIpDonnee();
@@ -160,6 +181,13 @@ public class View extends JFrame {
 		}
 		
 		model.joinGame(nom, ip, numeroPort);
+		apparitionVueAttente();
+	}
+	
+	private void apparitionVueAttente() {
+		undisplay(); //Faire disparaître cette fenêtre
+        groupAttente = new ControlGroupAttente(model);
+		groupAttente.viewAttente.display();
 	}
 	
 	
@@ -179,7 +207,7 @@ public class View extends JFrame {
     	sonAlternatif.arreter();
     }
     
-    private void createView(){
+    private void createView() {
     	  JPanel pWidget = new JPanel(new GridLayout(10, 1));
     	  
     	  JPanel ligneTest = new JPanel();
@@ -211,7 +239,6 @@ public class View extends JFrame {
     	  pWidget.add(ligneBouttons);
     	  
     	  setContentPane(pWidget);
-    
     }
 	
     public void display() {
@@ -228,7 +255,7 @@ public class View extends JFrame {
     	JDialog fenErreur = erreur.createDialog(this, titreErreur);
     }
     
-    //Ne me demande pas ce que fait ça...
+    //Qu'é ce ke ça fait ?
     class FrameListener extends WindowAdapter
     {
        public void windowClosing(WindowEvent e)

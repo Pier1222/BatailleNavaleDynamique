@@ -5,6 +5,12 @@ import java.net.*;
 
 public class Bataille_Server_Requester extends Thread {
 	
+	private final static int SHOWING_ID     = 1;
+	private final static int MOVING_ID      = 2;
+	private final static int FIRE_ID        = 3;
+	private final static int DISPLAY_ID     = 4;
+	private final static int DESTROY_ID     = 5;
+	
     private Socket commReq;
 	private Socket commInfo;
 	private Game game;
@@ -50,15 +56,10 @@ public class Bataille_Server_Requester extends Thread {
 
 	      oos.flush();
 
-	      /*while(true) {
+	      while(true) {
 	        int requeteId = ois.readInt();
-	        if(requeteId == 1)
-	          requestMoveOf();
-	        else if(requeteId == 2)
-	          requestNeighbors();
-	        else if(requeteId == 3)
-	          requestMessage();
-	      }*/
+	        traiteRequete(requeteId);
+	      }
 
 	    }
 	    catch(IOException e) {
@@ -70,6 +71,45 @@ public class Bataille_Server_Requester extends Thread {
 	      }
 
 	    }
-	  }
+	}
+	
+	private void traiteRequete(int requeteId) {
+		try {
+	        if(requeteId == SHOWING_ID)
+	        	requestShowing();
+	        else if(requeteId == MOVING_ID)
+	        	requestMoving();
+	        else if(requeteId == FIRE_ID)
+	        	requestFire();
+	        else if(requeteId == DISPLAY_ID)
+	        	requestDisplay();
+	        else if(requeteId == DESTROY_ID)
+	            requestDestroy();
+		} catch(IOException e) {
+			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
+			e.printStackTrace();
+		}
+	}
+	
+	//Voir la version "Bateille_Client_Requester pour les descriptions
+	private void requestShowing() throws IOException {
+		oos.writeObject("A virer");
+	}
+	
+	private void requestMoving() throws IOException {
+		oos.writeObject("A virer");
+	}
+	
+	private void requestFire() throws IOException {
+		oos.writeObject("A virer");
+	}
+	
+	private void requestDisplay() throws IOException {
+		oos.writeObject("A virer");
+	}
+	
+	private void requestDestroy() throws IOException {
+		oos.writeObject("A virer");
+	}
 
 }
