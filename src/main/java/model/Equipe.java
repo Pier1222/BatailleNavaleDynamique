@@ -45,6 +45,10 @@ public class Equipe implements Serializable {
 			navires[numeroNavireActu] = new Sous_Marin(i+1);
 		}
 	}
+	
+	public void ajouteMatelot(Matelot matelot) {
+		matelots.add(matelot);
+	}
 
 	public String getNom() {
 		return nom;

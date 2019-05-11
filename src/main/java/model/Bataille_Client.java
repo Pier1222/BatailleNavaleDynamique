@@ -17,4 +17,12 @@ public class Bataille_Client {
 	    requester.handshake();
 	    //requester.requestLoop();
 	}
+	
+	public void envoieRequete(String requete) {
+		requester.getRequete(requete);
+	}
+	
+	public String[] getRequesterString() {
+		return requester.getTabStringActu();
+	}
 }

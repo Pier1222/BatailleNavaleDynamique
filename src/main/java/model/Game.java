@@ -3,38 +3,115 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
+	
+	private static int ID_HOTE = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
 
+	private final static String NOM_DEFAUT_EQUIPE_ROUGE = "Blood team";
+	private final static String COULEUR_EQUIPE_ROUGE    = "Rouge";
+	
+	private final static String NOM_DEFAUT_EQUIPE_BLEUE = "Marins d'eau douce";
+	private final static String COULEUR_EQUIPE_BLEUE    = "Bleue";
+	
 	private Equipe equipeRouge;
 	private Equipe equipeBleu;
-	private Joueur createur;
+	private Joueur hote;
 	private ArrayList<Joueur> joueursEnAttentes;
 	
 	public Game(Joueur createur) {
 		equipeRouge = null;
 		equipeBleu  = null;
-		this.createur = createur;
+		hote        = null;
+		//hote = createur;
 		joueursEnAttentes = new ArrayList<Joueur>();
 		//ajouteJoueur(createur);
 	}
 	
 	public synchronized void ajouteJoueur(Joueur joueur) {
-		joueursEnAttentes.add(joueur);
+		//Comme le joueur ayant créé la partie la rejoint tout de suite après
+		if(joueursEnAttentes.isEmpty())
+			hote = joueur;
+		
+		joueursEnAttentes.add(joueur);	
 		changeIdJoueur();
-		getListJoueur();
+		getNomsJoueur();
 	}
 	
 	private synchronized void changeIdJoueur() {
-		int idActu = 1;
+		int idActu = ID_HOTE + 1;
 		for(Joueur j: joueursEnAttentes) {
-			j.setId(idActu);
-			idActu++;
+			if(j == hote)
+				j.setId(ID_HOTE);
+			else {
+			    j.setId(idActu);
+			    idActu++;
+			}
 		}
 	}
 	
-	public synchronized void getListJoueur() {
+	/**
+	 * Permet de montrer la liste des joueurs existants
+	 * @return Un tableau contenant le nom de tous les joueurs de la partie
+	 */
+	public synchronized String[] getNomsJoueur() {
+		String[] nomsJoueurs = new String[joueursEnAttentes.size()];
+		int placeActu = 0;
+		
 		System.out.println("Liste des joueurs de la partie:");
 		for(Joueur j: joueursEnAttentes) {
 			System.out.println(j.getId() + ": " + j.getNom());
+			nomsJoueurs[placeActu] = j.getNom();
+			if(j == hote)
+				nomsJoueurs[placeActu] += (" (Hôte)");
+			placeActu++;
 		}
+		return nomsJoueurs;
+	}
+	
+	
+	public synchronized String[][] createTeams() {
+		//On va prendre un joueur aléatoirement, le retirer des joueurs en attentes, sachant que le premier sera l'amial de son équipe
+		Amiral amiralRouge = new Amiral(removeRandomJoueur());
+		Amiral amiralBleu  = new Amiral(removeRandomJoueur());
+		
+		String nomEquipeRouge = trouveNomEquipe(amiralRouge.getNom());
+		String nomEquipeBleu = trouveNomEquipe(amiralBleu.getNom());
+		if(nomEquipeRouge == null)
+			nomEquipeRouge = NOM_DEFAUT_EQUIPE_ROUGE;
+		if(nomEquipeBleu == null)
+			nomEquipeBleu = NOM_DEFAUT_EQUIPE_BLEUE;
+		
+		//Histoire qu'on puisse différencier les deux équipes si on tombe sur le même nom
+		if(nomEquipeRouge.equals(nomEquipeBleu))
+			nomEquipeBleu += " (2)";
+		
+		equipeRouge = new Equipe(nomEquipeRouge, COULEUR_EQUIPE_ROUGE, amiralRouge);
+		equipeBleu = new Equipe(nomEquipeBleu, COULEUR_EQUIPE_BLEUE, amiralBleu);
+		
+		//Créer les matelots avec les autres membres de l'équipe
+		while(!joueursEnAttentes.isEmpty()) {
+	        
+		}
+		
+		return null;
+	}
+	
+	private synchronized Joueur removeRandomJoueur() {
+		if(joueursEnAttentes == null || joueursEnAttentes.isEmpty()) {
+			System.err.println("Erreur, il est impossible de retirer un joueur de la liste");
+			return null;
+		}
+		//Pour créer un nombre random = Math.round(Math.random() * ((MAX) - MIN) + MIN);
+        int index = (int) Math.round(Math.random() * ((joueursEnAttentes.size()) - 0) + 0);
+        return joueursEnAttentes.remove(index);
+	}
+	
+	//Si jamais on trouve marrant de mettre des noms d'équipes easter eggs en fonction du nom de l'amiral
+	//Genre "France" pour "Emmanuel Macron", "Gotta Go Fast" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
+	private synchronized String trouveNomEquipe(String nomAmiral) {
+		return null;
+	}
+
+	public static int getID_HOTE() {
+		return ID_HOTE;
 	}
 }

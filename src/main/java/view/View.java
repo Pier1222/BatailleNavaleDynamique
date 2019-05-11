@@ -146,11 +146,14 @@ public class View extends JFrame {
 			return;
 		}
 		if(numeroPort < 0) {
-			creerDialogueErreur("Le numéro de port est incorrect", "Mauvais numéro de port");
+			creerDialogueErreur("Le numéro de port est incorrect.", "Mauvais numéro de port");
 			return;
 		}
 		
-		model.createGame(nom, numeroPort);
+		if(!model.createGame(nom, numeroPort)) {
+			creerDialogueErreur("Il y a eu une erreur lors de la création de partie.", "Impossible de créer une partie");
+			return;
+		}
 		apparitionVueAttente();
 	}
 	
@@ -180,14 +183,18 @@ public class View extends JFrame {
 			return;
 		}
 		
-		model.joinGame(nom, ip, numeroPort);
+		if(!model.joinGame(nom, ip, numeroPort)) {
+			creerDialogueErreur("Impossible de rejoindre une partie au port " + numeroPort + " à l'adresse '" + ip + "'.", "Impossible de rejoindre la partie");
+		    return;
+		}
 		apparitionVueAttente();
 	}
 	
 	private void apparitionVueAttente() {
+		stopAllSong(); //On arrête toutes les musiques jouées actuellement
 		undisplay(); //Faire disparaître cette fenêtre
         groupAttente = new ControlGroupAttente(model);
-		groupAttente.viewAttente.display();
+		//groupAttente.viewAttente.display();
 	}
 	
 	

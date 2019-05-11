@@ -11,12 +11,10 @@ public class Joueur implements Serializable {
 	private String nom;
 	private Equipe equipe;
 	private Stats_Joueur statistiques;
+	private Bataille_Client client;
 	
 	public Joueur() {
-		id           = -1;
-		nom          = DEFAULT_NAME;
-		equipe       = null;
-		statistiques = new Stats_Joueur();
+		this(DEFAULT_NAME);
 	}
 	
 	public Joueur(String nom) {
@@ -24,12 +22,21 @@ public class Joueur implements Serializable {
 		this.nom     = nom;
 		equipe       = null;
 		statistiques = new Stats_Joueur(); //Voir comment récupérer les stats dans ce cas
+		client       = null;
+	}
+	
+	//Constructeur par copie
+	public Joueur(Joueur joueur) {
+		id           = joueur.id;
+		nom          = joueur.nom;
+		equipe       = joueur.equipe;
+		statistiques = joueur.statistiques;
+		client       = joueur.client; //Pas sûr
 	}
 	
 	public boolean creerPartie(int numeroPort) {
-		Bataille_Server serveur;
 		try {
-			serveur = new Bataille_Server(numeroPort, this);
+			Bataille_Server serveur = new Bataille_Server(numeroPort, this);
 		    serveur.start();
 		} catch (IOException e) {
 			System.out.println("Problème demande connexion au serveur au port " + numeroPort + " : " + e.getMessage());
@@ -47,13 +54,25 @@ public class Joueur implements Serializable {
 	 */
 	public boolean rejoindrePartie(String adresseIp, int numeroPort) {
 		try {
-			Bataille_Client client = new Bataille_Client(this, adresseIp, numeroPort);
+			client = new Bataille_Client(this, adresseIp, numeroPort);
 		} catch (IOException e) {
 			System.err.println("Erreur lors de la connexion à l'adressIP" + adresseIp + " au port " + numeroPort + ": \n " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isHote() {
+		return id == Game.getID_HOTE();
+	}
+	
+	/**
+	 * Désactive la connexion du client avec le serveur
+	 */
+	public void quitterPartie() {
+		client = null;
+		id = -1;
 	}
 	
 	public String getNom() {
@@ -74,5 +93,9 @@ public class Joueur implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Bataille_Client getClient() {
+		return client;
 	}
 }

@@ -11,6 +11,8 @@ public class Bataille_Server_Requester extends Thread {
 	private final static int DISPLAY_ID     = 4;
 	private final static int DESTROY_ID     = 5;
 	
+	private final static int PLAYERS_NAMES_ID = 6;
+	
     private Socket commReq;
 	private Socket commInfo;
 	private Game game;
@@ -85,6 +87,8 @@ public class Bataille_Server_Requester extends Thread {
 	        	requestDisplay();
 	        else if(requeteId == DESTROY_ID)
 	            requestDestroy();
+	        else if(requeteId == PLAYERS_NAMES_ID)
+	        	requestPlayersName();
 		} catch(IOException e) {
 			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
 			e.printStackTrace();
@@ -111,5 +115,10 @@ public class Bataille_Server_Requester extends Thread {
 	private void requestDestroy() throws IOException {
 		oos.writeObject("A virer");
 	}
-
+	
+	private void requestPlayersName() throws IOException {
+		String[] nomsObtenus = game.getNomsJoueur();
+		oos.writeObject(nomsObtenus);
+		oos.flush();
+	}
 }

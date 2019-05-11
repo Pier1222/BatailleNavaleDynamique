@@ -12,7 +12,6 @@ public class ControlGroupAttente {
         //Affectation du modèle donnée en paramètre
     	this.model = model;
     	
-    	
     	//Utilisation de ce même modèle pour le vue
     	viewAttente = new ViewAttente(model);
     	
