@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
+import model.Game;
 import model.Son;
 
 public class ViewAttente extends JFrame {
@@ -23,6 +24,8 @@ public class ViewAttente extends JFrame {
     protected JPanel panelJoueursAttentes;
     protected JPanel panelEquipe1;
     protected JPanel panelEquipe2;
+    
+    protected JLabel decompte;
     
     protected JPanel general;
     
@@ -120,16 +123,33 @@ public class ViewAttente extends JFrame {
     
     private void changeEtatBoutonLancerPartie() {
     	int nbJoueurs = panelJoueursAttentes.getComponentCount(); //En théorie, il y a autant de label que de joueurs
-    	lancerPartie.setEnabled(nbJoueurs > 1); //On ne peut pas cliquer sur ce bouton sur il n'y a qu'un joueur
+    	lancerPartie.setEnabled(nbJoueurs > Game.getMinJoueurs()); //On ne peut pas cliquer sur ce bouton sur il n'y a qu'un joueur
     }
     
-    public void createViewReady() {
+    public void launchGame() {
+    	
+    }
+    
+    private void createViewReady(String[][] idEtNomsJoueurs) {
+    	String[] idEtNomsRouge = idEtNomsJoueurs[0];
+    	String[] idEtNomsBleu  = idEtNomsJoueurs[1];
+    	
     	sonAttente.arreter();
     	sonLancementPartie.start();
     	timerPanelJoueurs.stop();
     	
+    	lancerPartie.setVisible(false);
+    	quitterPartie.setVisible(false);
+    	
+    	JLabel statut = new JLabel("...");
+    	//Modifier le texte pour indiquer "Vous êtes Amiral de l'équipe rouge par exemple"
+    	
+    	
+    	decompte = new JLabel();
+    	
+    	general.add(statut);
+    	general.add(decompte);
     	//Changer la vue
+    	setContentPane(general);
     }
-    
-	
 }

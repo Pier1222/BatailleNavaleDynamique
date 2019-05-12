@@ -82,6 +82,10 @@ public class Joueur implements Serializable {
 	public Equipe getEquipe() {
 		return equipe;
 	}
+	
+	public void setEquipe(Equipe equipe) {
+		this.equipe = equipe;
+	}
 
 	public Stats_Joueur getStatistiques() {
 		return statistiques;

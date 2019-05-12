@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Game {
 	
-	private static int ID_HOTE = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
+	private final static int ID_HOTE     = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
+	private final static int MIN_JOUEURS = 2; //Nombre de joueurs minimum pour pouvoir... Jouer
 
 	private final static String NOM_DEFAUT_EQUIPE_ROUGE = "Blood team";
 	private final static String COULEUR_EQUIPE_ROUGE    = "Rouge";
@@ -67,7 +68,10 @@ public class Game {
 		return nomsJoueurs;
 	}
 	
-	
+	/**
+	 * Va créer aléatoirement les équipes
+	 * @return Un premier tableau contenant l'ID et le nom des membres de l'équipe rouge et de même pour l'équipe bleu à la seconde case
+	 */
 	public synchronized String[][] createTeams() {
 		//On va prendre un joueur aléatoirement, le retirer des joueurs en attentes, sachant que le premier sera l'amial de son équipe
 		Amiral amiralRouge = new Amiral(removeRandomJoueur());
@@ -87,12 +91,27 @@ public class Game {
 		equipeRouge = new Equipe(nomEquipeRouge, COULEUR_EQUIPE_ROUGE, amiralRouge);
 		equipeBleu = new Equipe(nomEquipeBleu, COULEUR_EQUIPE_BLEUE, amiralBleu);
 		
+		Matelot matelotActu   = null;
+		int tailleRougeActu = 0;
+		int tailleBleuActu  = 0;
+		int RNGActu         = 0;
 		//Créer les matelots avec les autres membres de l'équipe
 		while(!joueursEnAttentes.isEmpty()) {
+	        matelotActu = new Matelot(removeRandomJoueur());
+	        tailleRougeActu = equipeRouge.getNBMatelots();
+	        tailleBleuActu  = equipeBleu.getNBMatelots();
+	        
+	        //50% de chance si les deux équipes ont la même taille
+            RNGActu = (int) Math.round(Math.random() * ((100) - 0) + 0);
+	        
+	        if(tailleRougeActu < tailleBleuActu || (tailleRougeActu == tailleBleuActu && (RNGActu < 50))) {
+	        	equipeRouge.ajouteMatelot(matelotActu);
+	        } else {
+	        	equipeBleu.ajouteMatelot(matelotActu);
+	        }
 	        
 		}
-		
-		return null;
+		return new String[][]{equipeRouge.getIDEtNomsMembres(), equipeBleu.getIDEtNomsMembres()};
 	}
 	
 	private synchronized Joueur removeRandomJoueur() {
@@ -113,5 +132,9 @@ public class Game {
 
 	public static int getID_HOTE() {
 		return ID_HOTE;
+	}
+
+	public static int getMinJoueurs() {
+		return MIN_JOUEURS;
 	}
 }

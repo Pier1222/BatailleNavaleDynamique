@@ -12,6 +12,7 @@ public class Bataille_Server_Requester extends Thread {
 	private final static int DESTROY_ID     = 5;
 	
 	private final static int PLAYERS_NAMES_ID = 6;
+	private final static int CREATE_TEAMS_ID  = 7;
 	
     private Socket commReq;
 	private Socket commInfo;
@@ -89,6 +90,8 @@ public class Bataille_Server_Requester extends Thread {
 	            requestDestroy();
 	        else if(requeteId == PLAYERS_NAMES_ID)
 	        	requestPlayersName();
+	        else if(requeteId == CREATE_TEAMS_ID)
+	        	requestCreateTeams();
 		} catch(IOException e) {
 			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
 			e.printStackTrace();
@@ -119,6 +122,12 @@ public class Bataille_Server_Requester extends Thread {
 	private void requestPlayersName() throws IOException {
 		String[] nomsObtenus = game.getNomsJoueur();
 		oos.writeObject(nomsObtenus);
+		oos.flush();
+	}
+	
+	private void requestCreateTeams() throws IOException {
+		String[][] idEtNomsObtenus = game.createTeams();
+		oos.writeObject(idEtNomsObtenus);
 		oos.flush();
 	}
 }

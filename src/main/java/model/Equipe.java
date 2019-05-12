@@ -22,6 +22,7 @@ public class Equipe implements Serializable {
 		this.couleur = couleur;
 		matelots = new ArrayList<Matelot>();
 		this.amiral = amiral;
+		amiral.setEquipe(this);
 		grille = new Grille();
 		initNavires();
 	}
@@ -48,6 +49,26 @@ public class Equipe implements Serializable {
 	
 	public void ajouteMatelot(Matelot matelot) {
 		matelots.add(matelot);
+		matelot.setEquipe(this);
+	}
+	
+	public int getNBMatelots() {
+		return matelots.size();
+	}
+	
+	/**
+	 * Cette méthode permet d'avoir l'ID et le nom de tous les membres de l'équipe (avec en premier l'Amiral)
+	 * @return
+	 */
+	public String[] getIDEtNomsMembres() {
+		String[] idEtNoms = new String[getNBMatelots() + 1]; //Plus l'Amiral
+		int placeActu = 0;
+		idEtNoms[placeActu] = amiral.getId() + " " + amiral.getNom();
+		for(Matelot m: matelots) {
+			placeActu++;
+			idEtNoms[placeActu] = m.getId() + " " + m.getNom();
+		}
+		return idEtNoms;
 	}
 
 	public String getNom() {

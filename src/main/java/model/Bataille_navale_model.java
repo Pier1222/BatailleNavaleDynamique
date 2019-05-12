@@ -27,7 +27,12 @@ public class Bataille_navale_model {
 	 */
 	public String[] getNomsJoueursPartieActu() {
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getPlayersNameReq());
-		return utilisateur.getClient().getRequesterString();
+		return utilisateur.getClient().getRequesterTabString();
+	}
+	
+	public String[][] createAndGetTeams() {
+		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getCreateTeamsReq());
+		return utilisateur.getClient().getRequesterTabDeTabDeString();
 	}
 
 	public Joueur getUtilisateur() {

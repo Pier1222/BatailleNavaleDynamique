@@ -22,7 +22,11 @@ public class Bataille_Client {
 		requester.getRequete(requete);
 	}
 	
-	public String[] getRequesterString() {
+	public String[] getRequesterTabString() {
 		return requester.getTabStringActu();
+	}
+	
+	public String[][] getRequesterTabDeTabDeString() {
+	    return requester.getTabDeTabDeStringActu();	
 	}
 }

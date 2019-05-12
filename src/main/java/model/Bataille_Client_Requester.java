@@ -15,6 +15,7 @@ public class Bataille_Client_Requester {
 	private final static String DESTROY_REQ = "Destroyed";
 	
 	private final static String PLAYERS_NAME_REQ = "Names";
+	private final static String CREATE_TEAMS_REQ = "CreateTeams";
 	
 	private final static int SHOWING_ID     = 1;
 	private final static int MOVING_ID      = 2;
@@ -23,6 +24,7 @@ public class Bataille_Client_Requester {
 	private final static int DESTROY_ID     = 5;
 	
 	private final static int PLAYERS_NAMES_ID = 6;
+	private final static int CREATE_TEAMS_ID  = 7;
 	
 	
 	private String ipServeur;
@@ -33,11 +35,15 @@ public class Bataille_Client_Requester {
 	private ObjectOutputStream oos;
 	
 	private String[] tabStringActu; //Si on a besoin de récupérer la liste dde chaîne de caractères
+	private String[][] tabDeTabDeStringActu;
 	
 	public Bataille_Client_Requester(Joueur joueur, String ipServeur, int portServeur) throws IOException {
-		this.joueurClient      = joueur;
+		this.joueurClient= joueur;
 		this.ipServeur   = ipServeur;
 		this.portServeur = portServeur;
+		
+		tabStringActu        = null;
+		tabDeTabDeStringActu = null;
 		
 		//Connexion
 		commReq = new Socket(ipServeur, portServeur);
@@ -88,6 +94,8 @@ public class Bataille_Client_Requester {
 			    needToShow = true;
 		    } else if(titreRequete.equals(PLAYERS_NAME_REQ)) {
 		    	requestPlayersName();
+		    } else if(titreRequete.equals(CREATE_TEAMS_REQ)) {
+		    	requestCreateTeams();
 		    }
 		    if(needToShow)
 			    getRequete(SHOWING_REQ); //
@@ -171,6 +179,15 @@ public class Bataille_Client_Requester {
 		oos.flush();
 		tabStringActu = (String[]) ois.readObject();
 	}
+	
+	private void requestCreateTeams() throws IOException, ClassNotFoundException {
+		/*
+		 * Requête que j'ai créé pour créer les équipes et récupérer les noms des joueurs
+		 */
+		oos.writeInt(CREATE_TEAMS_ID);
+		oos.flush();
+		tabDeTabDeStringActu = (String[][]) ois.readObject();
+	}
 
 	public static String getShowingReq() {
 		return SHOWING_REQ;
@@ -195,8 +212,16 @@ public class Bataille_Client_Requester {
 	public static String getPlayersNameReq() {
 		return PLAYERS_NAME_REQ;
 	}
+	
+	public static String getCreateTeamsReq() {
+		return CREATE_TEAMS_REQ;
+	}
 
 	public String[] getTabStringActu() {
 		return tabStringActu;
+	}
+
+	public String[][] getTabDeTabDeStringActu() {
+		return tabDeTabDeStringActu;
 	}
 }
