@@ -9,4 +9,13 @@ public class Amiral extends Joueur {
 		super(joueur);
     }
     
+    //Méthodes pour affecter des rôles et des navires aux matelors
+
+	public void setNavireSelectionne(Navire navireSelectionne) {
+		this.navireSelectionne = navireSelectionne;
+	}
+
+	public void setMatelotSelectonne(Matelot matelotSelectonne) {
+		this.matelotSelectonne = matelotSelectonne;
+	}
 }
