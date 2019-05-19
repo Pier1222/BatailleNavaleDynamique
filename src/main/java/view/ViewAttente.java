@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
 import model.Game;
+import model.Joueur;
 import model.Son;
 
 public class ViewAttente extends JFrame {
@@ -111,7 +112,7 @@ public class ViewAttente extends JFrame {
     /**
      * Change le panel contenant la liste des joueurs en attentes
      */
-    public void changePanelJoueurs() {
+    public void changePanelJoueursEnAttente() {
     	panelJoueursAttentes.removeAll(); //On retire tous les noms qu'il y avait
     	String[] nomsJoueursActu = model.getNomsJoueursPartieActu();
     	for(int i = 0; i < nomsJoueursActu.length; i++) {
@@ -123,16 +124,20 @@ public class ViewAttente extends JFrame {
     
     private void changeEtatBoutonLancerPartie() {
     	int nbJoueurs = panelJoueursAttentes.getComponentCount(); //En théorie, il y a autant de label que de joueurs
-    	lancerPartie.setEnabled(nbJoueurs > Game.getMinJoueurs()); //On ne peut pas cliquer sur ce bouton sur il n'y a qu'un joueur
+    	lancerPartie.setEnabled(nbJoueurs >= Game.getMinJoueurs()); //On ne peut pas cliquer sur ce bouton sur il n'y a qu'un joueur
     }
     
     public void launchGame() {
-    	
+    	String[][] contenuEquipe = model.createAndGetTeams();
+    	changePanelJoueursEnAttente();
+    	timerPanelJoueurs.stop();
+    	createViewReady(contenuEquipe);
     }
     
     private void createViewReady(String[][] idEtNomsJoueurs) {
     	String[] idEtNomsRouge = idEtNomsJoueurs[0];
     	String[] idEtNomsBleu  = idEtNomsJoueurs[1];
+    	Joueur joueur = model.getUtilisateur();
     	
     	sonAttente.arreter();
     	sonLancementPartie.start();
@@ -141,15 +146,40 @@ public class ViewAttente extends JFrame {
     	lancerPartie.setVisible(false);
     	quitterPartie.setVisible(false);
     	
-    	JLabel statut = new JLabel("...");
+    	String nomEquipe = null;
+    	if(joueur.isInTeam(idEtNomsRouge))
+    	    nomEquipe = "Rouge";
+    	else if (joueur.isInTeam(idEtNomsBleu))
+    		nomEquipe = "Bleue";
+    	else
+    		nomEquipe = "Erreur";
+    	
+    	
+    	JLabel statut = new JLabel("Vous êtes dans l'équipe " + nomEquipe + ".");
     	//Modifier le texte pour indiquer "Vous êtes Amiral de l'équipe rouge par exemple"
     	
+    	placeNomsJoueurInLayout(idEtNomsRouge, panelEquipe1);
+    	placeNomsJoueurInLayout(idEtNomsBleu, panelEquipe2);
     	
-    	decompte = new JLabel();
+    	
+    	decompte = new JLabel("(Placer décompte)");
     	
     	general.add(statut);
     	general.add(decompte);
     	//Changer la vue
     	setContentPane(general);
     }
+    
+    private void placeNomsJoueurInLayout(String[] nomsJoueurs, JPanel panel) {
+        //Penser à placer un split
+    	if(nomsJoueurs == null || nomsJoueurs.length == 0)
+    		return;
+    	
+    	String nomJoueurActu = null;
+    	for(int i = 0; i < nomsJoueurs.length; i++) {
+    		nomJoueurActu = nomsJoueurs[i];
+    		panel.add(new JLabel(nomJoueurActu));
+    	}
+    }
+    
 }

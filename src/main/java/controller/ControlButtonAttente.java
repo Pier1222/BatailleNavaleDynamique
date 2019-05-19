@@ -20,6 +20,7 @@ public class ControlButtonAttente implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == viewAttente.lancerPartie) {
 			System.out.println("Lancer partie");
+			viewAttente.launchGame();
 			
 		} else if(e.getSource() == viewAttente.quitterPartie) {
 			System.out.println("Quitter partie");

@@ -19,7 +19,7 @@ public class ControlTimerAttente implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == viewAttente.timerPanelJoueurs) {
-			viewAttente.changePanelJoueurs();
+			viewAttente.changePanelJoueursEnAttente();
 		}
 		
 	}

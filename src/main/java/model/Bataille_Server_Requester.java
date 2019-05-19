@@ -49,7 +49,7 @@ public class Bataille_Server_Requester extends Thread {
 	      try {
 	        joueurClient = (Joueur) ois.readObject();
 	      } catch (ClassNotFoundException e) {
-	        System.out.println("TU NE CONNAIS PAS LES CHAINES DE CARACTERES ? TU TE FICHE DE MOI ?");
+	        System.out.println("Attends... Tu ne connais pas les chaînes de caractères ?");
 	      }
 
 	      game.ajouteJoueur(joueurClient);
@@ -129,5 +129,6 @@ public class Bataille_Server_Requester extends Thread {
 		String[][] idEtNomsObtenus = game.createTeams();
 		oos.writeObject(idEtNomsObtenus);
 		oos.flush();
+		sp.broadcast("OK", false, this);
 	}
 }

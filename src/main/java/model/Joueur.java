@@ -67,6 +67,26 @@ public class Joueur implements Serializable {
 		return id == Game.getID_HOTE();
 	}
 	
+	public boolean isInTeam(String[] idEtNomsTeam) {
+    	if(idEtNomsTeam == null) {
+    		return false;
+    	}
+    	
+    	String idStringActu = "";
+    	int idActu = 0;
+    	for(int i = 0; i < idEtNomsTeam.length; i++) {
+    		idStringActu = idEtNomsTeam[i].split(" ")[0]; //L'id est normalement le premier éléent qui apparaît
+    		try {
+    			idActu = Integer.parseInt(idStringActu);
+    			if(idActu == getId()) //Si l'id obtenu est le même que celui du joueur
+    				return true;
+    		} catch (NumberFormatException e) {
+    			System.out.println("'" + idStringActu + "' n'est pas un nombre apparement...");
+    		}
+    	}
+    	return false; //On a trouvé aucun id correspondant
+    }
+	
 	/**
 	 * Désactive la connexion du client avec le serveur
 	 */
