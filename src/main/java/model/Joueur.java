@@ -60,6 +60,8 @@ public class Joueur implements Serializable {
 			e.printStackTrace();
 			return false;
 		}
+		if(id < 0) //Si le joueur possède un ID non valide
+			return false;
 		return true;
 	}
 	

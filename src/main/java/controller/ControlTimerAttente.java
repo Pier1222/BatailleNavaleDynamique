@@ -20,6 +20,10 @@ public class ControlTimerAttente implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == viewAttente.timerPanelJoueurs) {
 			viewAttente.changePanelJoueursEnAttente();
+		} else if(e.getSource() == viewAttente.timerPanelEquipes) {
+			viewAttente.preparationGame();
+		} else if(e.getSource() == viewAttente.timerChangementFenetre) {
+			viewAttente.apparitionVueCombat();
 		}
 		
 	}

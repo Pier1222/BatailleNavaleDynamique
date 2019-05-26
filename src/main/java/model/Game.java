@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Game {
 	
 	private final static int ID_HOTE     = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
+	private final static int ID_ERROR    = -1; //Quand un joueur essaie de rejoindre la partie alors qu'elle a déjà commencé
 	private final static int MIN_JOUEURS = 2; //Nombre de joueurs minimum pour pouvoir... Jouer
 
 	private final static String NOM_DEFAUT_EQUIPE_ROUGE = "Blood team";
@@ -17,6 +18,7 @@ public class Game {
 	private Equipe equipeBleu;
 	private Joueur hote;
 	private ArrayList<Joueur> joueursEnAttentes;
+	private boolean peutCommencer; //Permet de signaler aux autres joueurs que l'hôte a fait débuter la partie (et aussi pour empêcher d'autres personnes de la rejoindre quand tout est prêt)
 	
 	public Game(Joueur createur) {
 		equipeRouge = null;
@@ -24,17 +26,22 @@ public class Game {
 		hote        = null;
 		//hote = createur;
 		joueursEnAttentes = new ArrayList<Joueur>();
+		peutCommencer = false;
 		//ajouteJoueur(createur);
 	}
 	
 	public synchronized void ajouteJoueur(Joueur joueur) {
+		if(peutCommencer) {
+			joueur.setId(ID_ERROR);
+		} else {
 		//Comme le joueur ayant créé la partie la rejoint tout de suite après
 		if(joueursEnAttentes.isEmpty())
 			hote = joueur;
 		
-		joueursEnAttentes.add(joueur);	
-		changeIdJoueur();
-		getNomsJoueur();
+		    joueursEnAttentes.add(joueur);	
+		    changeIdJoueur();
+		    getNomsJoueur();
+		}
 	}
 	
 	private synchronized void changeIdJoueur() {
@@ -69,10 +76,21 @@ public class Game {
 	}
 	
 	/**
-	 * Va créer aléatoirement les équipes
-	 * @return Un premier tableau contenant l'ID et le nom des membres de l'équipe rouge et de même pour l'équipe bleu à la seconde case
+	 * 
+	 * @return Un premier tableau contenant tout d'abord le nom des deux équipes puis
+	 * l'ID et le nom des membres de l'équipe rouge et de même pour l'équipe bleu à la seconde case si on peut commencer la partie, null sinon
 	 */
-	public synchronized String[][] createTeams() {
+	public synchronized String[][] getNomsEquipesEtJoueurs() {
+		if(peutCommencer)
+			return getTabStringEquipes();
+		return null;
+	}
+	
+	/**
+	 * Va créer aléatoirement les équipes
+	 * @return Vrai si l'opération s'est bien déroulé, faux sinon
+	 */
+	public synchronized boolean createTeams() {
 		//On va prendre un joueur aléatoirement, le retirer des joueurs en attentes, sachant que le premier sera l'amial de son équipe
 		Amiral amiralRouge = new Amiral(removeRandomJoueur());
 		Amiral amiralBleu  = new Amiral(removeRandomJoueur());
@@ -111,7 +129,12 @@ public class Game {
 	        }
 	        
 		}
-		return new String[][]{equipeRouge.getIDEtNomsMembres(), equipeBleu.getIDEtNomsMembres()};
+		peutCommencer = true;
+		return true;
+	}
+	
+	private synchronized String[][] getTabStringEquipes() {
+		return new String[][]{new String[]{equipeRouge.getNom(), equipeBleu.getNom()}, equipeRouge.getIDEtNomsMembres(), equipeBleu.getIDEtNomsMembres()};
 	}
 	
 	private synchronized Joueur removeRandomJoueur() {
@@ -120,12 +143,12 @@ public class Game {
 			return null;
 		}
 		//Pour créer un nombre random = Math.round(Math.random() * ((MAX) - MIN) + MIN);
-        int index = (int) Math.round(Math.random() * ((joueursEnAttentes.size()) - 0) + 0);
+        int index = (int) Math.round(Math.random() * ((joueursEnAttentes.size() - 1) - 0) + 0);
         return joueursEnAttentes.remove(index);
 	}
 	
 	//Si jamais on trouve marrant de mettre des noms d'équipes easter eggs en fonction du nom de l'amiral
-	//Genre "France" pour "Emmanuel Macron", "Gotta Go Fast" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
+	//Genre "LE PROJET" pour "Emmanuel Macron", "Gotta Go Fast" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
 	private synchronized String trouveNomEquipe(String nomAmiral) {
 		return null;
 	}
@@ -136,5 +159,9 @@ public class Game {
 
 	public static int getMinJoueurs() {
 		return MIN_JOUEURS;
+	}
+
+	public boolean isPeutCommencer() {
+		return peutCommencer;
 	}
 }

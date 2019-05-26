@@ -262,7 +262,6 @@ public class View extends JFrame {
     	JDialog fenErreur = erreur.createDialog(this, titreErreur);
     }
     
-    //Qu'é ce ke ça fait ?
     class FrameListener extends WindowAdapter
     {
        public void windowClosing(WindowEvent e)

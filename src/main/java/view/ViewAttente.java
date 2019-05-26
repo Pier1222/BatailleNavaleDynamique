@@ -26,12 +26,14 @@ public class ViewAttente extends JFrame {
     protected JPanel panelEquipe1;
     protected JPanel panelEquipe2;
     
-    protected JLabel decompte;
+    protected JLabel messageDebutPartie;
     
     protected JPanel general;
     
     protected ControlTimerAttente ct;
     public Timer timerPanelJoueurs; //Permet de modifier régulièrement la liste des noms des joueurs
+    public Timer timerPanelEquipes; //Permet de modifier les panels sur les équipes une fois qu'elles sont prêtes
+    public Timer timerChangementFenetre; //S'occupe de la transition entre cette fenêtre et celle du jeu
     
     public ViewAttente(Bataille_navale_model model) {
         this.model = model;
@@ -40,7 +42,6 @@ public class ViewAttente extends JFrame {
         
         //Permet de mettre en place tous les éléments crées dans InitAttribut
         createView();
-        System.out.println("c");
         setSize(700,800);
         setTitle("Menu de bataille navale");
         
@@ -56,6 +57,7 @@ public class ViewAttente extends JFrame {
         display();
         sonAttente.jouerEnBoucle();
         timerPanelJoueurs.start();
+        timerPanelEquipes.start();
     }
     
 	private void initAttribut() {
@@ -69,6 +71,8 @@ public class ViewAttente extends JFrame {
 	    
 	    ct = new ControlTimerAttente(model, this);
 	    timerPanelJoueurs = new Timer(1000, ct); //Toutes les secondes, on va regarder les joueurs existants
+	    timerPanelEquipes = new Timer(1000, ct);
+	    timerChangementFenetre = new Timer(5000, ct);
 	}
 	
     public void setButtonControler(ActionListener listener) {
@@ -95,8 +99,10 @@ public class ViewAttente extends JFrame {
     	panelJoueursAttentes.add(new JLabel("Veuillez patientez..."));
     	
     	panelEquipe1 = new JPanel();
+    	panelEquipe1.setLayout(new BoxLayout(panelEquipe1, BoxLayout.Y_AXIS));
     	
     	panelEquipe2 = new JPanel();
+    	panelEquipe2.setLayout(new BoxLayout(panelEquipe2, BoxLayout.Y_AXIS));
     	
     	panelsJoueurs.add(panelEquipe1);
     	panelsJoueurs.add(panelJoueursAttentes);
@@ -115,9 +121,10 @@ public class ViewAttente extends JFrame {
     public void changePanelJoueursEnAttente() {
     	panelJoueursAttentes.removeAll(); //On retire tous les noms qu'il y avait
     	String[] nomsJoueursActu = model.getNomsJoueursPartieActu();
-    	for(int i = 0; i < nomsJoueursActu.length; i++) {
+    	/*for(int i = 0; i < nomsJoueursActu.length; i++) {
     		panelJoueursAttentes.add(new JLabel(nomsJoueursActu[i])); //On place tous les noms récupérés
-    	}
+    	}*/
+    	placeNomsJoueurInLayout(nomsJoueursActu, false, panelJoueursAttentes);
     	changeEtatBoutonLancerPartie();
     	setContentPane(general);
     }
@@ -128,15 +135,34 @@ public class ViewAttente extends JFrame {
     }
     
     public void launchGame() {
-    	String[][] contenuEquipe = model.createAndGetTeams();
+    	model.createTeams();
+    }
+    
+    /**
+     * Va vérifier si le jeu peut commencer et changer la vue si c'est le cas
+     */
+    public void preparationGame() {
+    	String[][] contenuEquipe = model.getInfosTeams();
+    	if(contenuEquipe == null) //si on a pas encore obtenu les informations sur l'équipe
+    		return;
+    	
+    	timerPanelEquipes.stop(); //On a plus besoin de ce timer désormais
     	changePanelJoueursEnAttente();
     	timerPanelJoueurs.stop();
     	createViewReady(contenuEquipe);
     }
     
+    
     private void createViewReady(String[][] idEtNomsJoueurs) {
-    	String[] idEtNomsRouge = idEtNomsJoueurs[0];
-    	String[] idEtNomsBleu  = idEtNomsJoueurs[1];
+    	if(idEtNomsJoueurs == null || idEtNomsJoueurs.length < 3 || idEtNomsJoueurs[0].length < 2) {
+    		creerDialogueErreur("Impossible de faire apparaître les données de début de partie", "Erreur de début de partie");
+    		return;
+    	}
+    	
+    	String nomEquipeRouge = idEtNomsJoueurs[0][0];
+    	String nomEquipeBleu  = idEtNomsJoueurs[0][1];
+    	String[] idEtNomsRouge = idEtNomsJoueurs[1];
+    	String[] idEtNomsBleu  = idEtNomsJoueurs[2];
     	Joueur joueur = model.getUtilisateur();
     	
     	sonAttente.arreter();
@@ -148,29 +174,30 @@ public class ViewAttente extends JFrame {
     	
     	String nomEquipe = null;
     	if(joueur.isInTeam(idEtNomsRouge))
-    	    nomEquipe = "Rouge";
+    	    nomEquipe = nomEquipeRouge;
     	else if (joueur.isInTeam(idEtNomsBleu))
-    		nomEquipe = "Bleue";
+    		nomEquipe = nomEquipeBleu;
     	else
     		nomEquipe = "Erreur";
     	
     	
-    	JLabel statut = new JLabel("Vous êtes dans l'équipe " + nomEquipe + ".");
+    	JLabel statut = new JLabel("Vous êtes dans l'équipe '" + nomEquipe + "'.");
     	//Modifier le texte pour indiquer "Vous êtes Amiral de l'équipe rouge par exemple"
     	
-    	placeNomsJoueurInLayout(idEtNomsRouge, panelEquipe1);
-    	placeNomsJoueurInLayout(idEtNomsBleu, panelEquipe2);
+    	placeNomsJoueurInLayout(idEtNomsRouge, true, panelEquipe1);
+    	placeNomsJoueurInLayout(idEtNomsBleu, true, panelEquipe2);
     	
-    	
-    	decompte = new JLabel("(Placer décompte)");
-    	
+    	messageDebutPartie = new JLabel("La partie va commencer");
+    	timerChangementFenetre.start();
     	general.add(statut);
-    	general.add(decompte);
+    	general.add(messageDebutPartie);
     	//Changer la vue
     	setContentPane(general);
     }
     
-    private void placeNomsJoueurInLayout(String[] nomsJoueurs, JPanel panel) {
+    
+    
+    private void placeNomsJoueurInLayout(String[] nomsJoueurs, boolean contientID, JPanel panel) {
         //Penser à placer un split
     	if(nomsJoueurs == null || nomsJoueurs.length == 0)
     		return;
@@ -178,8 +205,40 @@ public class ViewAttente extends JFrame {
     	String nomJoueurActu = null;
     	for(int i = 0; i < nomsJoueurs.length; i++) {
     		nomJoueurActu = nomsJoueurs[i];
+            if(contientID)
+            	nomJoueurActu = retireID(nomJoueurActu);
     		panel.add(new JLabel(nomJoueurActu));
     	}
     }
     
+    /**
+     * Permet de retirer l'ID dans une chaîne devant contenir le nom et l'ID,
+     * tout en tenant compte que des personnes puissent avoir des noms avec des espaces
+     * @param idEtNom
+     * @return Une chaîne de caractère retirant le premier espace et tout ce qui est avant (donc normalement l'ID)
+     */
+    private String retireID(String idEtNom) {
+    	String resultat = "";
+    	String[] tabIdEtNom = idEtNom.split(" ");
+    	if(tabIdEtNom.length < 2) //Si il n'avait aucun espace dans la chaîne donnée
+    		return idEtNom; //C'est que cette méthode a mal été utilisé
+    	
+    	for(int i = 1; i < tabIdEtNom.length; i++) {
+    		resultat += tabIdEtNom[i];
+    	}
+    	return resultat;
+    }
+    
+	public void apparitionVueCombat() {
+		timerChangementFenetre.stop();
+		undisplay(); //Faire disparaître cette fenêtre
+		System.out.println("Et c'est à ce moment que la nouvelle vue doit apparaître");
+        //groupCombat = new ControlGroupCombat(model);
+	}
+    
+    public void creerDialogueErreur(String messageErreur, String titreErreur) {
+    	JOptionPane erreur = new JOptionPane();
+    	erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
+    	JDialog fenErreur = erreur.createDialog(this, titreErreur);
+    }
 }

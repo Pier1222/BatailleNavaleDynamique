@@ -16,6 +16,7 @@ public class Bataille_Client_Requester {
 	
 	private final static String PLAYERS_NAME_REQ = "Names";
 	private final static String CREATE_TEAMS_REQ = "CreateTeams";
+	private final static String INFOS_TEAMS_REQ  = "InfosTeams";
 	
 	private final static int SHOWING_ID     = 1;
 	private final static int MOVING_ID      = 2;
@@ -25,6 +26,7 @@ public class Bataille_Client_Requester {
 	
 	private final static int PLAYERS_NAMES_ID = 6;
 	private final static int CREATE_TEAMS_ID  = 7;
+	private final static int INFOS_TEAMS_ID   = 8;
 	
 	
 	private String ipServeur;
@@ -47,7 +49,6 @@ public class Bataille_Client_Requester {
 		
 		//Connexion
 		commReq = new Socket(ipServeur, portServeur);
-		
 		//Création d'un Tread pour les messages ?
 		
 		
@@ -63,6 +64,11 @@ public class Bataille_Client_Requester {
 		
 		//Permet d'être sûr que le serveur a finit sa moulinette et de recopier le changement qu'il a fait sur l'ID du joueur
 		joueurClient.setId(ois.readInt());
+		if(joueurClient.getId() < 0) {
+			commReq.close();
+			System.out.println("Désolé, vous ne pouvez pas rejoindre la partie");
+			return;
+		}
 		System.out.println("Mon id est " + joueurClient.getId());
     }
 	
@@ -96,6 +102,8 @@ public class Bataille_Client_Requester {
 		    	requestPlayersName();
 		    } else if(titreRequete.equals(CREATE_TEAMS_REQ)) {
 		    	requestCreateTeams();
+		    } else if(titreRequete.equals(INFOS_TEAMS_REQ)) {
+		    	requestTeamsInfos();
 		    }
 		    if(needToShow)
 			    getRequete(SHOWING_REQ); //
@@ -180,11 +188,21 @@ public class Bataille_Client_Requester {
 		tabStringActu = (String[]) ois.readObject();
 	}
 	
-	private void requestCreateTeams() throws IOException, ClassNotFoundException {
+	private void requestCreateTeams() throws IOException {
 		/*
-		 * Requête que j'ai créé pour créer les équipes et récupérer les noms des joueurs
+		 * Requête que j'ai créé pour créer les équipes
 		 */
 		oos.writeInt(CREATE_TEAMS_ID);
+		oos.flush();
+		ois.readBoolean();
+		//Réagir si la création d'équipe peut faire une erreur
+	}
+	
+	private void requestTeamsInfos() throws IOException, ClassNotFoundException {
+	  /*
+	   * Requête que j'ai créé pour récupérer le noms des équipes ainsi que ceux des joueurs prrésents
+	   */
+		oos.writeInt(INFOS_TEAMS_ID);
 		oos.flush();
 		tabDeTabDeStringActu = (String[][]) ois.readObject();
 	}
@@ -215,6 +233,10 @@ public class Bataille_Client_Requester {
 	
 	public static String getCreateTeamsReq() {
 		return CREATE_TEAMS_REQ;
+	}
+
+	public static String getInfosTeamsReq() {
+		return INFOS_TEAMS_REQ;
 	}
 
 	public String[] getTabStringActu() {

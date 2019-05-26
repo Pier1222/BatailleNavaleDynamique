@@ -13,6 +13,7 @@ public class Bataille_Server_Requester extends Thread {
 	
 	private final static int PLAYERS_NAMES_ID = 6;
 	private final static int CREATE_TEAMS_ID  = 7;
+	private final static int INFOS_TEAMS_ID   = 8;
 	
     private Socket commReq;
 	private Socket commInfo;
@@ -53,11 +54,16 @@ public class Bataille_Server_Requester extends Thread {
 	      }
 
 	      game.ajouteJoueur(joueurClient);
+	      int idClient = joueurClient.getId();
 	      
 	      //Permet de dire que tout s'est bien déroulé
-	      oos.writeInt(joueurClient.getId());
-
+	      oos.writeInt(idClient);
 	      oos.flush();
+	      
+	      if(idClient < 0) {
+	    	  commInfo.close();
+	    	  return;
+	      }
 
 	      while(true) {
 	        int requeteId = ois.readInt();
@@ -92,6 +98,8 @@ public class Bataille_Server_Requester extends Thread {
 	        	requestPlayersName();
 	        else if(requeteId == CREATE_TEAMS_ID)
 	        	requestCreateTeams();
+	        else if(requeteId == INFOS_TEAMS_ID)
+	        	requestTeamsInfos();
 		} catch(IOException e) {
 			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
 			e.printStackTrace();
@@ -126,9 +134,15 @@ public class Bataille_Server_Requester extends Thread {
 	}
 	
 	private void requestCreateTeams() throws IOException {
-		String[][] idEtNomsObtenus = game.createTeams();
-		oos.writeObject(idEtNomsObtenus);
+		boolean reponseObtenu = game.createTeams();
+		oos.writeBoolean(reponseObtenu);
 		oos.flush();
-		sp.broadcast("OK", false, this);
+	}
+	
+	private void requestTeamsInfos() throws IOException {
+		String[][] idEtNomsEquipes = game.getNomsEquipesEtJoueurs();
+		oos.writeObject(idEtNomsEquipes);
+		oos.flush();
+		//sp.broadcast("OK", false, this);
 	}
 }

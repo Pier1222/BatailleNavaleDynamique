@@ -30,8 +30,15 @@ public class Bataille_navale_model {
 		return utilisateur.getClient().getRequesterTabString();
 	}
 	
-	public String[][] createAndGetTeams() {
+	/**
+	 * Va demander au serveur de créer les équipes
+	 */
+	public void createTeams() {
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getCreateTeamsReq());
+	}
+	
+	public String[][] getInfosTeams() {
+		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getInfosTeamsReq());
 		return utilisateur.getClient().getRequesterTabDeTabDeString();
 	}
 
