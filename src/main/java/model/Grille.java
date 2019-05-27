@@ -123,4 +123,16 @@ public class Grille implements Serializable {
     	char lettre = (char) codeAscii;
     	return "" + lettre;
     }
+
+	public static int getLines() {
+		return LINES;
+	}
+
+	public static int getColumns() {
+		return COLUMNS;
+	}
+	
+	public Case getUneCase(int positionX, int positionY) {
+		return cases[positionX][positionY];
+	}
 }

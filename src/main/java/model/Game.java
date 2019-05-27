@@ -6,7 +6,7 @@ public class Game {
 	
 	private final static int ID_HOTE     = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
 	private final static int ID_ERROR    = -1; //Quand un joueur essaie de rejoindre la partie alors qu'elle a déjà commencé
-	private final static int MIN_JOUEURS = 2; //Nombre de joueurs minimum pour pouvoir... Jouer
+	private final static int MIN_JOUEURS = 4; //Nombre de joueurs minimum pour pouvoir... Jouer
 
 	private final static String NOM_DEFAUT_EQUIPE_ROUGE = "Blood team";
 	private final static String COULEUR_EQUIPE_ROUGE    = "Rouge";
@@ -91,6 +91,7 @@ public class Game {
 	 * @return Vrai si l'opération s'est bien déroulé, faux sinon
 	 */
 	public synchronized boolean createTeams() {
+		
 		//On va prendre un joueur aléatoirement, le retirer des joueurs en attentes, sachant que le premier sera l'amial de son équipe
 		Amiral amiralRouge = new Amiral(removeRandomJoueur());
 		Amiral amiralBleu  = new Amiral(removeRandomJoueur());
@@ -106,8 +107,8 @@ public class Game {
 		if(nomEquipeRouge.equals(nomEquipeBleu))
 			nomEquipeBleu += " (2)";
 		
-		equipeRouge = new Equipe(nomEquipeRouge, COULEUR_EQUIPE_ROUGE, amiralRouge);
-		equipeBleu = new Equipe(nomEquipeBleu, COULEUR_EQUIPE_BLEUE, amiralBleu);
+		equipeRouge = new Equipe(nomEquipeRouge, COULEUR_EQUIPE_ROUGE, amiralRouge, this);
+		equipeBleu = new Equipe(nomEquipeBleu, COULEUR_EQUIPE_BLEUE, amiralBleu, this);
 		
 		Matelot matelotActu   = null;
 		int tailleRougeActu = 0;
@@ -152,6 +153,22 @@ public class Game {
 	private synchronized String trouveNomEquipe(String nomAmiral) {
 		return null;
 	}
+	
+	/**
+	 * Permet de connaître l'équipe adverse
+	 * @param equipe
+	 * @return L'autre équipe que celle donné en paramètre (ou null si l'équipe en question n'existe pas dans la partie)
+	 */
+	public synchronized Equipe getAutreEquipe(Equipe equipe) {
+		if(equipe == equipeBleu)
+			return equipeRouge;
+		else if(equipe == equipeRouge)
+			return equipeBleu;
+		else {
+			System.out.println("L'équipe '" + equipe.getNom() + "' n'est pas dans cette partie...");
+			return null;
+		}
+	}
 
 	public static int getID_HOTE() {
 		return ID_HOTE;
@@ -163,5 +180,13 @@ public class Game {
 
 	public boolean isPeutCommencer() {
 		return peutCommencer;
+	}
+
+	public Equipe getEquipeRouge() {
+		return equipeRouge;
+	}
+
+	public Equipe getEquipeBleu() {
+		return equipeBleu;
 	}
 }

@@ -11,7 +11,7 @@ public abstract class Navire implements Serializable {
 	private boolean estHorizontal;
 	//Il s'agit de la pièce tout à droite du bateau quand il est à l'horizontal et tout en haut quand il est à la verticale
 	private PieceNavire tete;
-	private  int tempsRechargement;
+	private int tempsRechargement;
 	private boolean estCoule;
 	
 	public Navire(int numero) {
@@ -56,6 +56,8 @@ public abstract class Navire implements Serializable {
 		estHorizontal = !estHorizontal;
 	}
 	
+	
+	//Méthodes de changement de position
 	/**
 	 * Permet de "poser" un navire (utilisé par l'Amiral)
 	 * @param grille
@@ -119,7 +121,7 @@ public abstract class Navire implements Serializable {
 		}
 		
     	if(deplacement) {
-		    //Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ? (à faire)
+		    //Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ?
     		Case positionTeteActu = tete.getPosition();
     		int positionXTeteActu = positionTeteActu.getPositionX();
     		int positionYTeteActu = positionTeteActu.getPositionY();
@@ -177,11 +179,35 @@ public abstract class Navire implements Serializable {
 		return false;
 	}
 	
-	public void tirer(Case cible) {
-		if(!peutTirer())
-			return;
 	
-		tempsRechargement = TEMPS_RECHARGEMENT_MAX;
+	/**
+	 * Effectue un tir si il le peut et initialise son temps de rechargement
+	 * @param cible Grille qui recevera le tir
+	 * @param posXCible Position X où effectuer le tir sur la grille cible
+	 * @param posYCible
+	 * @return
+	 */
+	public Navire tirer(Grille cible, int posXCible, int posYCible) {
+		if(!peutTirer()) {
+			System.out.println("Impossible de tirer (cooldown restant: " + tempsRechargement);
+			return null;
+		}
+		
+		tempsRechargement = TEMPS_RECHARGEMENT_MAX; //Le tir est effectué, on remet son cooldown au maximum
+		
+		PieceNavire pieceTouche = cible.getCases()[posXCible][posYCible].getPiecePose();
+		if(pieceTouche == null) {
+			System.out.println("Tir Effectué, aucune pièce touchée");
+			return null;
+		}
+		
+		if(pieceTouche.isEstEndommage()) {
+			System.out.println("La pièce touchée est déjà endommagé !");
+			return null;
+		}
+		
+		pieceTouche.recoitDommage();
+		return pieceTouche.getNavireAttache();
 	}
 	
 	/**
@@ -255,6 +281,10 @@ public abstract class Navire implements Serializable {
 
 	public PieceNavire[] getPieces() {
 		return pieces;
+	}
+
+	public PieceNavire getTete() {
+		return tete;
 	}
 
 	public boolean isEstCoule() {

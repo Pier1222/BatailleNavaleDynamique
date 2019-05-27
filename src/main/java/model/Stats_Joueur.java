@@ -11,6 +11,7 @@ public class Stats_Joueur implements Serializable {
 	private int nbTirsTouches;
 	private int nbTirsRates;
 	
+	private int nbFoisAmiral;
 	private int nbRoleAttaque;
 	private int nbRoleDefense;
 	
@@ -24,6 +25,7 @@ public class Stats_Joueur implements Serializable {
 		nbTirsTouches = 0;
 		nbTirsRates   = 0;
 		
+		nbFoisAmiral  = 0;
 		nbRoleAttaque = 0;
 		nbRoleDefense = 0;
 		
@@ -62,12 +64,20 @@ public class Stats_Joueur implements Serializable {
 		nbTirsTouches++;
 	}
 	
+	public void incrementeNbFoisAmiral() {
+		nbFoisAmiral++;
+	}
+	
 	public void incrementeNbTirsRates() {
 		nbTirsRates++;
 	}
 	
 	public void incrementeNbRoleAttaque() {
 		nbRoleAttaque++;
+	}
+	
+	public void incrementeNbRoleDefense() {
+		nbRoleDefense++;
 	}
 
 	public int getNbVictoires() {
