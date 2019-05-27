@@ -41,8 +41,6 @@ public class Case {
 	 * @return La lettre associciée la position de la case
 	 */
 	public String getStringPositionY() {
-		if(positionY < 0 || positionY > 25)
-			return "Err";
-		return "A";
+		return Grille.getlettreColonne(positionY);
 	}
 }

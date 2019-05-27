@@ -7,9 +7,12 @@ import model.Bataille_navale_model;
 public class Launcher {
 
 	public static void main(String[] args) {
+		//Habituellement, j'utilise ces deux lignes-là
 		Bataille_navale_model model = new Bataille_navale_model();
+		ControlGroup controlgroup = new ControlGroup(model);
 		
-		   javax.swing.SwingUtilities.invokeLater( new Runnable() {
+		//Bon après... Cette méthode fonctionne aussi mais... Je ne connais pas la différence...
+		   /*javax.swing.SwingUtilities.invokeLater( new Runnable() {
 	            public void run() {
 	
 					Bataille_navale_model model = new Bataille_navale_model();
@@ -23,10 +26,7 @@ public class Launcher {
 	
 		    
 	            }
-	        });
-		   
-		   
-		   
+	        }); */  
 	 
 	}
 }

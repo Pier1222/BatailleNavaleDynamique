@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Equipe {
+public class Equipe implements Serializable {
 	private static int NB_CUIRASSE    = 1;
 	private static int NB_CROISEURS   = 2;
 	private static int NB_TORPILLEURS = 3;
@@ -21,6 +22,7 @@ public class Equipe {
 		this.couleur = couleur;
 		matelots = new ArrayList<Matelot>();
 		this.amiral = amiral;
+		amiral.setEquipe(this);
 		grille = new Grille();
 		initNavires();
 	}
@@ -43,6 +45,30 @@ public class Equipe {
 		for(int i = 0; i < NB_SOUS_MARINS; i++) {
 			navires[numeroNavireActu] = new Sous_Marin(i+1);
 		}
+	}
+	
+	public void ajouteMatelot(Matelot matelot) {
+		matelots.add(matelot);
+		matelot.setEquipe(this);
+	}
+	
+	public int getNBMatelots() {
+		return matelots.size();
+	}
+	
+	/**
+	 * Cette méthode permet d'avoir l'ID et le nom de tous les membres de l'équipe (avec en premier l'Amiral)
+	 * @return
+	 */
+	public String[] getIDEtNomsMembres() {
+		String[] idEtNoms = new String[getNBMatelots() + 1]; //Plus l'Amiral
+		int placeActu = 0;
+		idEtNoms[placeActu] = amiral.getId() + " " + amiral.getNom();
+		for(Matelot m: matelots) {
+			placeActu++;
+			idEtNoms[placeActu] = m.getId() + " " + m.getNom();
+		}
+		return idEtNoms;
 	}
 
 	public String getNom() {

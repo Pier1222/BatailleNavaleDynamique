@@ -14,4 +14,9 @@ public class Cuirasse extends Navire {
 	public String getDebutNom() {
 		return "CU"; //Cuirassé
 	}
+	
+	@Override
+    public int getIdTypeNavire() {
+		return 3;
+	}
 }

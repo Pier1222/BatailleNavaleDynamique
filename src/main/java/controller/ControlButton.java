@@ -9,31 +9,42 @@ import view.View;
 
 public class ControlButton implements ActionListener {
 	
-	Bataille_navale_model model;
-	View view;
-	Son son;
+	protected Bataille_navale_model model;
+	protected View view;
 	
 
-
-	public ControlButton(Bataille_navale_model model, Son son, View view) {
+	public ControlButton(Bataille_navale_model model, View view) {
 		this.model = model;
         this.view = view;
-        this.son = son;
-        
-        son.jouer();
         
 		view.setButtonControler(this);
-	
 	}
 	
 	public void actionPerformed(ActionEvent e){
 		
-		if(e.getSource() == view.launchButton){
+		if(e.getSource() == view.testSon){
+			System.out.println("Launch button");
+			view.sonDeFond.jouerEnBoucle();
 			
-			 
-		
+		} else if(e.getSource() == view.testSon2) {
+			System.out.println("Launch button 2");
+			view.sonAlternatif.jouerEnBoucle();
+			
+		} else if(e.getSource() == view.testStop) {
+			System.out.println("Stop song");
+			view.stopAllSong();
+			
+		} else if(e.getSource() == view.launchCreateur) {
+			System.out.println("Création partie");
+			//view.createPartie();
+			view.threadCreation.execute();
+			
+		} else if(e.getSource() == view.launchInvite) {
+			System.out.println("Rejoindre partie");
+			//view.rejoindrePartie();
+			view.threadJoin.execute();
+			
 		}
 		
 	}
-
 }
