@@ -21,7 +21,7 @@ import model.Son;
 public class View extends JFrame {
 
 	protected Bataille_navale_model model;
-	//Classe que j'ai créé moi-même pour faire du son
+
 	public Son sonDeFond;
 	public Son sonAlternatif;
 	
@@ -80,7 +80,7 @@ public class View extends JFrame {
     	testSon       = new JButton("Test Son");
     	testSon2      = new JButton("Test Son numéro 2");
     	testStop      = new JButton("Stop");
-    	sonAlternatif = new Son("aaa.wav");
+    	sonAlternatif = new Son("AreYouReady.wav");
     	sonDeFond     = new Son("Hydrocity.wav"); //...Quoi ? Au moins cette musique possède l'eau comme thème (vous voyez... Bateau/Eau... Tout ça...)
     	
     	//Éléments pour créer/rejoindre Une Partie
@@ -215,13 +215,13 @@ public class View extends JFrame {
     }
     
     private void createView() {
-    	  JPanel pWidget = new JPanel(new GridLayout(10, 1));
+    	  JPanel menu = new JPanel();
+    	  menu.setLayout(new GridLayout(5, 5));
+
+    	  JPanel ligneConnexion = new JPanel(new FlowLayout());
     	  
     	  JPanel ligneTest = new JPanel();
     	  ligneTest.setLayout(new BoxLayout(ligneTest, BoxLayout.X_AXIS));
-    	  
-    	  JPanel ligneChamps = new JPanel();
-    	  ligneChamps.setLayout(new BoxLayout(ligneChamps, BoxLayout.X_AXIS)); 
     	  
     	  JPanel ligneBouttons = new JPanel();
     	  ligneBouttons.setLayout(new BoxLayout(ligneBouttons, BoxLayout.X_AXIS));
@@ -230,22 +230,22 @@ public class View extends JFrame {
     	  ligneTest.add(testSon2);
     	  ligneTest.add(testStop);
     	  
-    	  ligneChamps.add(nomLabel);
-    	  ligneChamps.add(nomField);
-    	  ligneChamps.add(portLabel);
-    	  ligneChamps.add(portField);
-    	  ligneChamps.add(adresseIpLabel);
-    	  ligneChamps.add(adresseIpField);
+    	  ligneConnexion.add(nomLabel);
+    	  ligneConnexion.add(nomField);
+    	  ligneConnexion.add(portLabel);
+    	  ligneConnexion.add(portField);
+    	  ligneConnexion.add(adresseIpLabel);
+    	  ligneConnexion.add(adresseIpField);
     	  
     	  ligneBouttons.add(launchCreateur);
     	  ligneBouttons.add(new JPanel());
     	  ligneBouttons.add(launchInvite);
     	  
-    	  pWidget.add(ligneTest);
-    	  pWidget.add(ligneChamps);
-    	  pWidget.add(ligneBouttons);
+    	  menu.add(ligneTest);
+    	  menu.add(ligneConnexion);
+    	  menu.add(ligneBouttons);
     	  
-    	  setContentPane(pWidget);
+    	  setContentPane(menu);
     }
 	
     public void display() {
