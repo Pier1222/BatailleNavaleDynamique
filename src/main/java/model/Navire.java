@@ -274,6 +274,89 @@ public abstract class Navire implements Serializable {
 	 * @return L'id du type de navire
 	 */
 	public abstract int getIdTypeNavire();
+	
+	/**
+	 * Permet d'obtenir à partir d'une position donnée celle correspondant à celle qu'obtiendra la tête en cas de déplacement
+	 * @param positionX
+	 * @param positionY
+	 * @return Un tableau dont la première case correspond à la position X obtenu et la seconde à celle de la position Y (par défaut, ce seront les valeurs données en paramètre qui seront retournéess)
+	 */
+	public int[] getCasePourDeplacementTete(int positionX, int positionY) {
+		if(estHorizontal)
+			return getCasePourDeplacementTeteVertical(positionX, positionY);
+		return getCasePourDeplacementTeteHorizontal(positionX, positionY);
+			
+	}
+	
+	private int[] getCasePourDeplacementTeteVertical(int positionX, int positionY) {
+		int positionXTeteDeplacement = positionX;
+		int positionYTeteDeplacement = positionY;
+		
+		int positionXTeteActu = tete.getPosition().getPositionX();
+		int positionYTeteActu = tete.getPosition().getPositionY();
+		
+		//Premier cas: à gauche ou à droite d'une des pièces du navire
+		if((positionYTeteActu-1 == positionY || positionYTeteActu+1 == positionY)  && getCorrespondanceX(positionX))
+			positionX = positionXTeteActu; //La position est désormais juste à gauche ou à droite de la tête
+		//Deuxième cas: en dessous de la dernière pièce
+		else {
+		   PieceNavire dernierePiece = pieces[pieces.length - 1];
+		   if(dernierePiece.getPosition().getPositionX()+1 == positionX && dernierePiece.getPosition().getPositionY() == positionY)
+			   positionX = positionXTeteActu+1; //La position est désormais juste en dessous de la tête
+		}
+		
+		return new int[] {positionXTeteDeplacement, positionYTeteDeplacement};
+	}
+	
+	private int[] getCasePourDeplacementTeteHorizontal(int positionX, int positionY) {
+		int positionXTeteDeplacement = positionX;
+		int positionYTeteDeplacement = positionY;
+		
+		int positionXTeteActu = tete.getPosition().getPositionX();
+		int positionYTeteActu = tete.getPosition().getPositionY();
+
+		//Premier cas: au dessus ou en dessous d'une des pièces du navire
+		if((positionXTeteActu-1 == positionX || positionXTeteActu+1 == positionX)  && getCorrespondanceY(positionY))
+			positionY = positionYTeteActu; //La position est désormais juste au dessus ou en dessus de la tête
+		//Deuxième cas: à la gauche de la dernière pièce
+		else {
+		   PieceNavire dernierePiece = pieces[pieces.length - 1];
+		   if(dernierePiece.getPosition().getPositionX() == positionX && dernierePiece.getPosition().getPositionY()-1 == positionY)
+			   positionY = positionYTeteActu-1; //La position est désormais juste à gauche de la tête
+		}
+		
+		return new int[] {positionXTeteDeplacement, positionYTeteDeplacement};
+	}
+	
+	/**
+	 * Permet de vérifier si la postion X donnée correspond à celle d'une des pièces du navire
+	 * @param positionX
+	 * @return Vrai si une correspondance a été trouvée, faux sinon
+	 */
+	private boolean getCorrespondanceX(int positionX) {
+		PieceNavire pieceActu = null;
+		for(int i = 0; i < pieces.length; i++) {
+			pieceActu = pieces[i];
+			if(pieceActu.getPosition().getPositionX() == positionX)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Permet de vérifier si la postion Y donnée correspond à celle d'une des pièces du navire
+	 * @param positionX
+	 * @return Vrai si une correspondance a été trouvée, faux sinon
+	 */
+	private boolean getCorrespondanceY(int positionY) {
+		PieceNavire pieceActu = null;
+		for(int i = 0; i < pieces.length; i++) {
+			pieceActu = pieces[i];
+			if(pieceActu.getPosition().getPositionY() == positionY)
+				return true;
+		}
+		return false;
+	}
 
 	public String getNom() {
 		return nom;

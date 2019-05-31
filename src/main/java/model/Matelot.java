@@ -26,7 +26,7 @@ public class Matelot extends Joueur {
 	//Faire cela avec un index (numéro de navire dans la liste) ou en checkant à chaque fois que le navire donné est dans cette liste ?
 	//Aussi, comment gérer les rôles ? Faire deux sous-classes ou utiliser un booléen et mettre toutes les méthodes (attaque/mouvement) ici ?
 	public void utiliseNavire(int posXChoisi, int posYChoisi) {
-	    if(!aUnRole || navireSelectionne == null || !peutAgir()) {
+	    if(navireSelectionne == null || !peutAgir()) {
 	    	System.out.println("Vous ne pouvez pas utiliser le navire");
 	    	return;
 	    }
@@ -132,11 +132,11 @@ public class Matelot extends Joueur {
 	}
 	
 	/**
-	 * Permet de savoir si le matelot peut déplacer/faire tirer son navire
-	 * @return Un booléen qui renvoie la réponse
+	 * Permet de savoir si le matelot peut déplacer/faire tirer un navire
+	 * @return Un booléen qui renvoie la réponse à cette question
 	 */
 	private boolean peutAgir() {
-		return getEquipe().isEstPret();
+		return getEquipe().isEstPret() && aUnRole;
 	}
 
 	/**
