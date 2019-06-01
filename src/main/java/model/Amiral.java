@@ -4,9 +4,25 @@ public class Amiral extends Joueur {
     private Navire navireSelectionne;
     private Matelot matelotSelectionne;
     
+    public Amiral() {
+    	this(new Joueur());
+    }
+    
     //Constructeur par copie
     public Amiral(Joueur joueur) {
 		super(joueur);
+		navireSelectionne  = null;
+		matelotSelectionne = null;
+    }
+    
+    /**
+     * Permet de tourner le navire sélectionné si on est encore dans la phase de préparation
+     */
+    public void tourneNavire() {
+    	if(navireSelectionne == null || !peutPreparer()) {
+    		System.out.println("Impossible de tourner le navire actuellement");
+    	}
+    	navireSelectionne.tourne();
     }
     
     //Méthodes pour affecter des rôles et des navires aux matelots
@@ -78,9 +94,15 @@ public class Amiral extends Joueur {
     }
 
 	public void setNavireSelectionne(Navire navireSelectionne) {
+		//Rechercher si il est dans l'équipe
 		this.navireSelectionne = navireSelectionne;
 	}
 	
+	public void setMatelotSelectionne(Matelot matelotSelectionne) {
+		//Rechercher si il est dans l'équipe
+		this.matelotSelectionne = matelotSelectionne;
+	}
+
 	public void deselectNavireSelectionne() {
 		navireSelectionne = null;
 	}

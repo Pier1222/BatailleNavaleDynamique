@@ -132,6 +132,8 @@ public class Equipe implements Serializable {
 	}
 	
 	public Equipe getEquipeAdverse() {
+		if(partie == null) //C'est le cas durant les tests
+			return null;
 		return partie.getAutreEquipe(this);
 	}
 

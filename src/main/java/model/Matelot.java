@@ -14,27 +14,32 @@ public class Matelot extends Joueur {
 	private boolean aUnRole; //Permet de savoir si le matelot à un rôle ou pas (au lieu de toujours assumer par défaut qu'il est en défense)
 	private boolean estAttaquant;
 	
+	public Matelot() {
+		this(new Joueur());
+	}
+	
 	public Matelot(Joueur joueur) {
 		super(joueur);
-		naviresControles = new ArrayList<Navire>();
+		naviresControles  = new ArrayList<Navire>();
 		navireSelectionne = null;
-		aUnRole      = false;
-		estAttaquant = false;
+		aUnRole           = false;
+		estAttaquant      = false;
 	}
 	
 	//Méthodes pour faire des actions avec le/les navire(s) controle(s)
 	//Faire cela avec un index (numéro de navire dans la liste) ou en checkant à chaque fois que le navire donné est dans cette liste ?
 	//Aussi, comment gérer les rôles ? Faire deux sous-classes ou utiliser un booléen et mettre toutes les méthodes (attaque/mouvement) ici ?
-	public void utiliseNavire(int posXChoisi, int posYChoisi) {
+	public Navire utiliseNavire(int posXChoisi, int posYChoisi) {
 	    if(navireSelectionne == null || !peutAgir()) {
 	    	System.out.println("Vous ne pouvez pas utiliser le navire");
-	    	return;
+	    	return null;
 	    }
 	    
 	    if(estAttaquant) {
 	    	deplaceNavire(posXChoisi, posYChoisi);
+	    	return null;
 	    } else {
-            tirAvecNavire(posXChoisi, posYChoisi);
+            return tirAvecNavire(posXChoisi, posYChoisi);
 	    }
 	}
 	
@@ -47,8 +52,11 @@ public class Matelot extends Joueur {
 		Equipe adversaires = getEquipe().getEquipeAdverse();
 		Grille grilleCible = adversaires.getGrille();
 		Navire navireTouche = navireSelectionne.tirer(grilleCible, posXCible, posYCible);
-		//Envoyer infos à l'équipe
-		return null;
+		//Permettre à l'équipe ennemi de retirer le navire si il est coulé
+		if(navireTouche != null && navireTouche.isEstCoule()) {
+			adversaires.retireNavireATousMatelots(navireTouche);
+		}
+		return navireTouche;
 	}
 	
 	/**
@@ -158,5 +166,17 @@ public class Matelot extends Joueur {
 
 	public boolean isEstAttaquant() {
 		return estAttaquant;
+	}
+
+	public static String getRoleInconnu() {
+		return ROLE_INCONNU;
+	}
+
+	public static String getRoleAttaquant() {
+		return ROLE_ATTAQUANT;
+	}
+
+	public static String getRoleDefenseur() {
+		return ROLE_DEFENSEUR;
 	}
 }

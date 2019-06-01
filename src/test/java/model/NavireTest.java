@@ -4,12 +4,13 @@ package model;
  * C'est ici où seront testé le comportement des navires sur une seule Grille
  */
 import static org.junit.Assert.*;
-
 import org.junit.Test;
+//import junit.framework.Assert;
 
 
 public class NavireTest {
 	
+      //Test de placement
 	  @Test
 	  public void testPlaceAndCheckPositionHorizontal() {
 		  System.out.println("testPlaceAndCheckPositionHorizontal");
@@ -19,7 +20,7 @@ public class NavireTest {
 	      int posYTete = 3;
 	        
 	      cuirasse.placeNavire(grille, posXTete, posYTete);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      PieceNavire pieceActu = cuirasse.getPieces()[0];
 	      assertTrue(pieceActu.getPosition().getPositionX() == posXTete);
 	      assertTrue(pieceActu.getPosition().getPositionY() == posYTete);
@@ -49,7 +50,7 @@ public class NavireTest {
 	      int posYTete = 0;
 	        
 	      cuirasse.placeNavire(grille, posXTete, posYTete);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      PieceNavire pieceActu = cuirasse.getPieces()[0];
 	      assertTrue(pieceActu.getPosition().getPositionX() == posXTete);
 	      assertTrue(pieceActu.getPosition().getPositionY() == posYTete);
@@ -122,7 +123,7 @@ public class NavireTest {
 		  //Le sous Marin va bloquer le positionnement du cuirassé
 		  sousMarin.placeNavire(grille, 5, 5);
 		  cuirasse.placeNavire(grille, 6, 7);
-		  grille.printGrille();
+		  grille.printGrille(false);
 		  
 		  assertTrue(sousMarin.checkPosition(grille, 5, 5));  
 	      //On vérifie qu'aucune pièce ne possède de position
@@ -141,7 +142,7 @@ public class NavireTest {
 		  //Le sous Marin va bloquer le positionnement du cuirassé
 		  sousMarin.placeNavire(grille, 1, 0);
 		  cuirasse.placeNavire(grille, 0, 4);
-		  grille.printGrille();
+		  grille.printGrille(false);
 		  
 		  assertTrue(sousMarin.checkPosition(grille, 1, 0));
 	      //On vérifie qu'aucune pièce ne possède de position
@@ -161,7 +162,7 @@ public class NavireTest {
 		  //Le sous Marin va bloquer le positionnement du cuirassé
 		  sousMarin.placeNavire(grille, 3, 2);
 		  cuirasse.placeNavire(grille, 0, 3);
-		  grille.printGrille();
+		  grille.printGrille(false);
 		  
 		  assertTrue(sousMarin.checkPosition(grille, 3, 2));  
 	      //On vérifie qu'aucune pièce ne possède de position
@@ -181,7 +182,7 @@ public class NavireTest {
 		  //Le sous Marin va bloquer le positionnement du cuirassé
 		  sousMarin.placeNavire(grille, 9, 9);
 		  cuirasse.placeNavire(grille, 5, 8);
-		  grille.printGrille();
+		  grille.printGrille(false);
 		  
 		  assertTrue(sousMarin.checkPosition(grille, 9, 9));
 	      //On vérifie qu'aucune pièce ne possède de position
@@ -190,6 +191,7 @@ public class NavireTest {
 	      }
 	  }
 	  
+	  //Test de déplacement
 	  @Test
 	  public void testHorizontalUpValide() {
 		  System.out.println("testHorizontalUpValide");
@@ -198,9 +200,9 @@ public class NavireTest {
 	      
 	      int posY = 5;
 	      cuirasse.placeNavire(grille, 1, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, 0, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, 0, posY));
 	  }
 	  
@@ -212,9 +214,9 @@ public class NavireTest {
 	      
 	      int posY = 5;
 	      cuirasse.placeNavire(grille, 0, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, 1, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, 1, posY));
 	  }
 	  
@@ -226,9 +228,9 @@ public class NavireTest {
 	      
 	      int posX = 3;
 	      cuirasse.placeNavire(grille, posX, 5);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, posX, 6);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, posX, 6));
 	  }
 	  
@@ -240,9 +242,9 @@ public class NavireTest {
 	      
 	      int posX = 3;
 	      cuirasse.placeNavire(grille, posX, 5);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, posX, 4);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, posX, 4));
 	  }
 	  
@@ -255,9 +257,9 @@ public class NavireTest {
 	      
 	      int posY = 2;
 	      cuirasse.placeNavire(grille, 2, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, 3, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, 3, posY));
 	  }
 	  
@@ -270,9 +272,9 @@ public class NavireTest {
 	      
 	      int posY = 2;
 	      cuirasse.placeNavire(grille, 2, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, 3, posY);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, 3, posY));
 	  }
 	  
@@ -285,9 +287,9 @@ public class NavireTest {
 	      
 	      int posX = 0;
 	      cuirasse.placeNavire(grille, posX, 8);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, posX, 9);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, posX, 9));
 	  }
 	  
@@ -300,10 +302,25 @@ public class NavireTest {
 	      
 	      int posX = 0;
 	      cuirasse.placeNavire(grille, posX, 8);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      cuirasse.deplacementNavire(grille, posX, 7);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      assertTrue(cuirasse.checkPosition(grille, posX, 7));
+	  }
+	  
+	  @Test
+	  public void testDeplacementSansEtrePlace() {
+		  System.out.println("testDeplacementSansEtrePlace");
+		  Grille grille     = new Grille();
+		  Cuirasse cuirasse = new Cuirasse(1);
+		  
+		  //On tente de déplacer le navire sur une position valide alors qu'il n'est pas placé
+		  cuirasse.deplacementNavire(grille, 5, 5);
+
+		  //On vérifie qu'aucune pièce ne possède de position
+		  for(int y = 0; y < cuirasse.getNBPieces(); y++) {
+		      assertEquals(null, cuirasse.getPieces()[y].getPosition());
+		  }
 	  }
 	  
 	  @Test
@@ -314,7 +331,7 @@ public class NavireTest {
 	      
 	      cuirasse.placeNavire(grille, 0, 3);
 	      cuirasse.deplacementNavire(grille, 0, 2);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      //On vérifie si le navire n'a pas bougé
 	      assertTrue(cuirasse.checkPosition(grille, 0, 3));
 	  }
@@ -328,7 +345,7 @@ public class NavireTest {
 	      
 	      cuirasse.placeNavire(grille, 6, 2);
 	      cuirasse.deplacementNavire(grille, 7, 2);
-	      grille.printGrille();
+	      grille.printGrille(false);
 	      //On vérifie si le navire n'a pas bougé
 	      assertTrue(cuirasse.checkPosition(grille, 6, 2));
 	  }
@@ -349,7 +366,7 @@ public class NavireTest {
           //Doit échouer
           cuirasse.deplacementNavire(grille, 5, 5);
           
-          grille.printGrille();
+          grille.printGrille(false);
           assertTrue(sousMarin.checkPosition(grille, 5, 3));
           assertTrue(cuirasse.checkPosition(grille, 6, 5));
 	  }
@@ -371,7 +388,7 @@ public class NavireTest {
           //Doit échouer
           cuirasse.deplacementNavire(grille, 0, 7);
           
-          grille.printGrille();
+          grille.printGrille(false);
           assertTrue(sousMarin.checkPosition(grille, 2, 7));
           assertTrue(cuirasse.checkPosition(grille, 0, 8));
 	  }
@@ -468,5 +485,153 @@ public class NavireTest {
 		      //On vérifie que le navire n'a pas bougé
               assertTrue(torpilleur.checkPosition(grille, posXOriginal, posYOriginal));
 		  }
+	  }
+	  
+	  @Test
+	  public void testDeplacementNavireTouche() {
+		  System.out.println("testDeplacementNavireTouche");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //On est sûr de le toucher en visant la tête
+	      sousMarin.tirer(grille2, 5, 5);
+	      torpilleur.deplacementNavire(grille2, 5, 4);
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est au même endroit qu'au début
+          assertTrue(torpilleur.checkPosition(grille2, 5, 5));
+	  }
+	  
+	  
+	  //Test de tir
+	  @Test
+	  public void testTirRate() {
+		  System.out.println("testTirRate");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4 et pas en 5,3
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 3);
+	      
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est intact et que le navire touché vaut null
+	      PieceNavire[] pieces = torpilleur.getPieces();
+	      for(int i = 0; i < pieces.length; i++) {
+	    	  assertFalse(pieces[i].isEstEndommage());
+	      }
+	      assertEquals(null, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirReussit() {
+		  System.out.println("testTirReussit");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
+	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirSansEtreRecharge() {
+		  System.out.println("testTirSansEtreRecharge");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      sousMarin.tirer(grille2, 5, 5);
+	      sousMarin.decrementeTempsRechargement();
+	      //Ce tir doit être annulé car le sousMarin n'a pas eu le temps de recharger
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille2.printGrille(true);
+	      //On vérifie que seul la première pièce visé du torpilleur a été touché et qu'aucun navire a été touché au second tir
+	      assertTrue(torpilleur.getPieces()[0].isEstEndommage());
+	      assertFalse(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(null, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirPieceDejaTouche() {
+		  System.out.println("testTirPieceDejaTouche");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      sousMarin.tirer(grille2, 5, 5);
+	      sousMarin.annuleTempsRechargement();
+	      //Tout de suite après son rechargement, le sousMarin va tirer au même endroit, or, on ne peut pas toucher deux fois la même pièce
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 5);
+	      
+	      grille2.printGrille(true);
+	      //On vérifie que seul la première pièce visé du torpilleur a été touché et qu'aucun navire a été touché au second tir
+	      assertTrue(torpilleur.getPieces()[0].isEstEndommage());
+	      assertFalse(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(null, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirQuiCoule() {
+		  System.out.println("testTirQuiCoule");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      //Comme on a déjà fait des test de tirs sur un navire à l'horizontal, on va le faire sur un navire à la vertical
+	      Cuirasse cuirasse = new Cuirasse(1);
+	      cuirasse.tourne();
+	      
+	      sousMarin.placeNavire(grille1, 2, 2);
+	      cuirasse.placeNavire(grille2, 2, 3);
+	      
+	      //Le Sous-marin va détruire le cuirasse
+	      Navire[] tabTouche = new Navire[4];
+	      tabTouche[0] = sousMarin.tirer(grille2, 2, 3);
+	      sousMarin.annuleTempsRechargement();
+	      tabTouche[1] = sousMarin.tirer(grille2, 3, 3);
+	      sousMarin.annuleTempsRechargement();
+	      tabTouche[2] = sousMarin.tirer(grille2, 4, 3);
+	      sousMarin.annuleTempsRechargement();
+	      tabTouche[3] = sousMarin.tirer(grille2, 5, 3);
+	      
+	      grille2.printGrille(true);
+	      //On vérifie que le cuirasse est bien coulé et que c'est bien lui qui a été touché à chaque tir
+	      assertTrue(cuirasse.isEstCoule());
+	      for(int i = 0; i < tabTouche.length; i++) {
+	    	  assertEquals(cuirasse, tabTouche[i]);
+	      }
+
 	  }
 }

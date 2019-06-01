@@ -114,11 +114,19 @@ public abstract class Navire implements Serializable {
 	
 	
 	private boolean verificationChangementPosition(Grille grille, int posXTete, int posYTete, boolean deplacement) {
+		//+Vérification 0: Est-ce que la tête a été placé si on souhaite déplacer le navrire ?
+		if(deplacement && tete.getPosition() == null) {
+			System.out.println("Navire '" + nom + "' non placé, cela va être dur de la déplacer alors...");
+			return false;
+		}
+		
 		//Vérification 1: Est-ce que le navire est endommagé ?
 		if(estEndommage()) {
 			System.out.println("Navire '" + nom + "' endommagé, déplacement impossible");
     		return false;
 		}
+		
+		String positionDeplacement = "[" + posXTete + ", " + posYTete + "]";
 		
     	if(deplacement) {
 		    //Vérification 2: Est-ce qu'on ne se déplace que d'une seule case ?
@@ -129,31 +137,33 @@ public abstract class Navire implements Serializable {
     		int differenceY = Math.abs(positionYTeteActu - posYTete);
     		if(differenceX > 1 || differenceY > 1 || (differenceX == 1 && differenceY == 1)) { //Interdiction de se déplacer de plus d'une case en X/Y ou en diagonale
     			System.out.println("Déplacement de plus d'une case non autorisé: " + 
-    		    "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: [" + posXTete + ", " + posYTete +"] menant à une différence de [" + differenceX + ", " + differenceY +"]");
+    		    "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: " + positionDeplacement + " menant à une différence de [" + differenceX + ", " + differenceY +"]");
     			return false;
     		}
     		
     	}
 		
-		int posXActu = posXTete;
-		int posYActu = posYTete;
+		int posXActu               = posXTete;
+		int posYActu               = posYTete;
+		String positionActu        = null;
 		PieceNavire pieceOccupante = null;
 		
 		//Vérification 3: Est-ce qu'on ne sort pas des limites de la grille et est-ce que aucune case n'est déjà occupé par une autre pièce ?
     	//+Vérification 4: si placement Amiral: est-ce qu'il y a aucun navire autour de la position donnée ?
 		for(int i = 0; i < getNBPieces(); i++) {
+			positionActu = "[" + posXActu + ", " + posYActu + "]";
     	    if(!grille.ifPostionValide(posXActu, posYActu)) {
-    	    	System.out.println("Position [" + posXActu + ", " + posYActu + "] invalide");
+    	    	System.out.println("Position " + positionActu + " invalide");
     		    return false;
     	    }
     	    pieceOccupante = grille.getCases()[posXActu][posYActu].getPiecePose();
     	    if(pieceOccupante != null && !isPiecePresente(pieceOccupante)) {
-    	    	System.out.println("La position [" + posXActu + ", " + posYActu + "] est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
+    	    	System.out.println("La position " + positionActu + " est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
     	    	return false;
     	    }
     	    
     	    if(!deplacement && grille.ifNavireAutourCase(posXActu, posYActu, this)) { //Si on souhaite placer le navire mais qu'il y en a déjà un autre autour
-    	    	System.out.println("Il y a un navire autour de la position [" + posXActu + ", " + posYActu + " ] ");
+    	    	System.out.println("Il y a un navire autour de la position " + positionActu);
     	    	return false;
     	    }
     	    
@@ -185,24 +195,26 @@ public abstract class Navire implements Serializable {
 	 * @param cible Grille qui recevera le tir
 	 * @param posXCible Position X où effectuer le tir sur la grille cible
 	 * @param posYCible
-	 * @return
+	 * @return Le navire qui a été touché (ou null si le tir à raté
 	 */
 	public Navire tirer(Grille cible, int posXCible, int posYCible) {
 		if(!peutTirer()) {
-			System.out.println("Impossible de tirer (cooldown restant: " + tempsRechargement);
+			System.out.println("Impossible de tirer (cooldown restant: " + tempsRechargement + ")");
 			return null;
 		}
+		
+		String position = "[" + posXCible + ", " + posYCible + "]";
 		
 		tempsRechargement = TEMPS_RECHARGEMENT_MAX; //Le tir est effectué, on remet son cooldown au maximum
 		
 		PieceNavire pieceTouche = cible.getCases()[posXCible][posYCible].getPiecePose();
 		if(pieceTouche == null) {
-			System.out.println("Tir Effectué, aucune pièce touchée");
+			System.out.println("Tir Effectué, aucune pièce touchée en " + position);
 			return null;
 		}
 		
 		if(pieceTouche.isEstEndommage()) {
-			System.out.println("La pièce touchée est déjà endommagé !");
+			System.out.println("La pièce touchée en " + position + " est déjà endommagée !");
 			return null;
 		}
 		
@@ -258,10 +270,14 @@ public abstract class Navire implements Serializable {
 	 * @return Vrai si il le peut, faux sinon
 	 */
 	private boolean peutTirer() {
-		return (tempsRechargement <= 0 && !estCoule);
+		return (tempsRechargement <= 0 && !estCoule && tete.getPosition() != null);
 	}
 	
-	private void decrementeTempsRechargement() {
+	public void annuleTempsRechargement() {
+		tempsRechargement = 0;
+	}
+	
+	public void decrementeTempsRechargement() {
 		tempsRechargement--;
 	}
 	

@@ -36,6 +36,7 @@ public class PieceNavire {
 	
 	public void recoitDommage() {
 		estEndommage = true;
+		navireAttache.verifieEtat();
 	}
 
 	public boolean isEstEndommage() {

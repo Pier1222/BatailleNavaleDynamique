@@ -75,17 +75,25 @@ public class Grille implements Serializable {
         return this.cases;
     }
     
-    public void printGrille() {
-    	//Les noms des navires sont constitués de 3 caractères (2 premiers + un chiffre)
+    /**
+     * Cette méthode permet de sortir à coups de System.out les navires qui sont sur la grille et éventuellement leur état 
+     * @param montreEtat Permet d'ajouter une indication sur l'état des pièces "(O)" = pièce intacte "(X)" = pièce endommagée "(D") = navire de la pièce coulé
+     */
+    public void printGrille(boolean montreEtat) {
+    	//Les noms des navires sont constitués de 3 caractères (2 premiers + un chiffre) / 7 si on souhaite montrer l'état du navire
     	System.out.println();
     	String nomNavireActu  = "";
+    	String etatActu       = "";
     	Case caseActu         = null;
     	PieceNavire pieceActu = null;
     	
     	//Placer les lettres
     	System.out.print(" " + " |");
     	for(int l = 0; l < COLUMNS; l++) {
-    		System.out.print("  " + getlettreColonne(l) + "  |");
+    		if(montreEtat)
+    			System.out.print("    " + getlettreColonne(l) + "    |");
+    		else
+		        System.out.print("  " + getlettreColonne(l) + "  |");
     	}
     	
     	System.out.println();
@@ -96,14 +104,30 @@ public class Grille implements Serializable {
     			caseActu = cases[x][y];
     			if(caseActu == null) {
     				nomNavireActu = "Err"; //Signifie qu'il y a un problème
+    				if(montreEtat)
+    					etatActu = "(E)";
     			} else {
     				pieceActu = caseActu.getPiecePose();
-    				if(pieceActu != null)
+    				if(pieceActu != null) {
     					nomNavireActu = pieceActu.getNavireAttache().getNom();
-    				else
+    					if(montreEtat) {
+    						if(pieceActu.getNavireAttache().isEstCoule())
+    							etatActu = "(D)"; //D pour "Dead"
+    						else if(pieceActu.isEstEndommage())
+    							etatActu = "(X)"; //La pièce est endommagée
+    						else
+    							etatActu = "(O)"; //La pièce est en bon état
+    					}
+    				} else {
     					nomNavireActu = "   "; //Aucun Navire, la case est vide
+    					if(montreEtat)
+    					    etatActu = "   ";
+    				}
     			}
-    			System.out.print(" " + nomNavireActu + " |");
+    			//Un espace avant de montrer chaque état
+    			if(montreEtat)
+    			    etatActu = " " + etatActu;
+    			System.out.print(" " + nomNavireActu + etatActu + " |");
     		}
     		System.out.println(); //On change de ligne
     	}
