@@ -26,7 +26,6 @@ public class Amiral extends Joueur {
     }
     
     //Méthodes pour affecter des rôles et des navires aux matelots
-    
     /**
      * Affecte le navire actuellement sélectionné au matelot sélectionné si c'est possible
      */
@@ -41,6 +40,11 @@ public class Amiral extends Joueur {
     		return;
     	}
     	
+    	if(matelotSelectionne.possedeNavire(navireSelectionne)) {
+    		System.out.println("Le matelot possède déjà le navire a affecter");
+    		return;
+    	}
+    	
     	//Si le matelot sélectionné a un rôle
     	if(matelotSelectionne.isaUnRole()) {
     		//On retire le navire au potentiel matelot qui possède le même rôle dessus
@@ -48,7 +52,17 @@ public class Amiral extends Joueur {
     		//On affecte le navire au matelot sélectionné
     		matelotSelectionne.addNavire(navireSelectionne);
     	}
-
+    }
+    
+    /**
+     * Retire le contrôle du navire sélectionné au matelot
+     */
+    public void desaffecteNavire() {
+    	if(matelotSelectionne == null || navireSelectionne == null) {
+    		System.out.println("Impossible de retirer un navire a un matelot si le navire ou le matelot est inexistant");
+    		return;
+    	}
+    	matelotSelectionne.perdNavire(navireSelectionne);
     }
     
     /**
@@ -79,7 +93,7 @@ public class Amiral extends Joueur {
     
     public void retireNavire() {
     	if(navireSelectionne == null || !peutPreparer()) {
-    		System.out.println("Impossible de retirer la naire");
+    		System.out.println("Impossible de retirer la navire");
     		return;
     	}
     	navireSelectionne.retireNavire();
@@ -92,14 +106,58 @@ public class Amiral extends Joueur {
     private boolean peutPreparer() {
     	return !getEquipe().isEstPret();
     }
+    
+    /**
+     * Il s'agit d'une méthode utilisée durant les tests pour placer tous les navires sur la première position où c'est possible
+     */
+    public void placeTousLesNavires() {
+    	System.out.println("On place tous les navires:");
+    	Navire[] naviresEquipe = getEquipe().getNavires();
+    	Navire navireActu      = null;
+    	int positionXActu      = 0;
+    	int positionYActu      = 0;
+    	for(int i = 0; i < naviresEquipe.length; i++) {
+    		navireActu = naviresEquipe[i];
+    		setNavireSelectionne(navireActu);
+    		while(navireActu.getTete().getPosition() == null) { //Tant qu'on a pas réussit à placer le navire
+    			placeNavire(positionXActu, positionYActu);
+    			positionYActu++;
+    			if(positionYActu == Grille.getColumns()) { //Si on atteint la dernière colonne existante, on saute une ligne
+    				positionXActu++;
+    				positionYActu = 0;
+    			}
+    		}
+    	}
+    	System.out.println("C'est bon, tous les navires sont placés");
+    }
 
 	public void setNavireSelectionne(Navire navireSelectionne) {
-		//Rechercher si il est dans l'équipe
+		//Si le Navire existe, que l'Amiral a une équipe et que le Navire est dedans
+		if(navireSelectionne == null) {
+			System.out.println("Aucun navire sélectionné !");
+		} else if(getEquipe() == null) {
+			System.out.println("L'amiral n'est pas dans une équipe, il ne peut donc pas sélectionner de navire");
+			return;
+		} else if(!getEquipe().dansFlotte(navireSelectionne)) {
+			System.out.println("Le navire n'est pas dans l'équipe de l'amiral");
+			return;
+		}
+		
 		this.navireSelectionne = navireSelectionne;
 	}
 	
 	public void setMatelotSelectionne(Matelot matelotSelectionne) {
-		//Rechercher si il est dans l'équipe
+		//Si le Matelot existe et que lui et l'Amiral ont une équipe et que c'est la même
+		if(matelotSelectionne == null) {
+			System.out.println("Aucun matelot à sélectionné !");
+			return;
+		} else if(getEquipe() == null || matelotSelectionne.getEquipe() == null) {
+			System.out.println("L'amiral ou le matelot qu'il veut sélectionner n'ont pas d'équipe");
+			return;
+		} else if(getEquipe() != matelotSelectionne.getEquipe()) {
+			System.out.println("L'amiral n'est pas dans la même équipe que le matelot qu'il veut sélectionner");
+			return;
+		}
 		this.matelotSelectionne = matelotSelectionne;
 	}
 

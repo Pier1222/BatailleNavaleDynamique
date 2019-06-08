@@ -75,13 +75,20 @@ public class Grille implements Serializable {
         return this.cases;
     }
     
+    public void printGrille(boolean montreEtat) {
+    	printGrille(montreEtat, null);
+    }
+    
     /**
      * Cette méthode permet de sortir à coups de System.out les navires qui sont sur la grille et éventuellement leur état 
      * @param montreEtat Permet d'ajouter une indication sur l'état des pièces "(O)" = pièce intacte "(X)" = pièce endommagée "(D") = navire de la pièce coulé
+     * @param matelot Si différent de null, cette méthode ne montrera que les navires contrôlés par ce matelot
      */
-    public void printGrille(boolean montreEtat) {
+    public void printGrille(boolean montreEtat, Matelot matelot) {
     	//Les noms des navires sont constitués de 3 caractères (2 premiers + un chiffre) / 7 si on souhaite montrer l'état du navire
     	System.out.println();
+    	if(matelot != null)
+    		System.out.println("Navires de " + matelot.getNom() + " (" + matelot.getRoleString() + ")");
     	String nomNavireActu  = "";
     	String etatActu       = "";
     	Case caseActu         = null;
@@ -108,7 +115,8 @@ public class Grille implements Serializable {
     					etatActu = "(E)";
     			} else {
     				pieceActu = caseActu.getPiecePose();
-    				if(pieceActu != null) {
+    				//Si il existe une pièce sur la case et si on recherche par matelot, ce dernier possède le navire qui y est attaché
+    				if(pieceActu != null && (matelot == null || matelot.possedeNavire(pieceActu.getNavireAttache()))) {
     					nomNavireActu = pieceActu.getNavireAttache().getNom();
     					if(montreEtat) {
     						if(pieceActu.getNavireAttache().isEstCoule())

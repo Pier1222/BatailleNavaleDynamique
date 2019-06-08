@@ -29,10 +29,10 @@ public class Matelot extends Joueur {
 	//Méthodes pour faire des actions avec le/les navire(s) controle(s)
 	//Faire cela avec un index (numéro de navire dans la liste) ou en checkant à chaque fois que le navire donné est dans cette liste ?
 	//Aussi, comment gérer les rôles ? Faire deux sous-classes ou utiliser un booléen et mettre toutes les méthodes (attaque/mouvement) ici ?
-	public Navire utiliseNavire(int posXChoisi, int posYChoisi) {
+	/*public Navire utiliseNavire(int posXChoisi, int posYChoisi) { //Finallement, c'est assez moyen vu les requête qu'on doit faire en ligne
 	    if(navireSelectionne == null || !peutAgir()) {
 	    	System.out.println("Vous ne pouvez pas utiliser le navire");
-	    	return null;
+	    	return
 	    }
 	    
 	    if(estAttaquant) {
@@ -41,14 +41,30 @@ public class Matelot extends Joueur {
 	    } else {
             return tirAvecNavire(posXChoisi, posYChoisi);
 	    }
-	}
+	}*/
 	
-	private void deplaceNavire(int posXTete, int posYTete) {
+	public void deplaceNavire(int posXTete, int posYTete) {
+	    if(navireSelectionne == null || !peutAgir()) {
+	    	System.out.println("Vous ne pouvez pas utiliser le navire");
+	    	return;
+	    }
+	    if(estAttaquant) {
+	    	System.out.println("Un attaquant ne déplace pas les navires");
+	    }
+		
 	    Grille grilleDeplacement = getEquipe().getGrille();
     	navireSelectionne.deplacementNavire(grilleDeplacement, posXTete, posYTete);		
 	}
 	
-	private Navire tirAvecNavire(int posXCible, int posYCible) {
+	public Navire tirAvecNavire(int posXCible, int posYCible) {
+	    if(navireSelectionne == null || !peutAgir()) {
+	    	System.out.println("Vous ne pouvez pas utiliser le navire");
+	    	return null;
+	    }
+	    if(!estAttaquant) {
+	    	System.out.println("Un défenseur ne tire pas");
+	    }
+	    
 		Equipe adversaires = getEquipe().getEquipeAdverse();
 		Grille grilleCible = adversaires.getGrille();
 		Navire navireTouche = navireSelectionne.tirer(grilleCible, posXCible, posYCible);
@@ -58,17 +74,25 @@ public class Matelot extends Joueur {
 		}
 		return navireTouche;
 	}
-	
+
 	/**
 	 * Ajoute un navire à ceux que la matelot peut contrôler
 	 * @param navire
+	 * @return Vrai si l'opération s'est bien déroulé, false sinon
 	 */
 	public boolean addNavire(Navire navire) {
+		//System.out.println("Role du matelot: " + getRoleString());
 		if(!aUnRole) {
-			System.out.println("Le matelot doit avoir un rôle avant de lui affecter un rôle");
+			System.out.println("Le matelot doit avoir un rôle avant de lui affecter un navire");
+			return false;
+		}
+		if(possedeNavire(navire)) {
+			System.out.println("Cela ne va pas aider le matelot d'avoir deux fois le même navire");
 			return false;
 		}
 		naviresControles.add(navire);
+		//System.out.println("Nombre de navire: " + getNombreNaviresControles() + " est ce que " + navire.getNom() + " est dedans ?: " + possedeNavire(navire));
+		
 		getStatistiques().incrementUtilisationsNavires(navire);
 		return true;
 	}
@@ -78,9 +102,9 @@ public class Matelot extends Joueur {
 	 * @param navire
 	 */
 	public void perdNavire(Navire navire) {
-	    naviresControles.remove(navire);
-	    if(naviresControles.isEmpty())
-	    	aUnRole = false; //Le matelot perd son rôle si il n'a plus aucun navire
+	    boolean navireRetire = naviresControles.remove(navire);
+	    if(navireRetire && naviresControles.isEmpty())
+	    	aUnRole = false; //Le matelot perd son rôle si il a perdu un navire et qu'il en a plus
 	}
 	
 	/**
@@ -89,13 +113,13 @@ public class Matelot extends Joueur {
 	 * @param retireAAttaquant Vrai si on souhaite retirer le navire à son attaquant, Faux si c'est au défenseur
 	 */
 	public void perdNavire(Navire navire, boolean retireAAttaquant) {
-		if(estAttaquant == retireAAttaquant)
+		if(aUnRole && estAttaquant == retireAAttaquant)
 			perdNavire(navire);
 	}
 	
 	public void changeRole(boolean estAttaquant) {
 		if(!naviresControles.isEmpty()) {
-			System.out.println("Ce matelot à déjà des navires");
+			System.out.println("Ce matelot a déjà des navires, on ne peut pas lui affecter de rôle pour l'instant");
 			return;
 		}
 		
@@ -123,7 +147,7 @@ public class Matelot extends Joueur {
 	 * Permet d'obtenir le nom des navires contrôlés par le matelot
 	 * @return Le nom de tous les navires dans sa liste des navires séparé d'une virgule (ou "(Aucun)" si il n'a pas de navire)
 	 */
-	public String getNaviresToString() {
+	public String getNomsNaviresControles() {
 		if(naviresControles.isEmpty())
 			return "(Aucun)";
 		
@@ -139,6 +163,10 @@ public class Matelot extends Joueur {
 		return naviresToString;
 	}
 	
+	public ArrayList<Navire> getNaviresControles() {
+		return naviresControles;
+	}
+
 	/**
 	 * Permet de savoir si le matelot peut déplacer/faire tirer un navire
 	 * @return Un booléen qui renvoie la réponse à cette question
@@ -152,14 +180,31 @@ public class Matelot extends Joueur {
 	 * @param navireSelectionne
 	 */
 	public void setNavireSelectionne(Navire navireSelectionne) {
-		if(!naviresControles.contains(navireSelectionne)) {
+		if(!possedeNavire(navireSelectionne)) {
 			System.out.println(getNom() + " ne possède pas le navire " + navireSelectionne.getNom());
 			return;
 		}
 		this.navireSelectionne = navireSelectionne;
 	}
-
 	
+	/**
+	 * Vérifie si le matelot possède le navire donné en paramètre
+	 * @param navire
+	 * @return Vrai si le navire est dans la liste de navires que contrôle le matelot, faux sinon
+	 */
+	public boolean possedeNavire(Navire navire) {
+		for(Navire n: naviresControles) {
+			if(n.equals(navire))
+				return true;
+		}
+		return false;
+		//return naviresControles.contains(navireSelectionne); //Ne Fonctionne pas
+	}
+	
+	public int getNombreNaviresControles() {
+		return naviresControles.size();
+	}
+
 	public boolean isaUnRole() {
 		return aUnRole;
 	}

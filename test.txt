@@ -27,8 +27,216 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running model.EquipeTest
-testAffectationNavire
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.348 s - in model.EquipeTest
+testPlacementRetirementNavire
+testAffectationNavireDouble
+testAffectationNavireDejaPossede
+Le matelot possède déjà le navire a affecter
+testEquipePrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 | CU1 | CU1 | CU1 | CU1 |     | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+testAffectationRoleEquipesDifferentes
+L'amiral n'est pas dans la même équipe que le matelot qu'il veut sélectionner
+Aucun matelot à qui affecter un rôle !
+testAffectationNavireEquipesDifferentes
+Le navire n'est pas dans l'équipe de l'amiral
+Impossible de faire une affectation si on a pas de matelot ou de navire sélectionné
+testAffectationDesaffectationNavire
+testDeplacement
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     | CR1 | CR1 | CR1 |     |     |
+1 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+
+Navires de Invité (D)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     |     |     |     |     |     |
+1 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+testAffectationRoleAvecNavirePossede
+Ce matelot a déjà des navires, on ne peut pas lui affecter de rôle pour l'instant
+testAffectationRole
+testAffectationNavireEquipesAmiralSansEquipe
+Le navire n'est pas dans l'équipe de l'amiral
+Impossible de faire une affectation si on a pas de matelot ou de navire sélectionné
+testTourneEtPlaceNavire
+testPlacementRetirementNavireAvecEquipePrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Impossible de placer le navire
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     | CU1 | CU1 | CU1 | CU1 |
+
+testAffectationRoleSansEquipe
+L'amiral ou le matelot qu'il veut sélectionner n'ont pas d'équipe
+Aucun matelot à qui affecter un rôle !
+testAffectationNavireMatelotSansRole
+testEquipeNonPrete
+L'équipe n'est pas encore prête... Le navire CR1 n'est pas encore placé...
+testRemplaementNavire
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.621 s - in model.EquipeTest
 [INFO] Running model.NavireTest
 testDeplacementNavireTouche
 Navire 'TO1' endommagé, déplacement impossible
@@ -530,11 +738,11 @@ Il y a un navire autour de la position [2, 3]
 8 |     |     |     |     |     |     |     |     |     |     |
 9 |     |     |     |     |     |     |     |     |     |     |
 
-[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.008 s - in model.NavireTest
+[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.665 s - in model.NavireTest
 [INFO] 
 [INFO] Results:
 [INFO] 
-[INFO] Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 48, Failures: 0, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] 
 [INFO] --- jacoco-maven-plugin:0.8.2:report (report) @ batailleNavale-maven ---
@@ -543,6 +751,6 @@ Il y a un navire autour de la position [2, 3]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  14.156 s
-[INFO] Finished at: 2019-06-01T19:55:19+02:00
+[INFO] Total time:  10.194 s
+[INFO] Finished at: 2019-06-08T21:26:03+02:00
 [INFO] ------------------------------------------------------------------------

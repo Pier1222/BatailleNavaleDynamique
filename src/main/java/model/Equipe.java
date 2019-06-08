@@ -50,6 +50,15 @@ public class Equipe implements Serializable {
 		}
 		for(int i = 0; i < NB_SOUS_MARINS; i++) {
 			navires[numeroNavireActu] = new Sous_Marin(i+1);
+			numeroNavireActu++;
+		}
+		//printEtatFlotte();
+	}
+	
+	public void printEtatFlotte() {
+		System.out.println("Etat de la flotte");
+		for(int i = 0; i < navires.length; i++) {
+			System.out.println(navires[i].getNom() + ": " + navires[i].getEtatString());
 		}
 	}
 	
@@ -159,6 +168,20 @@ public class Equipe implements Serializable {
 
 	public boolean isEstPret() {
 		return estPret;
+	}
+	
+	/**
+	 * Vérifie si l'équipe a dans sa flotte le navire donné en paramètre
+	 * @param navire
+	 * @return Vrai si le navire est dans la liste des navires de l'équipe, faux sinon
+	 */
+	public boolean dansFlotte(Navire navire) {
+		for(Navire n: navires) {
+			if(n.equals(navire))
+				return true;
+		}
+		return false;
+		//return naviresControles.contains(navireSelectionne); //Ne Fonctionne pas
 	}
 
 	/**

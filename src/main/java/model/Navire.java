@@ -33,6 +33,26 @@ public abstract class Navire implements Serializable {
 		tete = pieces[0];
 	}
 	
+	/**
+	 * Permet d'obtenir l'état du navire sous forme de chaîne de caractère
+	 * @return "Coulé" si le navire est coulé, sinon, une chaîne avec X signifiant une pièce endommagé et O pour une pièce intacte
+	 */
+	public String getEtatString() {
+		String etat = "";
+		if(estCoule) {
+			etat = "Coulé";
+			return etat;
+		}
+		
+		for(int i = 0; i < getNBPieces(); i++) {
+			if(!pieces[i].isEstEndommage())
+				etat += "O";
+			else
+				etat += "X";
+		}
+		return etat;
+	}
+	
 	public void verifieEtat() {
 		for(int i = 0; i < getNBPieces(); i++) {
 			if(!pieces[i].isEstEndommage()) //Si une pièce n'est pas endommagé, on ne fait rien

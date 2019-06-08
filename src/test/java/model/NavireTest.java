@@ -632,6 +632,5 @@ public class NavireTest {
 	      for(int i = 0; i < tabTouche.length; i++) {
 	    	  assertEquals(cuirasse, tabTouche[i]);
 	      }
-
 	  }
 }
