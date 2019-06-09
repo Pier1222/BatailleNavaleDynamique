@@ -7,6 +7,8 @@ public class Game {
 	private final static int ID_HOTE     = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
 	private final static int ID_ERROR    = -1; //Quand un joueur essaie de rejoindre la partie alors qu'elle a déjà commencé
 	private final static int MIN_JOUEURS = 4; //Nombre de joueurs minimum pour pouvoir... Jouer
+	
+	private static boolean DO_PRINT = true; //A désactiver durant la majorité des tests afin d'éviter de toujours avoir les mêmes 50 lignes de textes inutiles qui apparaissent dans GameTest
 
 	private final static String NOM_DEFAUT_EQUIPE_ROUGE = "Blood team";
 	private final static String COULEUR_EQUIPE_ROUGE    = "Rouge";
@@ -64,9 +66,9 @@ public class Game {
 		String[] nomsJoueurs = new String[joueursEnAttentes.size()];
 		int placeActu = 0;
 		
-		System.out.println("Liste des joueurs de la partie:");
+		doPrintLn("Liste des joueurs de la partie:");
 		for(Joueur j: joueursEnAttentes) {
-			System.out.println(j.getId() + ": " + j.getNom());
+			doPrintLn(j.getId() + ": " + j.getNom());
 			nomsJoueurs[placeActu] = j.getNom();
 			if(j == hote)
 				nomsJoueurs[placeActu] += (" (Hôte)");
@@ -78,7 +80,7 @@ public class Game {
 	/**
 	 * 
 	 * @return Un premier tableau contenant tout d'abord le nom des deux équipes puis
-	 * l'ID et le nom des membres de l'équipe rouge et de même pour l'équipe bleu à la seconde case si on peut commencer la partie, null sinon
+	 * l'ID et le nom des membres de l'équipe rouge à la deuxième case et de même pour l'équipe bleu à la troisième case si on peut commencer la partie, null sinon
 	 */
 	public synchronized String[][] getNomsEquipesEtJoueurs() {
 		if(peutCommencer)
@@ -169,6 +171,28 @@ public class Game {
 			return null;
 		}
 	}
+	
+	/**
+	 * Permet d'obtenir le vainqueur de la partie
+	 * @return Un tableau contenant une équipe gagnante, les deux équipes si il y a égalité ou null si la partie n'est pas finit
+	 */
+	public Equipe[] getVainqueur() {
+		boolean rougeAPerdu = equipeRouge.verifieSiAPerdu();
+		boolean bleuAPerdu  = equipeBleu.verifieSiAPerdu();
+		if(rougeAPerdu && bleuAPerdu) //Égalité
+			return new Equipe[] {equipeRouge, equipeBleu};
+		else if(rougeAPerdu) //Bleu a gagné
+			return new Equipe[] {equipeBleu};
+		else if(bleuAPerdu) //Rouge a gagné
+			return new Equipe[] {equipeRouge};
+		else //Personne n'a gagné pour l'instant
+			return null;
+	}
+	
+	private void doPrintLn(String message) {
+		if(DO_PRINT)
+			System.out.println(message);
+	}
 
 	public static int getID_HOTE() {
 		return ID_HOTE;
@@ -188,5 +212,9 @@ public class Game {
 
 	public Equipe getEquipeBleu() {
 		return equipeBleu;
+	}
+
+	public static void setDO_PRINT(boolean doPrint) {
+		DO_PRINT = doPrint;
 	}
 }

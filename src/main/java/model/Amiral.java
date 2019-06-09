@@ -132,9 +132,12 @@ public class Amiral extends Joueur {
     }
 
 	public void setNavireSelectionne(Navire navireSelectionne) {
-		//Si le Navire existe, que l'Amiral a une équipe et que le Navire est dedans
+		//Si le Navire existe, qu'il n'est pas coulé, que l'Amiral a une équipe et que le Navire est dedans
 		if(navireSelectionne == null) {
 			System.out.println("Aucun navire sélectionné !");
+		} else if(navireSelectionne.isEstCoule()) {
+			System.out.println("Que veux-tu faire avec un navire coulé ?");
+			return;
 		} else if(getEquipe() == null) {
 			System.out.println("L'amiral n'est pas dans une équipe, il ne peut donc pas sélectionner de navire");
 			return;
@@ -159,6 +162,11 @@ public class Amiral extends Joueur {
 			return;
 		}
 		this.matelotSelectionne = matelotSelectionne;
+	}
+	
+	public void deselectNavire(Navire navire) {
+		if(navireSelectionne != null && navireSelectionne.equals(navire))
+			deselectNavireSelectionne();
 	}
 
 	public void deselectNavireSelectionne() {

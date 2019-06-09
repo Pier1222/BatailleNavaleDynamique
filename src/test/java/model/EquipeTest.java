@@ -215,6 +215,7 @@ public class EquipeTest {
 		assertEquals(1, matelot.getNombreNaviresControles());
 	}
 	
+	
 	@Test
 	public void testRemplaementNavire() {
 		System.out.println("testRemplaementNavire");
@@ -323,8 +324,8 @@ public class EquipeTest {
 		equipe.ajouteMatelot(matelot);
 		//L'Amiral ne fait que placer son Navire
 		amiral.placeTousLesNavires();
-		/* On va enregistrer la position du premier navire pour avoir une position où on est sûr qu'on peut le placer sans avoir
-		 un autre problème que "l'équipe est prête" avant de le placer a une autre position valide */
+		/* On va enregistrer la position du premier navire pour avoir une position où on est sûr qu'on peut le déplacer sans avoir
+		 un autre problème que "l'équipe n'est pas prête" */
 		Navire navireADeplacer = equipe.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
 	    Case anciennePosition = navireADeplacer.getTete().getPosition();
 		equipe.setEquipeToPret();
@@ -342,9 +343,120 @@ public class EquipeTest {
 		System.out.println();
 		//Vision du matelot
 		equipe.getGrille().printGrille(false, matelot);
-		//On vérifie que le navire a bien été déplacer
+		//On vérifie que le navire a bien été déplacé
 		assertTrue(navireADeplacer.checkPosition(equipe.getGrille(), anciennePosition.getPositionX()+1, anciennePosition.getPositionY()));
 	}
 	
-	//Faire les tests ou le déplacement ne fonctionne pas (une seule occurence pour le bumpage de navire dans la même équipe, si le matelot est attaquant etc...)
+	@Test
+	public void testDeplacementAvecAttaquant() {
+		System.out.println("testDeplacementAvecAttaquant");
+		Amiral amiral   = new Amiral();
+		Equipe equipe   = new Equipe(NOM_EQUIPE_TEST, COULEUR_EQUIPE_TEST, amiral, null);
+		Matelot matelot = new Matelot();
+		equipe.ajouteMatelot(matelot);
+		//L'Amiral ne fait que placer son Navire
+		amiral.placeTousLesNavires();
+		/* On va enregistrer la position du premier navire pour avoir une position où on est sûr qu'on peut le déplacer sans avoir
+		 un autre problème que "l'équipe n'est pas prête" */
+		Navire navireADeplacer = equipe.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
+	    Case anciennePosition = navireADeplacer.getTete().getPosition();
+		equipe.setEquipeToPret();
+		
+		//Le matelot ne pourra pas déplacer son navire comme il est attaquant
+		amiral.setMatelotSelectionne(matelot);
+		amiral.setNavireSelectionne(navireADeplacer);
+		amiral.affecteRole(true);
+		amiral.affecteNavire();
+		matelot.setNavireSelectionne(navireADeplacer);
+		matelot.deplaceNavire(anciennePosition.getPositionX()+1, anciennePosition.getPositionY());
+		
+		//Vision de l'amiral
+		equipe.getGrille().printGrille(false);
+		System.out.println();
+		//Vision du matelot
+		equipe.getGrille().printGrille(false, matelot);
+		//On vérifie que le navire n'a pas bougé
+		assertTrue(navireADeplacer.checkPosition(equipe.getGrille(), anciennePosition.getPositionX(), anciennePosition.getPositionY()));
+	}
+	
+	@Test
+	public void testDeplacementSurAllie() {
+		System.out.println("testDeplacementSurAllie");
+		Amiral amiral    = new Amiral();
+		Equipe equipe    = new Equipe(NOM_EQUIPE_TEST, COULEUR_EQUIPE_TEST, amiral, null);
+		Matelot matelot  = new Matelot();
+		Matelot matelot2 = new Matelot();
+		equipe.ajouteMatelot(matelot);
+		//L'Amiral ne fait que placer son Navire
+		amiral.placeTousLesNavires();
+		/* On va enregistrer la position du premier et du second navire pour avoir une position où on est sûr qu'on peut le déplacer sans avoir
+		 un autre problème que "l'équipe n'est pas prête" et comme ils sont logiquement à cause case de distance, le premier déplacera à droite et
+		 le second à gauche */
+		Navire navireDroite = equipe.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
+		Navire navireGauche = equipe.getNavires()[1]; //Le deuxième navire de l'équipe: un croiseur
+	    Case anciennePositionDroite = navireDroite.getTete().getPosition();
+	    Case anciennePositionGauche = navireGauche.getTete().getPosition();
+		equipe.setEquipeToPret();
+		
+		//On affecte le rôle de défenseur aux matelots dont le deuxième ne pourra pas se déplacer après le déplacement du premier
+		amiral.setMatelotSelectionne(matelot);
+		amiral.setNavireSelectionne(navireDroite);
+		amiral.affecteRole(false);
+		amiral.affecteNavire();
+		amiral.setMatelotSelectionne(matelot2);
+		amiral.setNavireSelectionne(navireGauche);
+		amiral.affecteRole(false);
+		amiral.affecteNavire();
+		
+		//Déplacement à droite qui doit réussir
+		matelot.setNavireSelectionne(navireDroite);
+		matelot.deplaceNavire(anciennePositionDroite.getPositionX(), anciennePositionDroite.getPositionY()+1);
+		
+		//Déplacement à gauche qui doit échouer
+		matelot2.setNavireSelectionne(navireGauche);
+		matelot2.deplaceNavire(anciennePositionGauche.getPositionX(), anciennePositionGauche.getPositionY()+1);
+		
+		
+		
+		//Vision de l'amiral
+		equipe.getGrille().printGrille(false);
+		System.out.println();
+		//Vision des matelots
+		equipe.getGrille().printGrille(false, matelot);
+		equipe.getGrille().printGrille(false, matelot2);
+		//On vérifie que le navire a bien été déplacé
+		assertTrue(navireDroite.checkPosition(equipe.getGrille(), anciennePositionDroite.getPositionX(), anciennePositionDroite.getPositionY()+1));
+		assertTrue(navireGauche.checkPosition(equipe.getGrille(), anciennePositionGauche.getPositionX(), anciennePositionGauche.getPositionY()));
+	}
+	
+	@Test
+	public void testDeplacementEquipePasPrete() {
+		System.out.println("testDeplacementEquipePasPrete");
+		Amiral amiral   = new Amiral();
+		Equipe equipe   = new Equipe(NOM_EQUIPE_TEST, COULEUR_EQUIPE_TEST, amiral, null);
+		Matelot matelot = new Matelot();
+		equipe.ajouteMatelot(matelot);
+		//L'Amiral ne fait que placer son Navire
+		amiral.placeTousLesNavires();
+		Navire navireADeplacer = equipe.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
+		
+		//On place le navire
+		amiral.setNavireSelectionne(navireADeplacer);
+		amiral.placeNavire(6, 3);
+		
+		//On affecte le rôle de défenseur au matelot qui va essayer de déplacer son navire
+		amiral.setMatelotSelectionne(matelot);
+		amiral.affecteRole(false);
+		amiral.affecteNavire();
+		matelot.setNavireSelectionne(navireADeplacer);
+		matelot.deplaceNavire(5, 3);
+		
+		//Vision de l'amiral
+		equipe.getGrille().printGrille(false);
+		System.out.println();
+		//Vision du matelot
+		equipe.getGrille().printGrille(false, matelot);
+		//On vérifie que le navire n'a pas bougé
+		assertTrue(navireADeplacer.checkPosition(equipe.getGrille(), 6, 3));
+	}
 }

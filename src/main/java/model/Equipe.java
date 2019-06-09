@@ -95,6 +95,7 @@ public class Equipe implements Serializable {
 			return;
 		}
 		if(navireEndommage.isEstCoule()) {
+			amiral.deselectNavire(navireEndommage);
 			retireNavireATousMatelots(navireEndommage);
 		}
 	}
@@ -128,7 +129,6 @@ public class Equipe implements Serializable {
 	 * @return Vrai si elle a abandonnée ou que sa flotte a été réduit à néant, faux sinon
 	 */
 	public boolean verifieSiAPerdu() {
-		//Faire une méthode qui utilise celle-là dans Game
 		return (aAbandonne || flotteDetruite());
 	}
 
@@ -202,5 +202,15 @@ public class Equipe implements Serializable {
 	
 	public void abandonne() {
 		aAbandonne = true;
+	}
+
+	public Amiral getAmiral() {
+		return amiral;
+	}
+	
+	public Matelot getAMatelot(int index) {
+		if(index < 0 || index >= matelots.size())
+			return null;
+		return matelots.get(index);
 	}
 }

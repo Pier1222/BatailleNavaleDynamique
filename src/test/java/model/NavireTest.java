@@ -496,7 +496,8 @@ public class NavireTest {
 	      Sous_Marin sousMarin = new Sous_Marin(1);
 	      Torpilleur torpilleur = new Torpilleur(1);
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
+	      //On place la tête du sous-marin sur la tête du torpilleur pour être sûr
+	      sousMarin.placeNavire(grille1, 5, 5);
 	      torpilleur.placeNavire(grille2, 5, 5);
 	      
 	      //On est sûr de le toucher en visant la tête
@@ -518,12 +519,13 @@ public class NavireTest {
 	      Sous_Marin sousMarin = new Sous_Marin(1);
 	      Torpilleur torpilleur = new Torpilleur(1);
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
+	      sousMarin.placeNavire(grille1, 5, 2);
 	      torpilleur.placeNavire(grille2, 5, 5);
 	      
 	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4 et pas en 5,3
 	      Navire navireTouche = sousMarin.tirer(grille2, 5, 3);
 	      
+	      grille1.printGrille(true);
 	      grille2.printGrille(true);
 	      //On vérifie que le torpilleur est intact et que le navire touché vaut null
 	      PieceNavire[] pieces = torpilleur.getPieces();
@@ -534,24 +536,145 @@ public class NavireTest {
 	  }
 	  
 	  @Test
-	  public void testTirReussit() {
-		  System.out.println("testTirReussit");
+	  public void testTirReussitDessus() {
+		  System.out.println("testTirReussitDessus");
 	      Grille grille1 = new Grille();
 	      Grille grille2 = new Grille();
 	      
 	      Sous_Marin sousMarin = new Sous_Marin(1);
 	      Torpilleur torpilleur = new Torpilleur(1);
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
+	      //Sur la position de tir
+	      sousMarin.placeNavire(grille1, 5, 4);
 	      torpilleur.placeNavire(grille2, 5, 5);
 	      
 	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
 	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
 	      
+	      grille1.printGrille(true);
 	      grille2.printGrille(true);
 	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
 	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
 	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirReussitDroite() {
+		  System.out.println("testTirReussitDroite");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      //A sa gauche pour tirer à droite
+	      sousMarin.placeNavire(grille1, 5, 3);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille1.printGrille(true);
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
+	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirReussitGauche() {
+		  System.out.println("testTirReussitGauche");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      //A sa droite pour tirer à gauche
+	      sousMarin.placeNavire(grille1, 5, 5);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille1.printGrille(true);
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
+	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirReussitHaut() {
+		  System.out.println("testTirReussitHaut");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      //En dessous pour tirer au dessus
+	      sousMarin.placeNavire(grille1, 4, 4);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille1.printGrille(true);
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
+	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirReussitBas() {
+		  System.out.println("testTirReussitBas");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      //En dessus pour tirer en dessous
+	      sousMarin.placeNavire(grille1, 6, 4);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille1.printGrille(true);
+	      grille2.printGrille(true);
+	      //On vérifie que le torpilleur est touché et qu'il s'agit du navire retourné
+	      assertTrue(torpilleur.getPieces()[1].isEstEndommage());
+	      assertEquals(torpilleur, navireTouche);
+	  }
+	  
+	  @Test
+	  public void testTirTropLoin() {
+		  System.out.println("testTirTropLoin");
+	      Grille grille1 = new Grille();
+	      Grille grille2 = new Grille();
+	      
+	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Torpilleur torpilleur = new Torpilleur(1);
+	      
+	      //Deux cases de plus que celle ciblé
+	      sousMarin.placeNavire(grille1, 5, 6);
+	      torpilleur.placeNavire(grille2, 5, 5);
+	      
+	      //Normalement si la tête est en 5,5 à l'horizontal, la seconde pièce est en 5,4
+	      Navire navireTouche = sousMarin.tirer(grille2, 5, 4);
+	      
+	      grille1.printGrille(true);
+	      grille2.printGrille(true);
+	      
+	      //On vérifie que le torpilleur est intact et que le navire touché vaut null
+	      PieceNavire[] pieces = torpilleur.getPieces();
+	      for(int i = 0; i < pieces.length; i++) {
+	    	  assertFalse(pieces[i].isEstEndommage());
+	      }
+	      assertEquals(null, navireTouche);
 	  }
 	  
 	  @Test
@@ -563,7 +686,7 @@ public class NavireTest {
 	      Sous_Marin sousMarin = new Sous_Marin(1);
 	      Torpilleur torpilleur = new Torpilleur(1);
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
+	      sousMarin.placeNavire(grille1, 5, 5);
 	      torpilleur.placeNavire(grille2, 5, 5);
 	      
 	      sousMarin.tirer(grille2, 5, 5);
@@ -587,7 +710,7 @@ public class NavireTest {
 	      Sous_Marin sousMarin = new Sous_Marin(1);
 	      Torpilleur torpilleur = new Torpilleur(1);
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
+	      sousMarin.placeNavire(grille1, 5, 5);
 	      torpilleur.placeNavire(grille2, 5, 5);
 	      
 	      sousMarin.tirer(grille2, 5, 5);
@@ -608,29 +731,31 @@ public class NavireTest {
 	      Grille grille1 = new Grille();
 	      Grille grille2 = new Grille();
 	      
-	      Sous_Marin sousMarin = new Sous_Marin(1);
+	      Cuirasse cuirasseDestructeur = new Cuirasse(1);
 	      //Comme on a déjà fait des test de tirs sur un navire à l'horizontal, on va le faire sur un navire à la vertical
-	      Cuirasse cuirasse = new Cuirasse(1);
-	      cuirasse.tourne();
+	      Cuirasse cuirasseVictime = new Cuirasse(1);
+	      cuirasseVictime.tourne();
+	      cuirasseDestructeur.tourne();
 	      
-	      sousMarin.placeNavire(grille1, 2, 2);
-	      cuirasse.placeNavire(grille2, 2, 3);
+	      cuirasseDestructeur.placeNavire(grille1, 2, 3);
+	      cuirasseVictime.placeNavire(grille2, 2, 3);
 	      
 	      //Le Sous-marin va détruire le cuirasse
 	      Navire[] tabTouche = new Navire[4];
-	      tabTouche[0] = sousMarin.tirer(grille2, 2, 3);
-	      sousMarin.annuleTempsRechargement();
-	      tabTouche[1] = sousMarin.tirer(grille2, 3, 3);
-	      sousMarin.annuleTempsRechargement();
-	      tabTouche[2] = sousMarin.tirer(grille2, 4, 3);
-	      sousMarin.annuleTempsRechargement();
-	      tabTouche[3] = sousMarin.tirer(grille2, 5, 3);
+	      tabTouche[0] = cuirasseDestructeur.tirer(grille2, 2, 3);
+	      cuirasseDestructeur.annuleTempsRechargement();
+	      tabTouche[1] = cuirasseDestructeur.tirer(grille2, 3, 3);
+	      cuirasseDestructeur.annuleTempsRechargement();
+	      tabTouche[2] = cuirasseDestructeur.tirer(grille2, 4, 3);
+	      cuirasseDestructeur.annuleTempsRechargement();
+	      tabTouche[3] = cuirasseDestructeur.tirer(grille2, 5, 3);
 	      
+	      grille1.printGrille(true);
 	      grille2.printGrille(true);
 	      //On vérifie que le cuirasse est bien coulé et que c'est bien lui qui a été touché à chaque tir
-	      assertTrue(cuirasse.isEstCoule());
+	      assertTrue(cuirasseVictime.isEstCoule());
 	      for(int i = 0; i < tabTouche.length; i++) {
-	    	  assertEquals(cuirasse, tabTouche[i]);
+	    	  assertEquals(cuirasseVictime, tabTouche[i]);
 	      }
 	  }
 }

@@ -44,12 +44,17 @@ public class Matelot extends Joueur {
 	}*/
 	
 	public void deplaceNavire(int posXTete, int posYTete) {
-	    if(navireSelectionne == null || !peutAgir()) {
-	    	System.out.println("Vous ne pouvez pas utiliser le navire");
+	    if(navireSelectionne == null) {
+	    	System.out.println("Aucun navire selectionné");
+	    	return;
+	    }
+	    if (!peutAgir()) {
+	    	System.out.println("Vous ne pouvez pas agir");
 	    	return;
 	    }
 	    if(estAttaquant) {
 	    	System.out.println("Un attaquant ne déplace pas les navires");
+	    	return;
 	    }
 		
 	    Grille grilleDeplacement = getEquipe().getGrille();
@@ -57,15 +62,25 @@ public class Matelot extends Joueur {
 	}
 	
 	public Navire tirAvecNavire(int posXCible, int posYCible) {
-	    if(navireSelectionne == null || !peutAgir()) {
-	    	System.out.println("Vous ne pouvez pas utiliser le navire");
+	    if(navireSelectionne == null) {
+	    	System.out.println("Aucun navire selectionné");
+	    	return null;
+	    }
+	    if (!peutAgir()) {
+	    	System.out.println("Vous ne pouvez pas agir");
 	    	return null;
 	    }
 	    if(!estAttaquant) {
 	    	System.out.println("Un défenseur ne tire pas");
+	    	return null;
 	    }
 	    
 		Equipe adversaires = getEquipe().getEquipeAdverse();
+		if(adversaires == null) {
+			System.out.println("Euh... Où est-ce que peux tirer le Matelot si son équipe n'a pas d'adversaire ?");
+			return null;
+		}
+		
 		Grille grilleCible = adversaires.getGrille();
 		Navire navireTouche = navireSelectionne.tirer(grilleCible, posXCible, posYCible);
 		//Permettre à l'équipe ennemi de retirer le navire si il est coulé
@@ -103,6 +118,9 @@ public class Matelot extends Joueur {
 	 */
 	public void perdNavire(Navire navire) {
 	    boolean navireRetire = naviresControles.remove(navire);
+	    if(navire.equals(navireSelectionne))
+	    	deselectNavireSelectionne(); //Si il contrôlait ce navire, on lui enlève le contrôle
+	    
 	    if(navireRetire && naviresControles.isEmpty())
 	    	aUnRole = false; //Le matelot perd son rôle si il a perdu un navire et qu'il en a plus
 	}
@@ -169,10 +187,11 @@ public class Matelot extends Joueur {
 
 	/**
 	 * Permet de savoir si le matelot peut déplacer/faire tirer un navire
-	 * @return Un booléen qui renvoie la réponse à cette question
+	 * @return Vrai si son équipe est prête, que ce matelot a un rôle et que l'équipe adverse est prête (ou qu'elle n'existe pas)
 	 */
 	private boolean peutAgir() {
-		return getEquipe().isEstPret() && aUnRole;
+		Equipe equipeAdverse = getEquipe().getEquipeAdverse();
+		return (equipeAdverse == null || equipeAdverse.isEstPret()) && getEquipe().isEstPret() && aUnRole;
 	}
 
 	/**
@@ -185,6 +204,10 @@ public class Matelot extends Joueur {
 			return;
 		}
 		this.navireSelectionne = navireSelectionne;
+	}
+	
+	public void deselectNavireSelectionne() {
+		navireSelectionne = null;
 	}
 	
 	/**

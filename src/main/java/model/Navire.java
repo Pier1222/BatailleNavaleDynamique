@@ -214,7 +214,7 @@ public abstract class Navire implements Serializable {
 	 * Effectue un tir si il le peut et initialise son temps de rechargement
 	 * @param cible Grille qui recevera le tir
 	 * @param posXCible Position X où effectuer le tir sur la grille cible
-	 * @param posYCible
+	 * @param posYCible Position Y où effectuer le tir sur la grille cible
 	 * @return Le navire qui a été touché (ou null si le tir à raté
 	 */
 	public Navire tirer(Grille cible, int posXCible, int posYCible) {
@@ -224,6 +224,10 @@ public abstract class Navire implements Serializable {
 		}
 		
 		String position = "[" + posXCible + ", " + posYCible + "]";
+		
+		if(!verificationTirPosition(posXCible, posYCible)) {
+			return null;
+		}
 		
 		tempsRechargement = TEMPS_RECHARGEMENT_MAX; //Le tir est effectué, on remet son cooldown au maximum
 		
@@ -240,6 +244,49 @@ public abstract class Navire implements Serializable {
 		
 		pieceTouche.recoitDommage();
 		return pieceTouche.getNavireAttache();
+	}
+	
+	/**
+	 * Permet de vérifier si le navire peut tirer dans les coordonnées X/Y choisis
+	 * @param posXCible
+	 * @param posYCible
+	 * @return Vraie si la position du tir est valide, faux sinon
+	 */
+	private boolean verificationTirPosition(int posXCible, int posYCible) {
+		for(int i = 0; i < pieces.length; i++) {
+			if(coordonneSurOuAutourPiece(posXCible, posYCible, pieces[i]))
+				return true;
+		}
+		System.out.println("La position de tir [" + posXCible + ", " + posYCible + "] n'est pas valide");
+		return false;
+	}
+	
+	/**
+	 * Vérifie si les coordonnées données sont sur ou autour (sans diagonale) d'une pièce du navire
+	 * @param coordonneX
+	 * @param coordonneY
+	 * @param piece
+	 * @return Vrai si c'est le cas, faux sinon
+	 */
+	private boolean coordonneSurOuAutourPiece(int coordonneX, int coordonneY, PieceNavire piece) {
+		if(piece == null)
+			return false;
+		
+		Case position = piece.getPosition();
+		if(position == null) {
+			System.out.println("Cette pièce n'est pas placé... Donc, comment je peut vérifier sa position ?");
+			return false;
+		}
+		
+		int positionX = position.getPositionX();
+		int positionY = position.getPositionY();
+		
+		//On vérifie si on est sur, à gauche, à droite, au dessus ou en dessous de la pièce
+		return ((coordonneX == positionX && coordonneY == positionY) ||
+				(coordonneX == positionX && coordonneY == positionY-1) ||
+				(coordonneX == positionX && coordonneY == positionY+1) ||
+				(coordonneX == positionX-1 && coordonneY == positionY) ||
+				(coordonneX == positionX+1 && coordonneY == positionY));
 	}
 	
 	/**

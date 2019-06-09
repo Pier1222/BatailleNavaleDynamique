@@ -87,6 +87,78 @@ C'est bon, tous les navires sont placés
 8 |     |     |     |     |     |     |     |     |     |     |
 9 |     |     |     |     |     |     |     |     |     |     |
 
+testDeplacementAvecAttaquant
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Un attaquant ne déplace pas les navires
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 | CU1 | CU1 | CU1 | CU1 |     | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+
+Navires de Invité (A)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
 testAffectationRoleEquipesDifferentes
 L'amiral n'est pas dans la même équipe que le matelot qu'il veut sélectionner
 Aucun matelot à qui affecter un rôle !
@@ -171,6 +243,78 @@ testAffectationRole
 testAffectationNavireEquipesAmiralSansEquipe
 Le navire n'est pas dans l'équipe de l'amiral
 Impossible de faire une affectation si on a pas de matelot ou de navire sélectionné
+testDeplacementEquipePasPrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Vous ne pouvez pas agir
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+
+Navires de Invité (D)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     |     |     |     |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
 testTourneEtPlaceNavire
 testPlacementRetirementNavireAvecEquipePrete
 On place tous les navires:
@@ -229,6 +373,95 @@ Impossible de placer le navire
 8 |     |     |     |     |     |     |     |     |     |     |
 9 |     |     |     |     |     |     | CU1 | CU1 | CU1 | CU1 |
 
+testDeplacementSurAllie
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+L'amiral ou le matelot qu'il veut sélectionner n'ont pas d'équipe
+Ce matelot a déjà des navires, on ne peut pas lui affecter de rôle pour l'instant
+Invité ne possède pas le navire CR1
+Aucun navire selectionné
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     | CU1 | CU1 | CU1 | CU1 | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+
+Navires de Invité (D)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     | CU1 | CU1 | CU1 | CU1 | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+Navires de Invité (?)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 |     |     |     |     |     |     |     |     |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
 testAffectationRoleSansEquipe
 L'amiral ou le matelot qu'il veut sélectionner n'ont pas d'équipe
 Aucun matelot à qui affecter un rôle !
@@ -236,7 +469,1178 @@ testAffectationNavireMatelotSansRole
 testEquipeNonPrete
 L'équipe n'est pas encore prête... Le navire CR1 n'est pas encore placé...
 testRemplaementNavire
-[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.621 s - in model.EquipeTest
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.965 s - in model.EquipeTest
+[INFO] Running model.GameTest
+testTirNavireCouleApresSelection
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+C'est bon, tous les navires sont placés
+Aucun navire selectionné
+
+Navires de PlayerTest1 (?)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testAffectationNavireCouleApresSelection
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (D) | CU1 (D) | CU1 (D) | CU1 (D) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+Navires de PlayerTest5 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirAvecDefenseur
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Un défenseur ne tire pas
+
+Navires de PlayerTest5 (D)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirEquipeAdversePasPrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Vous ne pouvez pas agir
+
+Navires de PlayerTest6 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirNavireCouleAvantSelection
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+C'est bon, tous les navires sont placés
+PlayerTest4 ne possède pas le navire CU1
+Aucun navire selectionné
+
+Navires de PlayerTest4 (?)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testDeplacementEquipeAdversePasPrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Vous ne pouvez pas agir
+
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 | CU1 | CU1 | CU1 | CU1 |     | CR1 | CR1 | CR1 |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 | CR2 | CR2 | CR2 |     | TO1 | TO1 |     | TO2 | TO2 |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 | TO3 | TO3 |     | SM1 |     | SM2 |     | SM3 |     | SM4 |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+
+Navires de PlayerTest5 (D)
+  |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |  I  |  J  |
+0 | CU1 | CU1 | CU1 | CU1 |     |     |     |     |     |     |
+1 |     |     |     |     |     |     |     |     |     |     |
+2 |     |     |     |     |     |     |     |     |     |     |
+3 |     |     |     |     |     |     |     |     |     |     |
+4 |     |     |     |     |     |     |     |     |     |     |
+5 |     |     |     |     |     |     |     |     |     |     |
+6 |     |     |     |     |     |     |     |     |     |     |
+7 |     |     |     |     |     |     |     |     |     |     |
+8 |     |     |     |     |     |     |     |     |     |     |
+9 |     |     |     |     |     |     |     |     |     |     |
+
+testTirEquipePasPrete
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Vous ne pouvez pas agir
+
+Navires de PlayerTest6 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testAffectationNavireCouleAvantSelection
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+Que veux-tu faire avec un navire coulé ?
+Impossible de faire une affectation si on a pas de matelot ou de navire sélectionné
+Impossible de faire une affectation si on a pas de matelot ou de navire sélectionné
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (D) | CU1 (D) | CU1 (D) | CU1 (D) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+Navires de PlayerTest5 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testVictoireFlotteAdverseCoule
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+
+Navires de PlayerTest2 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (D) | CU1 (D) | CU1 (D) | CU1 (D) |         | CR1 (D) | CR1 (D) | CR1 (D) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (D) | CR2 (D) | CR2 (D) |         | TO1 (D) | TO1 (D) |         | TO2 (D) | TO2 (D) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (D) | TO3 (D) |         | SM1 (D) |         | SM2 (D) |         | SM3 (D) |         | SM4 (D) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirReussit
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+On place tous les navires:
+Position [0, -1] invalide
+Position [0, -1] invalide
+Position [0, -1] invalide
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 4]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [0, 8]
+Il y a un navire autour de la position [1, 0]
+Il y a un navire autour de la position [1, 1]
+Il y a un navire autour de la position [1, 2]
+Il y a un navire autour de la position [1, 3]
+Il y a un navire autour de la position [1, 4]
+Il y a un navire autour de la position [1, 5]
+Il y a un navire autour de la position [1, 6]
+Il y a un navire autour de la position [1, 7]
+Il y a un navire autour de la position [1, 8]
+Il y a un navire autour de la position [1, 8]
+Position [2, -1] invalide
+Position [2, -1] invalide
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 3]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 6]
+Il y a un navire autour de la position [2, 9]
+Il y a un navire autour de la position [3, 0]
+Il y a un navire autour de la position [3, 1]
+Il y a un navire autour de la position [3, 2]
+Il y a un navire autour de la position [3, 3]
+Il y a un navire autour de la position [3, 4]
+Il y a un navire autour de la position [3, 5]
+Il y a un navire autour de la position [3, 6]
+Il y a un navire autour de la position [3, 7]
+Il y a un navire autour de la position [3, 8]
+Il y a un navire autour de la position [3, 9]
+Position [4, -1] invalide
+Il y a un navire autour de la position [4, 2]
+Il y a un navire autour de la position [4, 4]
+Il y a un navire autour de la position [4, 6]
+Il y a un navire autour de la position [4, 8]
+C'est bon, tous les navires sont placés
+
+Navires de PlayerTest5 (A)
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (O) |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+Equipe adverse: 
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 | CU1 (O) | CU1 (O) | CU1 (O) | CU1 (X) |         | CR1 (O) | CR1 (O) | CR1 (O) |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 | CR2 (O) | CR2 (O) | CR2 (O) |         | TO1 (O) | TO1 (O) |         | TO2 (O) | TO2 (O) |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 | TO3 (O) | TO3 (O) |         | SM1 (O) |         | SM2 (O) |         | SM3 (O) |         | SM4 (O) |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testCreationEquipeEquilibre
+Liste des joueurs de la partie:
+0: PlayerTest1
+Liste des joueurs de la partie:
+0: PlayerTest1
+1: PlayerTest2
+Liste des joueurs de la partie:
+0: PlayerTest1
+1: PlayerTest2
+2: PlayerTest3
+Liste des joueurs de la partie:
+0: PlayerTest1
+1: PlayerTest2
+2: PlayerTest3
+3: PlayerTest4
+Liste des joueurs de la partie:
+0: PlayerTest1
+1: PlayerTest2
+2: PlayerTest3
+3: PlayerTest4
+4: PlayerTest5
+Liste des joueurs de la partie:
+0: PlayerTest1
+1: PlayerTest2
+2: PlayerTest3
+3: PlayerTest4
+4: PlayerTest5
+5: PlayerTest6
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.228 s - in model.GameTest
 [INFO] Running model.NavireTest
 testDeplacementNavireTouche
 Navire 'TO1' endommagé, déplacement impossible
@@ -282,6 +1686,19 @@ testVerticalDownValide
 
 testTirRate
 Tir Effectué, aucune pièce touchée en [5, 3]
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         | SM1 (O) |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
 
   |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
 0 |         |         |         |         |         |         |         |         |         |         |
@@ -391,6 +1808,33 @@ Position [0, -1] invalide
 Position [0, 10] invalide
 Position [-1, 3] invalide
 Position [11, 3] invalide
+testTirReussitBas
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         | SM1 (O) |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | TO1 (X) | TO1 (O) |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
 testTirPieceDejaTouche
 La pièce touchée en [5, 5] est déjà endommagée !
 
@@ -559,6 +2003,34 @@ testHorizontalRightValide
 8 |     |     |     |     |     |     |     |     |     |     |
 9 |     |     |     |     |     |     |     |     |     |     |
 
+testTirTropLoin
+La position de tir [5, 4] n'est pas valide
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         |         | SM1 (O) |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | TO1 (O) | TO1 (O) |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
 testDeplacementSurAutreNavireHorizontal
 La position [5, 3] est déjà occupé par une pièce de 'SM1'
 
@@ -642,7 +2114,47 @@ testVerticalRightValide
 
 testDeplacementSansEtrePlace
 Navire 'CU1' non placé, cela va être dur de la déplacer alors...
-testTirReussit
+testTirReussitDessus
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | SM1 (O) |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | TO1 (X) | TO1 (O) |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirReussitDroite
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         | SM1 (O) |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
 
   |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
 0 |         |         |         |         |         |         |         |         |         |         |
@@ -661,10 +2173,77 @@ testTirQuiCoule
   |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
 0 |         |         |         |         |         |         |         |         |         |         |
 1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         | CU1 (O) |         |         |         |         |         |         |
+3 |         |         |         | CU1 (O) |         |         |         |         |         |         |
+4 |         |         |         | CU1 (O) |         |         |         |         |         |         |
+5 |         |         |         | CU1 (O) |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
 2 |         |         |         | CU1 (D) |         |         |         |         |         |         |
 3 |         |         |         | CU1 (D) |         |         |         |         |         |         |
 4 |         |         |         | CU1 (D) |         |         |         |         |         |         |
 5 |         |         |         | CU1 (D) |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirReussitHaut
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         | SM1 (O) |         |         |         |         |         |
+5 |         |         |         |         |         |         |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | TO1 (X) | TO1 (O) |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+testTirReussitGauche
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         |         | SM1 (O) |         |         |         |         |
+6 |         |         |         |         |         |         |         |         |         |         |
+7 |         |         |         |         |         |         |         |         |         |         |
+8 |         |         |         |         |         |         |         |         |         |         |
+9 |         |         |         |         |         |         |         |         |         |         |
+
+
+  |    A    |    B    |    C    |    D    |    E    |    F    |    G    |    H    |    I    |    J    |
+0 |         |         |         |         |         |         |         |         |         |         |
+1 |         |         |         |         |         |         |         |         |         |         |
+2 |         |         |         |         |         |         |         |         |         |         |
+3 |         |         |         |         |         |         |         |         |         |         |
+4 |         |         |         |         |         |         |         |         |         |         |
+5 |         |         |         |         | TO1 (X) | TO1 (O) |         |         |         |         |
 6 |         |         |         |         |         |         |         |         |         |         |
 7 |         |         |         |         |         |         |         |         |         |         |
 8 |         |         |         |         |         |         |         |         |         |         |
@@ -738,11 +2317,11 @@ Il y a un navire autour de la position [2, 3]
 8 |     |     |     |     |     |     |     |     |     |     |
 9 |     |     |     |     |     |     |     |     |     |     |
 
-[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.665 s - in model.NavireTest
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.988 s - in model.NavireTest
 [INFO] 
 [INFO] Results:
 [INFO] 
-[INFO] Tests run: 48, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 67, Failures: 0, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] 
 [INFO] --- jacoco-maven-plugin:0.8.2:report (report) @ batailleNavale-maven ---
@@ -751,6 +2330,6 @@ Il y a un navire autour de la position [2, 3]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  10.194 s
-[INFO] Finished at: 2019-06-08T21:26:03+02:00
+[INFO] Total time:  11.690 s
+[INFO] Finished at: 2019-06-09T21:50:58+02:00
 [INFO] ------------------------------------------------------------------------
