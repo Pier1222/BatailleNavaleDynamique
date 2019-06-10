@@ -25,6 +25,7 @@ public class Equipe implements Serializable {
 		this.couleur = couleur;
 		matelots = new ArrayList<Matelot>();
 		this.amiral = amiral;
+		amiral.getStatistiques().incrementeNbFoisAmiral();
 		amiral.setEquipe(this);
 		this.partie = partie;
 		grille = new Grille();
@@ -208,7 +209,23 @@ public class Equipe implements Serializable {
 		return amiral;
 	}
 	
-	public Matelot getAMatelot(int index) {
+	public Navire getANavireParNom(String nomNavire) {
+		for(int i = 0; i < navires.length; i++) {
+			if(navires[i].getNom().equals(nomNavire))
+				return navires[i];
+		}
+		return null;
+	}
+	
+	public Matelot getAMatelotParId(int id) {
+	    for(Matelot m: matelots) {
+	    	if(m.getId() == id)
+	    		return m;
+	    }
+	    return null;
+	}
+	
+	public Matelot getAMatelotDansListe(int index) {
 		if(index < 0 || index >= matelots.size())
 			return null;
 		return matelots.get(index);

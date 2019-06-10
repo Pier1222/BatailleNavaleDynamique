@@ -4,11 +4,13 @@ package model;
 public class Bataille_navale_model {
 
 	private Joueur utilisateur;
+	private Game partieActu; //Permet de récupérer la partie et d'en soutirer des informations pour les vues
 	private boolean inAction; //Permet de dire si on ne arrêter toute action ou pas (à voir où on peut l'utiliser)
 	
 	public Bataille_navale_model() {
 		utilisateur = null;
-		inAction = false;
+		partieActu  = null;
+		inAction    = false;
 	}
 	
 	public boolean createGame(String nomJoueur, int numeroPort) {
@@ -40,6 +42,15 @@ public class Bataille_navale_model {
 	public String[][] getInfosTeams() {
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getInfosTeamsReq());
 		return utilisateur.getClient().getRequesterTabDeTabDeString();
+	}
+	
+	public void actualisePartieActu() {
+		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getShowingReq());
+		partieActu = utilisateur.getClient().getEtatPartie();
+	}
+
+	public Game getPartieActu() {
+		return partieActu;
 	}
 
 	public Joueur getUtilisateur() {

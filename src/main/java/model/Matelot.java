@@ -84,9 +84,13 @@ public class Matelot extends Joueur {
 		Grille grilleCible = adversaires.getGrille();
 		Navire navireTouche = navireSelectionne.tirer(grilleCible, posXCible, posYCible);
 		//Permettre à l'équipe ennemi de retirer le navire si il est coulé
-		if(navireTouche != null && navireTouche.isEstCoule()) {
-			adversaires.retireNavireATousMatelots(navireTouche);
-		}
+		if(navireTouche != null) {
+			getStatistiques().incrementeNbTirsTouches();
+		    if(navireTouche.isEstCoule()) {
+			    adversaires.retireNavireATousMatelots(navireTouche);
+		    }
+		} else
+			getStatistiques().incrementeNbTirsRates();
 		return navireTouche;
 	}
 

@@ -35,6 +35,7 @@ public class ViewAttente extends JFrame {
     public Timer timerPanelEquipes; //Permet de modifier les panels sur les équipes une fois qu'elles sont prêtes
     public Timer timerChangementFenetre; //S'occupe de la transition entre cette fenêtre et celle du jeu
     
+    
     public ViewAttente(Bataille_navale_model model) {
         this.model = model;
         

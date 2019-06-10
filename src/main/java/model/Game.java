@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Serializable {
 	
 	private final static int ID_HOTE     = 0; //Pour être sûr que l'hôte de la partie ai un id spécifique
 	private final static int ID_ERROR    = -1; //Quand un joueur essaie de rejoindre la partie alors qu'elle a déjà commencé
@@ -187,6 +188,32 @@ public class Game {
 			return new Equipe[] {equipeRouge};
 		else //Personne n'a gagné pour l'instant
 			return null;
+	}
+	
+	/**
+	 * Permet de rechercher un Matelot qui est dans la partie via son id
+	 * @param idMatelot
+	 * @return Le matelot si il a été trouvé ou null
+	 */
+	public synchronized Matelot getMatelot(int idMatelot) {
+		Matelot matelotTrouve = equipeBleu.getAMatelotParId(idMatelot);
+		if(matelotTrouve != null)
+			return matelotTrouve;
+		return equipeRouge.getAMatelotParId(idMatelot);
+	}
+	
+	/**
+	 * Permet de rechercher un Navire qui est dans la partie via son équipe et son nom
+	 * @param equipeNavire
+	 * @param nomNavire
+	 * @return Le navire correspondant ou null si l'équipe donnée n'est pas dans la partie ou que le navire n'est pas à l'intérieur
+	 */
+	public synchronized Navire getNavire(Equipe equipeNavire, String nomNavire) {
+		if(equipeNavire.equals(equipeBleu))
+			return equipeBleu.getANavireParNom(nomNavire);
+		else if(equipeNavire.equals(equipeRouge))
+			return equipeRouge.getANavireParNom(nomNavire);
+		return null;
 	}
 	
 	private void doPrintLn(String message) {

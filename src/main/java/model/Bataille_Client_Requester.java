@@ -36,6 +36,8 @@ public class Bataille_Client_Requester {
 	private ObjectInputStream ois;
 	private ObjectOutputStream oos;
 	
+	private Game etatPartie; //Il s'agit d'un clone de la version serveur qui sera récupéré pour obtenir des informations
+	
 	private String[] tabStringActu; //Si on a besoin de récupérer la liste dde chaîne de caractères
 	private String[][] tabDeTabDeStringActu;
 	
@@ -78,7 +80,8 @@ public class Bataille_Client_Requester {
 			return;
 		}
 		
-		String[] requeteDecoupe = requete.split(" ");
+		//String[] requeteDecoupe = requete.split(" ");
+		String[] requeteDecoupe = requete.split(";");
 		String titreRequete     = requeteDecoupe[0];
 		
 		boolean needToShow      = false; //Permet de savoir si on doit relancer une requête "Showing" juste après celle qu'on a exécuté
@@ -116,7 +119,7 @@ public class Bataille_Client_Requester {
 		}
 	}
 	
-	private void requestShowing() throws IOException {
+	private void requestShowing() throws IOException, ClassNotFoundException {
 		/*
 		 * - Envoie au client destnaitre connu de Vector, le message Showing du nouvel état du jeu
 		 * - Compte le nombre de navires dans chaque camp
@@ -129,7 +132,7 @@ public class Bataille_Client_Requester {
 		 * - Eventuellemennt, mémorise l'état du jeu
 		 */
 		oos.writeInt(SHOWING_ID);
-		
+		etatPartie = (Game) ois.readObject();
 	}
 	
 	private void doMoving(String[] requeteDecoupe) {
@@ -142,14 +145,20 @@ public class Bataille_Client_Requester {
 		//requestMoving();
 	}
 	
-	private void requestMoving(Navire navire, int positionXTete, int positionYTete) throws IOException {
+	private void requestMoving(String nomNavire, int positionXTete, int positionYTete) throws IOException {
 		/*
 		 * Envoie au client destinataire cible connu de Vector, le message Moving donnant
-		 * la position du nouveau navire (évntuellement, sa position de départ en cas de
+		 * la position du nouveau navire (éventuellement, sa position de départ en cas de
 		 * mouvement)
 		 */
 		oos.writeInt(MOVING_ID);
 		oos.flush();
+	}
+	
+	private void doFire(String[] requeteDecoupe) {
+		if(requeteDecoupe.length < 3) {
+			return;
+		}
 	}
 	
 	private void requestFire() throws IOException {
@@ -245,5 +254,9 @@ public class Bataille_Client_Requester {
 
 	public String[][] getTabDeTabDeStringActu() {
 		return tabDeTabDeStringActu;
+	}
+
+	public Game getEtatPartie() {
+		return etatPartie;
 	}
 }

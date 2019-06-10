@@ -96,6 +96,10 @@ public class Stats_Joueur implements Serializable {
 		return nbTirsRates;
 	}
 
+	public int getNbFoisAmiral() {
+		return nbFoisAmiral;
+	}
+
 	public int getNbRoleAttaque() {
 		return nbRoleAttaque;
 	}

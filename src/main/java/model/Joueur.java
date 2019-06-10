@@ -34,6 +34,11 @@ public class Joueur implements Serializable {
 		client       = joueur.client; //Pas sûr
 	}
 	
+	/**
+	 * Va essayer de créer une partie
+	 * @param numeroPort
+	 * @return Vrai si la création a réussit, faux sinon
+	 */
 	public boolean creerPartie(int numeroPort) {
 		try {
 			Bataille_Server serveur = new Bataille_Server(numeroPort, this);

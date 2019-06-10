@@ -108,7 +108,8 @@ public class Bataille_Server_Requester extends Thread {
 	
 	//Voir la version "Bateille_Client_Requester pour les descriptions
 	private void requestShowing() throws IOException {
-		oos.writeObject("A virer");
+		oos.writeObject(game);
+		oos.flush();
 	}
 	
 	private void requestMoving() throws IOException {

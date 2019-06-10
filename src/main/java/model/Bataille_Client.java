@@ -29,4 +29,8 @@ public class Bataille_Client {
 	public String[][] getRequesterTabDeTabDeString() {
 	    return requester.getTabDeTabDeStringActu();	
 	}
+
+	public Game getEtatPartie() {
+		return requester.getEtatPartie();
+	}
 }

@@ -40,7 +40,7 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(1);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(1);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -74,7 +74,7 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBDef = bleu.getAMatelot(1);
+		Matelot matelotBDef = bleu.getAMatelotDansListe(1);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -108,7 +108,7 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(1);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(1);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -142,7 +142,7 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(1);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(1);
 		
 		//L'amiral rouge va placer tous ses navires mais ne pas annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -178,8 +178,8 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(0);
-		Matelot matelotRAtt = rouge.getAMatelot(0);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(0);
+		Matelot matelotRAtt = rouge.getAMatelotDansListe(0);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -230,8 +230,8 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(0);
-		Matelot matelotRAtt = rouge.getAMatelot(0);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(0);
+		Matelot matelotRAtt = rouge.getAMatelotDansListe(0);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -278,14 +278,13 @@ public class GameTest {
 	//Test sur les conditions de victoires
 	@Test
 	public void testVictoireFlotteAdverseCoule() {
-		//Dans cette version le navire est coulé AVANT que le matelot le choisi
 		System.out.println("testVictoireFlotteAdverseCoule");
 		Game game = creationPartieTest(false);
 		Equipe bleu  = game.getEquipeBleu();
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(0);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(0);
 		
 		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -327,7 +326,49 @@ public class GameTest {
 	    rouge.getGrille().printGrille(true);
 	    assertEquals(bleu, game.getVainqueur()[0]); //On s'attends à ce que l'équipe vainqeur est la bleu
 	}
-	//Autres test sur la victoire
+	
+	@Test
+	public void testVictoireAbandon() {
+		System.out.println("testVictoireAbandon");
+		Game game = creationPartieTest(false);
+		Equipe bleu  = game.getEquipeBleu();
+		Equipe rouge = game.getEquipeRouge();
+		Amiral amiralB = bleu.getAmiral();
+		Amiral amiralR = rouge.getAmiral();
+		
+		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
+		amiralR.placeTousLesNavires();
+		rouge.setEquipeToPret();
+		
+		//Placement de tous les navires, affectation et fin de préparation pour l'Amiral bleu
+		amiralB.placeTousLesNavires();
+		bleu.setEquipeToPret();
+		
+		bleu.abandonne();
+	    assertEquals(rouge, game.getVainqueur()[0]); //On s'attends à ce que l'équipe vainqeur est la bleu
+	}
+	
+	@Test
+	public void testEgaliteAbandon() {
+		System.out.println("testEgaliteAbandon");
+		Game game = creationPartieTest(false);
+		Equipe bleu  = game.getEquipeBleu();
+		Equipe rouge = game.getEquipeRouge();
+		Amiral amiralB = bleu.getAmiral();
+		Amiral amiralR = rouge.getAmiral();
+		
+		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
+		amiralR.placeTousLesNavires();
+		rouge.setEquipeToPret();
+		
+		//Placement de tous les navires, affectation et fin de préparation pour l'Amiral bleu
+		amiralB.placeTousLesNavires();
+		bleu.setEquipeToPret();
+		
+		bleu.abandonne();
+		rouge.abandonne();
+	    assertEquals(2, game.getVainqueur().length); //On s'attends à ce que l'équipe vainqeur est la bleu
+	}
 	
 
 	//Méthodes déjà testés dans EquipeTest mais où on a besoin de l'équipe adverse
@@ -339,7 +380,7 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBDef = bleu.getAMatelot(1);
+		Matelot matelotBDef = bleu.getAMatelotDansListe(1);
 		
 		//L'amiral rouge va placer tous ses navires mais ne pas dire qu'il est prêt
 		amiralR.placeTousLesNavires();
@@ -372,9 +413,9 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(0);
-		Matelot matelotBDef = bleu.getAMatelot(1);
-		Matelot matelotRAtt = rouge.getAMatelot(0);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(0);
+		Matelot matelotBDef = bleu.getAMatelotDansListe(1);
+		Matelot matelotRAtt = rouge.getAMatelotDansListe(0);
 		Navire navireAAffecter = bleu.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
 		
 		//Les deux équipes placent tous leurs navires aux mêmes endroits
@@ -427,9 +468,9 @@ public class GameTest {
 		Equipe rouge = game.getEquipeRouge();
 		Amiral amiralB = bleu.getAmiral();
 		Amiral amiralR = rouge.getAmiral();
-		Matelot matelotBAtt = bleu.getAMatelot(0);
-		Matelot matelotBDef = bleu.getAMatelot(1);
-		Matelot matelotRAtt = rouge.getAMatelot(0);
+		Matelot matelotBAtt = bleu.getAMatelotDansListe(0);
+		Matelot matelotBDef = bleu.getAMatelotDansListe(1);
+		Matelot matelotRAtt = rouge.getAMatelotDansListe(0);
 		Navire navireAAffecter = bleu.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
 		
 		//Les deux équipes placent tous leurs navires aux mêmes endroits
