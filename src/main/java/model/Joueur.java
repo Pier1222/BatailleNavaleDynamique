@@ -74,24 +74,30 @@ public class Joueur implements Serializable {
 		return id == Game.getID_HOTE();
 	}
 	
-	public boolean isInTeam(String[] idEtNomsTeam) {
+	/**
+	 * Permet de savoir si le joueur est dans un tableau d'ID et de noms
+	 * @param idEtNomsTeam
+	 * @return L'index où se situe le joueur, -1 si il n'est pas à l'intérieur
+	 */
+	public int isInTeam(String[] idEtNomsTeam) {
     	if(idEtNomsTeam == null) {
-    		return false;
+    		return -1;
     	}
     	
     	String idStringActu = "";
     	int idActu = 0;
     	for(int i = 0; i < idEtNomsTeam.length; i++) {
-    		idStringActu = idEtNomsTeam[i].split(" ")[0]; //L'id est normalement le premier éléent qui apparaît
+    		idStringActu = idEtNomsTeam[i].split(" ")[0]; //L'id est normalement le premier élément qui apparaît
     		try {
     			idActu = Integer.parseInt(idStringActu);
-    			if(idActu == getId()) //Si l'id obtenu est le même que celui du joueur
-    				return true;
+    			if(idActu == getId()) { //Si l'id obtenu est le même que celui du joueur
+    				return i;
+    			}
     		} catch (NumberFormatException e) {
     			System.out.println("'" + idStringActu + "' n'est pas un nombre apparement...");
     		}
     	}
-    	return false; //On a trouvé aucun id correspondant
+    	return -1; //On a trouvé aucun id correspondant
     }
 	
 	/**

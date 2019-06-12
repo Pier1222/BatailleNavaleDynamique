@@ -1,7 +1,7 @@
 package model;
 
 /**
- * C'est ici où seront testé les interactions entre membresde la même équipe (affectation et déplacement)
+ * C'est ici où seront testé les interactions entre membres de la même équipe (affectation et déplacement)
  * Cependant, pour les cas d'erreurs qui ne dépendent pas de l'Amiral et du Matelot (débordement, navire endommagé, etc...) voir NavireTest
  */
 import static org.junit.Assert.*;

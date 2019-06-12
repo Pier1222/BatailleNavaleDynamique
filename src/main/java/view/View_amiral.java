@@ -8,20 +8,33 @@ import java.awt.BorderLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
+
+import model.Bataille_navale_model;
+import model.Grille;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
 public class View_amiral extends JFrame{
+	
+	protected Bataille_navale_model model;
+    public JButton[][] buttonsGrille;
 
+	public View_amiral(Bataille_navale_model model) {
+        this.model = model;
+		initialize();
+	}
 
 	/**
-	 * Create the application.
+	 * Initialize the contents of the frame.
 	 */
-	public View_amiral() {
+	private void initialize() {
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -39,611 +52,37 @@ public class View_amiral extends JFrame{
 		panel_2.setBounds(139, 0, 605, 580);
 		panel_1.add(panel_2);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_3.setBounds(99, 48, 501, 478);
-		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(10, 10, 0, 0));
-		
-		JButton button = new JButton("");
-		button.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button.setBackground(Color.WHITE);
-		button.setAlignmentY(0.0f);
-		panel_3.add(button);
-		
-		JButton button_1 = new JButton("");
-		button_1.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_1.setBackground(Color.WHITE);
-		button_1.setAlignmentY(0.0f);
-		panel_3.add(button_1);
-		
-		JButton button_2 = new JButton("");
-		button_2.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_2.setBackground(Color.WHITE);
-		button_2.setAlignmentY(0.0f);
-		panel_3.add(button_2);
-		
-		JButton button_3 = new JButton("");
-		button_3.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_3.setBackground(Color.WHITE);
-		button_3.setAlignmentY(0.0f);
-		panel_3.add(button_3);
-		
-		JButton button_4 = new JButton("");
-		button_4.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_4.setBackground(Color.WHITE);
-		button_4.setAlignmentY(0.0f);
-		panel_3.add(button_4);
-		
-		JButton button_5 = new JButton("");
-		button_5.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_5.setBackground(Color.WHITE);
-		button_5.setAlignmentY(0.0f);
-		panel_3.add(button_5);
-		
-		JButton button_6 = new JButton("");
-		button_6.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_6.setBackground(Color.WHITE);
-		button_6.setAlignmentY(0.0f);
-		panel_3.add(button_6);
-		
-		JButton button_7 = new JButton("");
-		button_7.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_7.setBackground(Color.WHITE);
-		button_7.setAlignmentY(0.0f);
-		panel_3.add(button_7);
-		
-		JButton button_8 = new JButton("");
-		button_8.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_8.setBackground(Color.WHITE);
-		button_8.setAlignmentY(0.0f);
-		panel_3.add(button_8);
-		
-		JButton button_9 = new JButton("");
-		button_9.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_9.setBackground(Color.WHITE);
-		button_9.setAlignmentY(0.0f);
-		panel_3.add(button_9);
-		
-		JButton button_10 = new JButton("");
-		button_10.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_10.setBackground(Color.WHITE);
-		button_10.setAlignmentY(0.0f);
-		panel_3.add(button_10);
-		
-		JButton button_11 = new JButton("");
-		button_11.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_11.setBackground(Color.WHITE);
-		button_11.setAlignmentY(0.0f);
-		panel_3.add(button_11);
-		
-		JButton button_12 = new JButton("");
-		button_12.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_12.setBackground(Color.WHITE);
-		button_12.setAlignmentY(0.0f);
-		panel_3.add(button_12);
-		
-		JButton button_13 = new JButton("");
-		button_13.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_13.setBackground(Color.WHITE);
-		button_13.setAlignmentY(0.0f);
-		panel_3.add(button_13);
-		
-		JButton button_14 = new JButton("");
-		button_14.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_14.setBackground(Color.WHITE);
-		button_14.setAlignmentY(0.0f);
-		panel_3.add(button_14);
-		
-		JButton button_15 = new JButton("");
-		button_15.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_15.setBackground(Color.WHITE);
-		button_15.setAlignmentY(0.0f);
-		panel_3.add(button_15);
-		
-		JButton button_16 = new JButton("");
-		button_16.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_16.setBackground(Color.WHITE);
-		button_16.setAlignmentY(0.0f);
-		panel_3.add(button_16);
-		
-		JButton button_17 = new JButton("");
-		button_17.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_17.setBackground(Color.WHITE);
-		button_17.setAlignmentY(0.0f);
-		panel_3.add(button_17);
-		
-		JButton button_18 = new JButton("");
-		button_18.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_18.setBackground(Color.WHITE);
-		button_18.setAlignmentY(0.0f);
-		panel_3.add(button_18);
-		
-		JButton button_19 = new JButton("");
-		button_19.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_19.setBackground(Color.WHITE);
-		button_19.setAlignmentY(0.0f);
-		panel_3.add(button_19);
-		
-		JButton button_20 = new JButton("");
-		button_20.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_20.setBackground(Color.WHITE);
-		button_20.setAlignmentY(0.0f);
-		panel_3.add(button_20);
-		
-		JButton button_21 = new JButton("");
-		button_21.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_21.setBackground(Color.WHITE);
-		button_21.setAlignmentY(0.0f);
-		panel_3.add(button_21);
-		
-		JButton button_22 = new JButton("");
-		button_22.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 5, (Color) new Color(0, 0, 0))));
-		button_22.setBackground(Color.WHITE);
-		button_22.setAlignmentY(0.0f);
-		panel_3.add(button_22);
-		
-		JButton button_23 = new JButton("");
-		button_23.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_23.setBackground(Color.WHITE);
-		button_23.setAlignmentY(0.0f);
-		panel_3.add(button_23);
-		
-		JButton button_24 = new JButton("");
-		button_24.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_24.setBackground(Color.WHITE);
-		button_24.setAlignmentY(0.0f);
-		panel_3.add(button_24);
-		
-		JButton button_25 = new JButton("");
-		button_25.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_25.setBackground(Color.WHITE);
-		button_25.setAlignmentY(0.0f);
-		panel_3.add(button_25);
-		
-		JButton button_26 = new JButton("");
-		button_26.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 5, (Color) new Color(0, 0, 0))));
-		button_26.setBackground(Color.WHITE);
-		button_26.setAlignmentY(0.0f);
-		panel_3.add(button_26);
-		
-		JButton button_27 = new JButton("");
-		button_27.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_27.setBackground(Color.WHITE);
-		button_27.setAlignmentY(0.0f);
-		panel_3.add(button_27);
-		
-		JButton button_28 = new JButton("");
-		button_28.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_28.setBackground(Color.WHITE);
-		button_28.setAlignmentY(0.0f);
-		panel_3.add(button_28);
-		
-		JButton button_29 = new JButton("");
-		button_29.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_29.setBackground(Color.WHITE);
-		button_29.setAlignmentY(0.0f);
-		panel_3.add(button_29);
-		
-		JButton button_30 = new JButton("");
-		button_30.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_30.setBackground(Color.WHITE);
-		button_30.setAlignmentY(0.0f);
-		panel_3.add(button_30);
-		
-		JButton button_31 = new JButton("");
-		button_31.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_31.setBackground(Color.WHITE);
-		button_31.setAlignmentY(0.0f);
-		panel_3.add(button_31);
-		
-		JButton button_32 = new JButton("");
-		button_32.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_32.setBackground(Color.WHITE);
-		button_32.setAlignmentY(0.0f);
-		panel_3.add(button_32);
-		
-		JButton button_33 = new JButton("");
-		button_33.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_33.setBackground(Color.WHITE);
-		button_33.setAlignmentY(0.0f);
-		panel_3.add(button_33);
-		
-		JButton button_34 = new JButton("");
-		button_34.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_34.setBackground(Color.WHITE);
-		button_34.setAlignmentY(0.0f);
-		panel_3.add(button_34);
-		
-		JButton button_35 = new JButton("");
-		button_35.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_35.setBackground(Color.WHITE);
-		button_35.setAlignmentY(0.0f);
-		panel_3.add(button_35);
-		
-		JButton button_36 = new JButton("");
-		button_36.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_36.setBackground(Color.WHITE);
-		button_36.setAlignmentY(0.0f);
-		panel_3.add(button_36);
-		
-		JButton button_37 = new JButton("");
-		button_37.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_37.setBackground(Color.WHITE);
-		button_37.setAlignmentY(0.0f);
-		panel_3.add(button_37);
-		
-		JButton button_38 = new JButton("");
-		button_38.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_38.setBackground(Color.WHITE);
-		button_38.setAlignmentY(0.0f);
-		panel_3.add(button_38);
-		
-		JButton button_39 = new JButton("");
-		button_39.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_39.setBackground(Color.WHITE);
-		button_39.setAlignmentY(0.0f);
-		panel_3.add(button_39);
-		
-		JButton button_40 = new JButton("");
-		button_40.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_40.setBackground(Color.WHITE);
-		button_40.setAlignmentY(0.0f);
-		panel_3.add(button_40);
-		
-		JButton button_41 = new JButton("");
-		button_41.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_41.setBackground(Color.WHITE);
-		button_41.setAlignmentY(0.0f);
-		panel_3.add(button_41);
-		
-		JButton button_42 = new JButton("");
-		button_42.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_42.setBackground(Color.WHITE);
-		button_42.setAlignmentY(0.0f);
-		panel_3.add(button_42);
-		
-		JButton button_43 = new JButton("");
-		button_43.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_43.setBackground(Color.WHITE);
-		button_43.setAlignmentY(0.0f);
-		panel_3.add(button_43);
-		
-		JButton button_44 = new JButton("");
-		button_44.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_44.setBackground(Color.WHITE);
-		button_44.setAlignmentY(0.0f);
-		panel_3.add(button_44);
-		
-		JButton button_45 = new JButton("");
-		button_45.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_45.setBackground(Color.WHITE);
-		button_45.setAlignmentY(0.0f);
-		panel_3.add(button_45);
-		
-		JButton button_46 = new JButton("");
-		button_46.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_46.setBackground(Color.WHITE);
-		button_46.setAlignmentY(0.0f);
-		panel_3.add(button_46);
-		
-		JButton button_47 = new JButton("");
-		button_47.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_47.setBackground(Color.WHITE);
-		button_47.setAlignmentY(0.0f);
-		panel_3.add(button_47);
-		
-		JButton button_48 = new JButton("");
-		button_48.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_48.setBackground(Color.WHITE);
-		button_48.setAlignmentY(0.0f);
-		panel_3.add(button_48);
-		
-		JButton button_49 = new JButton("");
-		button_49.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_49.setBackground(Color.WHITE);
-		button_49.setAlignmentY(0.0f);
-		panel_3.add(button_49);
-		
-		JButton button_50 = new JButton("");
-		button_50.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_50.setBackground(Color.WHITE);
-		button_50.setAlignmentY(0.0f);
-		panel_3.add(button_50);
-		
-		JButton button_51 = new JButton("");
-		button_51.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_51.setBackground(Color.WHITE);
-		button_51.setAlignmentY(0.0f);
-		panel_3.add(button_51);
-		
-		JButton button_52 = new JButton("");
-		button_52.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_52.setBackground(Color.WHITE);
-		button_52.setAlignmentY(0.0f);
-		panel_3.add(button_52);
-		
-		JButton button_53 = new JButton("");
-		button_53.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_53.setBackground(Color.WHITE);
-		button_53.setAlignmentY(0.0f);
-		panel_3.add(button_53);
-		
-		JButton button_54 = new JButton("");
-		button_54.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_54.setBackground(Color.WHITE);
-		button_54.setAlignmentY(0.0f);
-		panel_3.add(button_54);
-		
-		JButton button_55 = new JButton("");
-		button_55.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_55.setBackground(Color.WHITE);
-		button_55.setAlignmentY(0.0f);
-		panel_3.add(button_55);
-		
-		JButton button_56 = new JButton("");
-		button_56.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_56.setBackground(Color.WHITE);
-		button_56.setAlignmentY(0.0f);
-		panel_3.add(button_56);
-		
-		JButton button_57 = new JButton("");
-		button_57.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_57.setBackground(Color.WHITE);
-		button_57.setAlignmentY(0.0f);
-		panel_3.add(button_57);
-		
-		JButton button_58 = new JButton("");
-		button_58.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_58.setBackground(Color.WHITE);
-		button_58.setAlignmentY(0.0f);
-		panel_3.add(button_58);
-		
-		JButton button_59 = new JButton("");
-		button_59.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_59.setBackground(Color.WHITE);
-		button_59.setAlignmentY(0.0f);
-		panel_3.add(button_59);
-		
-		JButton button_60 = new JButton("");
-		button_60.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_60.setBackground(Color.WHITE);
-		button_60.setAlignmentY(0.0f);
-		panel_3.add(button_60);
-		
-		JButton button_61 = new JButton("");
-		button_61.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_61.setBackground(Color.WHITE);
-		button_61.setAlignmentY(0.0f);
-		panel_3.add(button_61);
-		
-		JButton button_62 = new JButton("");
-		button_62.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 5, (Color) new Color(0, 0, 0))));
-		button_62.setBackground(Color.WHITE);
-		button_62.setAlignmentY(0.0f);
-		panel_3.add(button_62);
-		
-		JButton button_63 = new JButton("");
-		button_63.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_63.setBackground(Color.WHITE);
-		button_63.setAlignmentY(0.0f);
-		panel_3.add(button_63);
-		
-		JButton button_64 = new JButton("");
-		button_64.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_64.setBackground(Color.WHITE);
-		button_64.setAlignmentY(0.0f);
-		panel_3.add(button_64);
-		
-		JButton button_65 = new JButton("");
-		button_65.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_65.setBackground(Color.WHITE);
-		button_65.setAlignmentY(0.0f);
-		panel_3.add(button_65);
-		
-		JButton button_66 = new JButton("");
-		button_66.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 5, (Color) new Color(0, 0, 0))));
-		button_66.setBackground(Color.WHITE);
-		button_66.setAlignmentY(0.0f);
-		panel_3.add(button_66);
-		
-		JButton button_67 = new JButton("");
-		button_67.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_67.setBackground(Color.WHITE);
-		button_67.setAlignmentY(0.0f);
-		panel_3.add(button_67);
-		
-		JButton button_68 = new JButton("");
-		button_68.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_68.setBackground(Color.WHITE);
-		button_68.setAlignmentY(0.0f);
-		panel_3.add(button_68);
-		
-		JButton button_69 = new JButton("");
-		button_69.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 5, 0, (Color) new Color(0, 0, 0))));
-		button_69.setBackground(Color.WHITE);
-		button_69.setAlignmentY(0.0f);
-		panel_3.add(button_69);
-		
-		JButton button_70 = new JButton("");
-		button_70.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_70.setBackground(Color.WHITE);
-		button_70.setAlignmentY(0.0f);
-		panel_3.add(button_70);
-		
-		JButton button_71 = new JButton("");
-		button_71.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_71.setBackground(Color.WHITE);
-		button_71.setAlignmentY(0.0f);
-		panel_3.add(button_71);
-		
-		JButton button_72 = new JButton("");
-		button_72.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_72.setBackground(Color.WHITE);
-		button_72.setAlignmentY(0.0f);
-		panel_3.add(button_72);
-		
-		JButton button_73 = new JButton("");
-		button_73.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_73.setBackground(Color.WHITE);
-		button_73.setAlignmentY(0.0f);
-		panel_3.add(button_73);
-		
-		JButton button_74 = new JButton("");
-		button_74.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_74.setBackground(Color.WHITE);
-		button_74.setAlignmentY(0.0f);
-		panel_3.add(button_74);
-		
-		JButton button_75 = new JButton("");
-		button_75.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_75.setBackground(Color.WHITE);
-		button_75.setAlignmentY(0.0f);
-		panel_3.add(button_75);
-		
-		JButton button_76 = new JButton("");
-		button_76.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_76.setBackground(Color.WHITE);
-		button_76.setAlignmentY(0.0f);
-		panel_3.add(button_76);
-		
-		JButton button_77 = new JButton("");
-		button_77.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_77.setBackground(Color.WHITE);
-		button_77.setAlignmentY(0.0f);
-		panel_3.add(button_77);
-		
-		JButton button_78 = new JButton("");
-		button_78.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_78.setBackground(Color.WHITE);
-		button_78.setAlignmentY(0.0f);
-		panel_3.add(button_78);
-		
-		JButton button_79 = new JButton("");
-		button_79.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_79.setBackground(Color.WHITE);
-		button_79.setAlignmentY(0.0f);
-		panel_3.add(button_79);
-		
-		JButton button_80 = new JButton("");
-		button_80.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_80.setBackground(Color.WHITE);
-		button_80.setAlignmentY(0.0f);
-		panel_3.add(button_80);
-		
-		JButton button_81 = new JButton("");
-		button_81.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_81.setBackground(Color.WHITE);
-		button_81.setAlignmentY(0.0f);
-		panel_3.add(button_81);
-		
-		JButton button_82 = new JButton("");
-		button_82.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_82.setBackground(Color.WHITE);
-		button_82.setAlignmentY(0.0f);
-		panel_3.add(button_82);
-		
-		JButton button_83 = new JButton("");
-		button_83.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_83.setBackground(Color.WHITE);
-		button_83.setAlignmentY(0.0f);
-		panel_3.add(button_83);
-		
-		JButton button_84 = new JButton("");
-		button_84.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_84.setBackground(Color.WHITE);
-		button_84.setAlignmentY(0.0f);
-		panel_3.add(button_84);
-		
-		JButton button_85 = new JButton("");
-		button_85.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_85.setBackground(Color.WHITE);
-		button_85.setAlignmentY(0.0f);
-		panel_3.add(button_85);
-		
-		JButton button_86 = new JButton("");
-		button_86.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_86.setBackground(Color.WHITE);
-		button_86.setAlignmentY(0.0f);
-		panel_3.add(button_86);
-		
-		JButton button_87 = new JButton("");
-		button_87.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_87.setBackground(Color.WHITE);
-		button_87.setAlignmentY(0.0f);
-		panel_3.add(button_87);
-		
-		JButton button_88 = new JButton("");
-		button_88.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_88.setBackground(Color.WHITE);
-		button_88.setAlignmentY(0.0f);
-		panel_3.add(button_88);
-		
-		JButton button_89 = new JButton("");
-		button_89.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_89.setBackground(Color.WHITE);
-		button_89.setAlignmentY(0.0f);
-		panel_3.add(button_89);
-		
-		JButton button_90 = new JButton("");
-		button_90.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_90.setBackground(Color.WHITE);
-		button_90.setAlignmentY(0.0f);
-		panel_3.add(button_90);
-		
-		JButton button_91 = new JButton("");
-		button_91.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_91.setBackground(Color.WHITE);
-		button_91.setAlignmentY(0.0f);
-		panel_3.add(button_91);
-		
-		JButton button_92 = new JButton("");
-		button_92.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_92.setBackground(Color.WHITE);
-		button_92.setAlignmentY(0.0f);
-		panel_3.add(button_92);
-		
-		JButton button_93 = new JButton("");
-		button_93.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_93.setBackground(Color.WHITE);
-		button_93.setAlignmentY(0.0f);
-		panel_3.add(button_93);
-		
-		JButton button_94 = new JButton("");
-		button_94.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_94.setBackground(Color.WHITE);
-		button_94.setAlignmentY(0.0f);
-		panel_3.add(button_94);
-		
-		JButton button_95 = new JButton("");
-		button_95.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_95.setBackground(Color.WHITE);
-		button_95.setAlignmentY(0.0f);
-		panel_3.add(button_95);
-		
-		JButton button_96 = new JButton("");
-		button_96.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-		button_96.setBackground(Color.WHITE);
-		button_96.setAlignmentY(0.0f);
-		panel_3.add(button_96);
-		
-		JButton button_97 = new JButton("");
-		button_97.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_97.setBackground(Color.WHITE);
-		button_97.setAlignmentY(0.0f);
-		panel_3.add(button_97);
-		
-		JButton button_98 = new JButton("");
-		button_98.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_98.setBackground(Color.WHITE);
-		button_98.setAlignmentY(0.0f);
-		panel_3.add(button_98);
-		
-		JButton button_99 = new JButton("");
-		button_99.setBorder(new LineBorder(new Color(153, 255, 255)));
-		button_99.setBackground(Color.WHITE);
-		button_99.setAlignmentY(0.0f);
-		panel_3.add(button_99);
+		JPanel panelGrille = new JPanel();
+		panelGrille.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelGrille.setBounds(99, 48, 501, 478);
+		panel_2.add(panelGrille);
+		panelGrille.setLayout(new GridLayout(Grille.getLines(), Grille.getColumns(), 0, 0));
+		
+		
+		//Tous les index de boutons dans la grille avec un matteBorder
+		int[] numerosBoutonsMatterBorder = new int[] {2, 6, 12, 16, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 36, 42, 46, 52, 56, 
+				60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 72, 76, 82, 86, 92, 96};
+		int numeroButtonActu = 0;
+		buttonsGrille = new JButton[Grille.getLines()][Grille.getColumns()];
+		JButton buttonActu = null;
+		//Initialisation du tableau de boutons
+		for(int x = 0; x < Grille.getLines(); x++) {
+			for(int y = 0; y < Grille.getColumns(); y++) {
+				buttonActu = new JButton("");
+				
+				if(nombreDansTabNombre(numeroButtonActu, numerosBoutonsMatterBorder))
+					buttonActu.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
+				else
+				    buttonActu.setBorder(new LineBorder(new Color(153, 255, 255)));
+				
+				
+				buttonActu.setBackground(Color.WHITE);
+				buttonActu.setAlignmentY(0.0f);
+				panelGrille.add(buttonActu);
+				buttonsGrille[x][y] = buttonActu;
+				numeroButtonActu++;
+			}
+		}
 		
 		JLabel label = new JLabel("A");
 		label.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -704,6 +143,9 @@ public class View_amiral extends JFrame{
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setBounds(552, 13, 41, 35);
 		panel_2.add(label_9);
+		
+		
+		
 		
 		JLabel label_10 = new JLabel("1");
 		label_10.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -822,22 +264,37 @@ public class View_amiral extends JFrame{
 		lblNavire.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblNavire.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_9.add(lblNavire);
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-	
+		
 	}
 	
-	 public void display() {
-	        setVisible(true);
-	    }
+	private boolean nombreDansTabNombre(int nombre, int[] tabNombre) {
+		for(int i = 0; i < tabNombre.length; i++) {
+			if(nombre == tabNombre[i])
+				return true;
+		}
+		return false;
+	}
+	
+	public void setControlButton(ActionListener listener) {
+		for(int x = 0; x < buttonsGrille.length; x++) {
+			for(int y = 0; y < buttonsGrille[x].length; y++) {
+				buttonsGrille[x][y].addActionListener(listener);
+			}
+		}
+		//Autres éléments donner
+	}
+	
+	public void display() {
+	    setVisible(true);
+	}
 
-	    public void undisplay() {
-	        setVisible(false);
-	    }
+	public void undisplay() {
+	    setVisible(false);
+	}
+	
+	private void changeVue() {
+		
+		
+	}
 
 }

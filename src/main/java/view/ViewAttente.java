@@ -14,6 +14,8 @@ import model.Son;
 
 public class ViewAttente extends JFrame {
 
+	private final static String NOM_EQUIPE_ERREUR = "Erreur";
+	
 	protected Bataille_navale_model model;
 	//Classe que j'ai créé moi-même pour faire du son
 	public Son sonAttente; //Son joué de base
@@ -34,6 +36,8 @@ public class ViewAttente extends JFrame {
     public Timer timerPanelJoueurs; //Permet de modifier régulièrement la liste des noms des joueurs
     public Timer timerPanelEquipes; //Permet de modifier les panels sur les équipes une fois qu'elles sont prêtes
     public Timer timerChangementFenetre; //S'occupe de la transition entre cette fenêtre et celle du jeu
+    
+    private boolean lanceVueAmiral; //Ce booléen permet de savoir si la vue à lancer à la fin de la préparation est celle de l'Amiral ou du Matelot
     
     
     public ViewAttente(Bataille_navale_model model) {
@@ -173,13 +177,30 @@ public class ViewAttente extends JFrame {
     	lancerPartie.setVisible(false);
     	quitterPartie.setVisible(false);
     	
+    	int placeEquipeRouge = joueur.isInTeam(idEtNomsRouge);
+    	int placeEquipeBleue = joueur.isInTeam(idEtNomsBleu);
+    	int placeEquipe = -1;
+    	
     	String nomEquipe = null;
-    	if(joueur.isInTeam(idEtNomsRouge))
+    	if(placeEquipeRouge >= 0) {
     	    nomEquipe = nomEquipeRouge;
-    	else if (joueur.isInTeam(idEtNomsBleu))
+    	    placeEquipe = placeEquipeRouge;
+    	} else if (placeEquipeBleue >= 0) {
     		nomEquipe = nomEquipeBleu;
-    	else
-    		nomEquipe = "Erreur";
+    		placeEquipe = placeEquipeBleue;
+    	} else
+    		nomEquipe = NOM_EQUIPE_ERREUR;
+    	
+    	String role = "(Aucun)";
+    	if(!nomEquipe.equals(NOM_EQUIPE_ERREUR)) {
+    		if(placeEquipe == 0) {
+    			role = "Amiral";
+    		    lanceVueAmiral = true;
+    		} else {
+    			role = "Matelot";
+    			lanceVueAmiral = false;
+    		}
+    	}
     	
     	
     	JLabel statut = new JLabel("Vous êtes dans l'équipe '" + nomEquipe + "'.");
@@ -188,12 +209,17 @@ public class ViewAttente extends JFrame {
     	placeNomsJoueurInLayout(idEtNomsRouge, true, panelEquipe1);
     	placeNomsJoueurInLayout(idEtNomsBleu, true, panelEquipe2);
     	
-    	messageDebutPartie = new JLabel("La partie va commencer");
-    	timerChangementFenetre.start();
+    	if(!nomEquipe.equals(NOM_EQUIPE_ERREUR)) {
+    	    messageDebutPartie = new JLabel("La partie va commencer");
+    	    timerChangementFenetre.start();
+    	} else {
+    		messageDebutPartie = new JLabel("Il y a eu un problème pendant la création des équipes...");
+    	}
     	general.add(statut);
     	general.add(messageDebutPartie);
     	//Changer la vue
     	setContentPane(general);
+    	
     }
     
     
@@ -233,8 +259,11 @@ public class ViewAttente extends JFrame {
 	public void apparitionVueCombat() {
 		timerChangementFenetre.stop();
 		undisplay(); //Faire disparaître cette fenêtre
-		System.out.println("Et c'est à ce moment que la nouvelle vue doit apparaître");
-        //groupCombat = new ControlGroupCombat(model);
+		//System.out.println("Et c'est à ce moment que la nouvelle vue doit apparaître");
+        /*if(lanceVueAmiral)
+        	//...
+        else
+        	//...*/
 	}
     
     public void creerDialogueErreur(String messageErreur, String titreErreur) {

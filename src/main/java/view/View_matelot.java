@@ -9,11 +9,16 @@ import java.awt.GridBagLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import model.Bataille_navale_model;
+import model.Grille;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
@@ -21,12 +26,21 @@ import javax.swing.border.MatteBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class View_interface extends JFrame{
+public class View_matelot extends JFrame{
+
+	protected Bataille_navale_model model;
+    public JButton[][] buttonsGrilleEquipe;
+    public JButton[][] buttonsGrilleAdverse;
+	
+	public View_matelot(Bataille_navale_model model) {
+		this.model = model;
+		initialize();
+	}
 
 	/**
-	 * Create the application.
+	 * Initialize the contents of the frame.
 	 */
-	public View_interface() {
+	private void initialize() {
 		setPreferredSize(new Dimension(1600, 900));
 		setSize(new Dimension(1600, 900));
 		setResizable(false);
@@ -60,6 +74,22 @@ public class View_interface extends JFrame{
 		button_2.setBorder(new LineBorder(new Color(153, 255, 255)));
 		panel_allie_button.add(button_2);
 		button_2.setAlignmentY(0.0f);
+		
+		//Initialisation des tableaux de boutons
+		
+		buttonsGrilleEquipe = new JButton[Grille.getLines()][Grille.getColumns()];
+		for(int x = 0; x < Grille.getLines(); x++) {
+			for(int y = 0; y < Grille.getColumns(); y++) {
+				
+			}
+		}
+		
+		buttonsGrilleAdverse = new JButton[Grille.getLines()][Grille.getColumns()];
+		for(int x = 0; x < Grille.getLines(); x++) {
+			for(int y = 0; y < Grille.getColumns(); y++) {
+				
+			}
+		}
 		
 		JButton button_1 = new JButton("");
 		button_1.setBackground(new Color(255, 255, 255));
@@ -1525,21 +1555,22 @@ public class View_interface extends JFrame{
 		lblVotreCamp.setBounds(477, 616, 123, 16);
 		getContentPane().add(lblVotreCamp);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel_allie_button, getContentPane()}));
-		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-
+	
+	public void setControlButton(ActionListener listener) {
+		for(int x = 0; x < buttonsGrilleEquipe.length; x++) {
+			for(int y = 0; y < buttonsGrilleEquipe[x].length; y++) {
+				buttonsGrilleEquipe[x][y].addActionListener(listener);
+			}
+		}
+		//Autres éléments donner
 	}
 	
 	 public void display() {
-	        setVisible(true);
-	    }
+	     setVisible(true);
+	 }
 
-	    public void undisplay() {
-	        setVisible(false);
-	    }
+	 public void undisplay() {
+	     setVisible(false);
+	 }
 }
