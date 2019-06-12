@@ -3,8 +3,8 @@ package view;
 import javax.swing.SwingWorker;
 
 public class ThreadCreationServ extends SwingWorker {
-	View v;
-	public ThreadCreationServ(View v) {
+	View_accueil v;
+	public ThreadCreationServ(View_accueil v) {
 		this.v = v;
 	}
 	

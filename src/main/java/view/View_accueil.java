@@ -7,8 +7,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
-
 import controller.ControlGroupAttente;
 import controller.ControlMenu;
 
@@ -18,23 +16,21 @@ import model.Bataille_navale_model;
 import model.Game;
 import model.Son;
 
-public class View extends JFrame {
+import java.awt.event.ActionEvent;
 
+
+public class View_accueil extends JFrame {
+
+	// Les JPanels
+	protected JPanel panel_view;
+	protected JPanel panel_champs;
+	protected JPanel panel_button;
+	
+	// Le model
 	protected Bataille_navale_model model;
 
+	// Le son
 	public Son sonDeFond;
-	public Son sonAlternatif;
-	
-	protected JPanel controlPanel;
-	protected JPanel gridPanel; 
-
-    public JButton testSon;
-    public JButton testSon2;
-    public JButton testStop;
-    protected JButton resetButton;
-    
-    protected JLabel titleAmiral;
-    protected JLabel title;
     
     //Les threads
     public ThreadCreationServ threadCreation;
@@ -44,60 +40,120 @@ public class View extends JFrame {
 
     //protected ControlMenu cm;
     
-    protected JTextField nomField;
-    protected JTextField adresseIpField;
-    protected JTextField portField;
+    // Les champs
+    protected JTextField textUser;
+    protected JTextField textIp;
+    protected JTextField textPort;
+    
+    // Les labels
     protected JLabel nomLabel;
     protected JLabel adresseIpLabel;
     protected JLabel portLabel;
-    public JButton launchInvite;
+        
+    // les boutons connexions
     public JButton launchCreateur;
+    public JButton launchInvite;
+    
+    //bouton pour stopper la musique;
+    public JButton btnStopperLaMusique;
+    
     
     protected ControlGroupAttente groupAttente; //Permet de faire apparaître la fenêtre attente
     
-    public View(Bataille_navale_model model) {
 
-        this.model = model;
-        
-        initAttribut();
+	public View_accueil(Bataille_navale_model model) {
+		
+		this.model = model;
+		
+		initialize();
         createMenu();
-        
-        //Permet de mettre en place tous les éléments crées dans InitAttribut
-        createView();
-        setSize(1024,700);
-        setResizable(false);
-        setTitle("Menu de bataille navale");
-        
-        //Permet apparement de centrer l'ecran et de l'arrêter quand on le ferme
-        addWindowListener(new FrameListener());
 
-        setLocationRelativeTo(null);
-    }
-    
+		setResizable(false);
+		
+		setTitle("Bataille Navale");
+		setBackground(new Color(240, 240, 240));
+		setBounds(100, 100, 800, 439);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
+		
+	}
 
-	private void initAttribut() {
-        //Éléments de test
-    	testSon       = new JButton("Test Son");
-    	testSon2      = new JButton("Test Son numéro 2");
-    	testStop      = new JButton("Stop");
-    	sonAlternatif = new Son("AreYouReady.wav");
-    	sonDeFond     = new Son("Hydrocity.wav"); //...Quoi ? Au moins cette musique possède l'eau comme thème (vous voyez... Bateau/Eau... Tout ça...)
-    	
-    	//Éléments pour créer/rejoindre Une Partie
-        nomField       = new JTextField();
-        adresseIpField = new JTextField();
-        portField      = new JTextField();
-        
-        nomLabel       = new JLabel("Nom: ");
-        adresseIpLabel = new JLabel("IP: ");
-        portLabel      = new JLabel("Port: ");
-        
-        launchInvite   = new JButton("Rejoindre une partie");
-        launchCreateur = new JButton("Créer une partie");
-        
-        creerThreadServeur();
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+
+
+		panel_view = new JPanel();
+		panel_view.setBounds(12, 162, 538, 409);
+		panel_view.setLayout(null);
+		
+		panel_champs = new JPanel();
+		panel_champs.setBounds(119, 205, 260, 169);
+		panel_view.add(panel_champs);
+		panel_champs.setLayout(null);
+		
+		panel_button = new JPanel();
+		panel_button.setBounds(451, 205, 199, 169);
+		panel_view.add(panel_button);
+		panel_button.setLayout(null);
+		
+		textPort = new JTextField();
+		textPort.setBounds(91, 105, 116, 22);
+		panel_champs.add(textPort);
+		textPort.setColumns(10);
+		
+		textIp = new JTextField();
+		textIp.setBounds(91, 70, 116, 22);
+		panel_champs.add(textIp);
+		textIp.setColumns(10);
+		
+		textUser = new JTextField();
+		textUser.setBounds(91, 35, 116, 22);
+		panel_champs.add(textUser);
+		textUser.setColumns(10);
+		
+		nomLabel = new JLabel("User :");
+		nomLabel.setBounds(35, 38, 35, 16);
+		panel_champs.add(nomLabel);
+		
+		adresseIpLabel = new JLabel("IP :");
+		adresseIpLabel.setBounds(35, 73, 20, 16);
+		panel_champs.add(adresseIpLabel);
+		
+		portLabel = new JLabel("Port :");
+		portLabel.setBounds(35, 108, 32, 16);
+		panel_champs.add(portLabel);
+				
+		launchCreateur = new JButton("Créer une partie");
+		launchCreateur.setBounds(27, 33, 149, 25);
+		panel_button.add(launchCreateur);
+		
+		launchInvite = new JButton("Rejoindre une partie");
+		launchInvite.setBounds(27, 71, 149, 25);
+		panel_button.add(launchInvite);
+		
+		btnStopperLaMusique = new JButton("Stopper la musique");
+		btnStopperLaMusique.setBounds(27, 124, 149, 25);
+		panel_button.add(btnStopperLaMusique);
+		
+		JLabel lblBatailleNavale = new JLabel("La Bataille Navale");
+		lblBatailleNavale.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBatailleNavale.setFont(new Font("Script MT Bold", Font.BOLD, 52));
+		lblBatailleNavale.setBounds(12, 13, 770, 205);
+		panel_view.add(lblBatailleNavale);
+		
+		JLabel lblNewLabel_1 = new JLabel("Bataille Navale");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Blackadder ITC", Font.PLAIN, 65));
+		lblNewLabel_1.setBounds(0, 46, 770, 72);
+		
+		creerThreadServeur();
         creerThreadJoin();
-    }
+        
+        setContentPane(panel_view);
+	}
 	
     private void creerThreadServeur() {
     	threadCreation = new ThreadCreationServ(this);
@@ -108,20 +164,25 @@ public class View extends JFrame {
     }
 	
     public void setButtonControler(ActionListener listener) {
-    	testSon.addActionListener(listener);
-    	testSon2.addActionListener(listener);
-    	testStop.addActionListener(listener);
+
+    	btnStopperLaMusique.addActionListener(listener);
     	launchInvite.addActionListener(listener);
     	launchCreateur.addActionListener(listener);
     }
+
+	public void creerDialogueErreur(String messageErreur, String titreErreur) {
+	    	JOptionPane erreur = new JOptionPane();
+	    	erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
+	    	JDialog fenErreur = erreur.createDialog(this, titreErreur);
+	}
 	
-    /**
+	  /**
      * Permet d'obtenir le numéro de port donné par l'utilisateur
      * @return Le numéro de port obtenu ou -1 si l'utilisateur n'a pas donné de nombre
      */
     private int getPortDonnee() {
     	try {
-    		return Integer.parseInt(portField.getText());
+    		return Integer.parseInt(textPort.getText());
     	} catch(NumberFormatException e) {
     		return -1;
     	}
@@ -129,7 +190,7 @@ public class View extends JFrame {
     
     public String getIpDonnee() {
     	//Ajouter une vérification
-    	return adresseIpField.getText();
+    	return textIp.getText();
     }
     
     public void useCreateThread() {
@@ -138,7 +199,7 @@ public class View extends JFrame {
     }
 	
 	private void createPartie() {
-		String nom     = nomField.getText();
+		String nom     = textUser.getText();
 		int numeroPort = getPortDonnee();
 		
 		if(nom == null) {
@@ -166,7 +227,7 @@ public class View extends JFrame {
 	 * Va créer si possible la partie avant de la rejoindre (la machine fera donc office de serveur et de client en même temps)
 	 */
 	private void rejoindrePartie() {
-		String nom     = nomField.getText();
+		String nom     = textUser.getText();
 		int numeroPort = getPortDonnee();
 		String ip      = getIpDonnee();
 		
@@ -197,13 +258,6 @@ public class View extends JFrame {
 		//groupAttente.viewAttente.display();
 	}
 	
-	
-	public void initAttributAmiral() {
-    	
-    	testSon = new JButton("haha");
-   
-    }
-    
     private void createMenu() {
     	
     		
@@ -211,41 +265,6 @@ public class View extends JFrame {
     
     public void stopAllSong() {
     	sonDeFond.arreter();
-    	sonAlternatif.arreter();
-    }
-    
-    private void createView() {
-    	  JPanel menu = new JPanel();
-    	  menu.setLayout(new GridLayout(5, 5));
-
-    	  JPanel ligneConnexion = new JPanel(new FlowLayout());
-    	  
-    	  JPanel ligneTest = new JPanel();
-    	  ligneTest.setLayout(new BoxLayout(ligneTest, BoxLayout.X_AXIS));
-    	  
-    	  JPanel ligneBouttons = new JPanel();
-    	  ligneBouttons.setLayout(new BoxLayout(ligneBouttons, BoxLayout.X_AXIS));
-    	  
-    	  ligneTest.add(testSon);
-    	  ligneTest.add(testSon2);
-    	  ligneTest.add(testStop);
-    	  
-    	  ligneConnexion.add(nomLabel);
-    	  ligneConnexion.add(nomField);
-    	  ligneConnexion.add(portLabel);
-    	  ligneConnexion.add(portField);
-    	  ligneConnexion.add(adresseIpLabel);
-    	  ligneConnexion.add(adresseIpField);
-    	  
-    	  ligneBouttons.add(launchCreateur);
-    	  ligneBouttons.add(new JPanel());
-    	  ligneBouttons.add(launchInvite);
-    	  
-    	  menu.add(ligneTest);
-    	  menu.add(ligneConnexion);
-    	  menu.add(ligneBouttons);
-    	  
-    	  setContentPane(menu);
     }
 	
     public void display() {
@@ -254,12 +273,6 @@ public class View extends JFrame {
 
     public void undisplay() {
         setVisible(false);
-    }
-    
-    public void creerDialogueErreur(String messageErreur, String titreErreur) {
-    	JOptionPane erreur = new JOptionPane();
-    	erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
-    	JDialog fenErreur = erreur.createDialog(this, titreErreur);
     }
     
     class FrameListener extends WindowAdapter

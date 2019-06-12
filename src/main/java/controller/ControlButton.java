@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
 import model.Son;
-import view.View;
+import view.View_accueil;
 
 public class ControlButton implements ActionListener {
 	
 	protected Bataille_navale_model model;
-	protected View view;
+	protected View_accueil view;
 	
 
-	public ControlButton(Bataille_navale_model model, View view) {
+	public ControlButton(Bataille_navale_model model, View_accueil view) {
 		this.model = model;
         this.view = view;
         
@@ -22,15 +22,7 @@ public class ControlButton implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e){
 		
-		if(e.getSource() == view.testSon){
-			System.out.println("Launch button");
-			view.sonDeFond.jouerEnBoucle();
-			
-		} else if(e.getSource() == view.testSon2) {
-			System.out.println("Launch button 2");
-			view.sonAlternatif.jouerEnBoucle();
-			
-		} else if(e.getSource() == view.testStop) {
+		if(e.getSource() == view.btnStopperLaMusique) {
 			System.out.println("Stop song");
 			view.stopAllSong();
 			

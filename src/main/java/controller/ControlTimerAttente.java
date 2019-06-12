@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
-import view.View;
+import view.View_accueil;
 import view.ViewAttente;
 
 public class ControlTimerAttente implements ActionListener {
