@@ -1,0 +1,8 @@
+amiral jpanel : grille + (tableau matelot, role, navire) + état des bateaux allié / adverse
+
+Matelot jpanel : texte rôle + état des bateaux allié / adverse +  grille matelot + grille adverse
+
+Accueil Jpanel : Jouer / statistique  / quitter
+
+
+
