@@ -348,16 +348,6 @@ public abstract class Navire implements Serializable {
 		tempsRechargement--;
 	}
 	
-	public abstract int getNBPieces();
-	
-	public abstract String getDebutNom();
-	
-	/**
-	 * Renvoie l'id du type de navire (sous-marin à cuirasse)  (pour créer des statistiques)
-	 * @return L'id du type de navire
-	 */
-	public abstract int getIdTypeNavire();
-	
 	/**
 	 * Permet d'obtenir à partir d'une position donnée celle correspondant à celle qu'obtiendra la tête en cas de déplacement
 	 * @param positionX
@@ -444,6 +434,16 @@ public abstract class Navire implements Serializable {
 	public String getNom() {
 		return nom;
 	}
+	
+	public abstract int getNBPieces();
+	
+	public abstract String getDebutNom();
+	
+	/**
+	 * Renvoie l'id du type de navire (sous-marin à cuirasse)  (pour créer des statistiques)
+	 * @return L'id du type de navire
+	 */
+	public abstract int getIdTypeNavire();
 
 	public PieceNavire[] getPieces() {
 		return pieces;
