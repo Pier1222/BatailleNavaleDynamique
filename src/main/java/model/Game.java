@@ -42,12 +42,12 @@ public class Game implements Serializable {
 			hote = joueur;
 		
 		    joueursEnAttentes.add(joueur);	
-		    changeIdJoueur();
+		    changeIdJoueurs();
 		    getNomsJoueur();
 		}
 	}
 	
-	private synchronized void changeIdJoueur() {
+	private synchronized void changeIdJoueurs() {
 		int idActu = ID_HOTE + 1;
 		for(Joueur j: joueursEnAttentes) {
 			if(j == hote)
@@ -99,8 +99,8 @@ public class Game implements Serializable {
 		Amiral amiralRouge = new Amiral(removeRandomJoueur());
 		Amiral amiralBleu  = new Amiral(removeRandomJoueur());
 		
-		String nomEquipeRouge = trouveNomEquipe(amiralRouge.getNom());
-		String nomEquipeBleu = trouveNomEquipe(amiralBleu.getNom());
+		String nomEquipeRouge = trouveNomEquipeEasterEgg(amiralRouge.getNom());
+		String nomEquipeBleu = trouveNomEquipeEasterEgg(amiralBleu.getNom());
 		if(nomEquipeRouge == null)
 			nomEquipeRouge = NOM_DEFAUT_EQUIPE_ROUGE;
 		if(nomEquipeBleu == null)
@@ -153,14 +153,14 @@ public class Game implements Serializable {
 	
 	//Si jamais on trouve marrant de mettre des noms d'équipes easter eggs en fonction du nom de l'amiral
 	//Genre "LE PROJET" pour "Emmanuel Macron", "Gotta Go Fast" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
-	private synchronized String trouveNomEquipe(String nomAmiral) {
+	private synchronized String trouveNomEquipeEasterEgg(String nomAmiral) {
 		return null;
 	}
 	
 	/**
 	 * Permet de connaître l'équipe adverse
 	 * @param equipe
-	 * @return L'autre équipe que celle donné en paramètre (ou null si l'équipe en question n'existe pas dans la partie)
+	 * @return L'autre équipe que celle donnée en paramètre (ou null si l'équipe en question n'existe pas dans la partie)
 	 */
 	public synchronized Equipe getAutreEquipe(Equipe equipe) {
 		if(equipe == equipeBleu)

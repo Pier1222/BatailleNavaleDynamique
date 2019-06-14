@@ -252,7 +252,7 @@ public class View_accueil extends JFrame {
 	}
 	
 	private void apparitionVueAttente() {
-		stopAllSong(); //On arrête toutes les musiques jouées actuellement
+		//stopAllSong(); //On arrête toutes les musiques jouées actuellement
 		undisplay(); //Faire disparaître cette fenêtre
         groupAttente = new ControlGroupAttente(model);
 		//groupAttente.viewAttente.display();

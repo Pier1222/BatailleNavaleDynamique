@@ -35,6 +35,7 @@ public class View_matelot extends JFrame{
 	public View_matelot(Bataille_navale_model model) {
 		this.model = model;
 		initialize();
+		//display();
 	}
 
 	/**

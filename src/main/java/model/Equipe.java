@@ -146,30 +146,6 @@ public class Equipe implements Serializable {
 			return null;
 		return partie.getAutreEquipe(this);
 	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public String getCouleur() {
-		return couleur;
-	}
-
-	public Grille getGrille() {
-		return grille;
-	}
-
-	public Game getPartie() {
-		return partie;
-	}
-
-	public Navire[] getNavires() {
-		return navires;
-	}
-
-	public boolean isEstPret() {
-		return estPret;
-	}
 	
 	/**
 	 * Vérifie si l'équipe a dans sa flotte le navire donné en paramètre
@@ -204,10 +180,6 @@ public class Equipe implements Serializable {
 	public void abandonne() {
 		aAbandonne = true;
 	}
-
-	public Amiral getAmiral() {
-		return amiral;
-	}
 	
 	public Navire getANavireParNom(String nomNavire) {
 		for(int i = 0; i < navires.length; i++) {
@@ -229,5 +201,33 @@ public class Equipe implements Serializable {
 		if(index < 0 || index >= matelots.size())
 			return null;
 		return matelots.get(index);
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public Grille getGrille() {
+		return grille;
+	}
+
+	public Game getPartie() {
+		return partie;
+	}
+
+	public Navire[] getNavires() {
+		return navires;
+	}
+
+	public boolean isEstPret() {
+		return estPret;
+	}
+	
+	public Amiral getAmiral() {
+		return amiral;
 	}
 }

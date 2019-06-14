@@ -13,10 +13,10 @@ public class Launcher_autre {
 		Bataille_navale_model model = new Bataille_navale_model();
 		//ControlGroup controlgroup = new ControlGroup(model);
 		
-		ControlGroup_amiral controlGroupAmiral = new ControlGroup_amiral(model);
+		//ControlGroup_amiral controlGroupAmiral = new ControlGroup_amiral(model);
 		
 		//View_amiral va = new View_amiral(model);
-		//View_matelot vi = new View_matelot(model);
+		View_matelot vi = new View_matelot(model);
 		
 		//va.display();
 		//vi.display();
