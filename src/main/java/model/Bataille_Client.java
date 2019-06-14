@@ -5,9 +5,9 @@ import java.io.IOException;
 public class Bataille_Client {
 
 	private Bataille_Client_Requester requester;
-	Joueur joueur;
-	String adresseIp;
-	int numeroPort;
+	private Joueur joueur;
+	private String adresseIp;
+	private int numeroPort;
 	
 	public Bataille_Client(Joueur joueur, String adresseIp, int numeroPort) throws IOException {
         this.joueur    = joueur;
@@ -30,7 +30,7 @@ public class Bataille_Client {
 	    return requester.getTabDeTabDeStringActu();	
 	}
 
-	public Game getEtatPartie() {
+	public Game getRequesterEtatPartie() {
 		return requester.getEtatPartie();
 	}
 }

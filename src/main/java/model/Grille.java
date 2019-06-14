@@ -71,10 +71,6 @@ public class Grille implements Serializable {
     	return (posX < LINES && posY < COLUMNS && posX >= 0 && posY >= 0);
     }
     
-    public Case[][] getCases() {
-        return this.cases;
-    }
-    
     public void printGrille(boolean montreEtat) {
     	printGrille(montreEtat, null);
     }
@@ -163,6 +159,10 @@ public class Grille implements Serializable {
 	public static int getColumns() {
 		return COLUMNS;
 	}
+	
+    public Case[][] getCases() {
+        return this.cases;
+    }
 	
 	public Case getUneCase(int positionX, int positionY) {
 		return cases[positionX][positionY];

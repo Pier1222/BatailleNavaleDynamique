@@ -19,9 +19,9 @@ public class Bataille_Server_Requester extends Thread {
 	private Socket commInfo;
 	private Game game;
 	private int id;
-	private ObjectInputStream ois; // used on commReq
-	private ObjectOutputStream oos; // used on commReq
-	private PrintStream ps; // used on commInfo
+	private ObjectInputStream ois; // utilisé avec commReq
+	private ObjectOutputStream oos; // utilisé avec commReq
+	private PrintStream ps; // utilisé avec commInfo (si on a le temps pour mettre un tchat)
 	
 	private StreamPool sp;
 	

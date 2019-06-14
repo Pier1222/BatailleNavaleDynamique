@@ -44,9 +44,10 @@ public class Bataille_navale_model {
 		return utilisateur.getClient().getRequesterTabDeTabDeString();
 	}
 	
+	//Contrairement aux autres, cette information n'est pas directement retourné car cela permettera au modèle d'être utilisé si on souhaite faire une version 1 joueur du jeu
 	public void actualisePartieActu() {
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getShowingReq());
-		partieActu = utilisateur.getClient().getEtatPartie();
+		partieActu = utilisateur.getClient().getRequesterEtatPartie();
 	}
 
 	public Game getPartieActu() {

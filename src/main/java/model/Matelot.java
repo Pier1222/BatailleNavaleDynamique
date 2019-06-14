@@ -112,7 +112,7 @@ public class Matelot extends Joueur {
 		naviresControles.add(navire);
 		//System.out.println("Nombre de navire: " + getNombreNaviresControles() + " est ce que " + navire.getNom() + " est dedans ?: " + possedeNavire(navire));
 		
-		getStatistiques().incrementUtilisationsNavires(navire);
+		getStatistiques().incrementeUtilisationsNavires(navire);
 		return true;
 	}
 	

@@ -45,7 +45,7 @@ public class Stats_Joueur implements Serializable {
 		
 	}
 	
-	public void incrementUtilisationsNavires(Navire navireUtilise) {
+	public void incrementeUtilisationsNavires(Navire navireUtilise) {
 		int idAAugmenter = navireUtilise.getIdTypeNavire();
 		if(idAAugmenter < 0 || idAAugmenter >= NB_TYPE_NAVIRE || nbUtilisationsNavires == null)
 			return; //Type de navire non valide
@@ -64,12 +64,12 @@ public class Stats_Joueur implements Serializable {
 		nbTirsTouches++;
 	}
 	
-	public void incrementeNbFoisAmiral() {
-		nbFoisAmiral++;
-	}
-	
 	public void incrementeNbTirsRates() {
 		nbTirsRates++;
+	}
+	
+	public void incrementeNbFoisAmiral() {
+		nbFoisAmiral++;
 	}
 	
 	public void incrementeNbRoleAttaque() {
@@ -108,7 +108,7 @@ public class Stats_Joueur implements Serializable {
 		return nbRoleDefense;
 	}
 
-	public int[] getNbUtilisationNavire() {
+	public int[] getNbUtilisationsNavire() {
 		return nbUtilisationsNavires;
 	}
 }
