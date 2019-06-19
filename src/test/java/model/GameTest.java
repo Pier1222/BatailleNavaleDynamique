@@ -42,7 +42,7 @@ public class GameTest {
 		Amiral amiralR = rouge.getAmiral();
 		Matelot matelotBAtt = bleu.getAMatelotDansListe(1);
 		
-		//L'amiral rouge va placer tous ses navires et annoncer qu'il est prêt
+		//L'Amiral rouge va placer tous ses navires et annoncer qu'il est prêt
 		amiralR.placeTousLesNavires();
 		rouge.setEquipeToPret();
 		
@@ -51,7 +51,9 @@ public class GameTest {
 		bleu.setEquipeToPret();
 		Navire navireDeTir = bleu.getNavires()[0]; //Le premier navire de l'équipe: le cuirassé
 		Navire navireCible = rouge.getNavires()[0];
-	    Case positionCible = navireCible.getTete().getPosition(); //Comme les deux équipes ont placés leurs navires de la même manière, cela devrait fonctionner
+		
+		//Comme les deux équipes ont placés leurs navires de la même manière, cela devrait fonctionner
+	    Case positionCible = navireCible.getTete().getPosition();
 	    amiralB.setNavireSelectionne(navireDeTir);
 	    amiralB.setMatelotSelectionne(matelotBAtt);
 	    amiralB.affecteRole(true);
