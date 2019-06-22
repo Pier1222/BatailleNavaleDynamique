@@ -21,7 +21,7 @@ public class Joueur implements Serializable {
 		id           = -1;
 		this.nom     = nom;
 		equipe       = null;
-		statistiques = new Stats_Joueur(); //Voir comment récupérer les stats dans ce cas
+		statistiques = new Stats_Joueur(nom);
 		client       = null;
 	}
 	
@@ -35,16 +35,17 @@ public class Joueur implements Serializable {
 	}
 	
 	/**
-	 * Va essayer de créer une partie
+	 * Va essayer de créer une partie et de la rejoindre
 	 * @param numeroPort
-	 * @return Vrai si la création a réussit, faux sinon
+	 * @return Vrai si la création et la connexion ont réussi, faux sinon
 	 */
 	public boolean creerPartie(int numeroPort) {
 		try {
 			Bataille_Server serveur = new Bataille_Server(numeroPort, this);
 		    serveur.start();
 		} catch (IOException e) {
-			System.out.println("Problème demande connexion au serveur au port " + numeroPort + " : " + e.getMessage());
+			System.out.println("Problème demande connexion au serveur au port " +
+		numeroPort + " : " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -52,16 +53,17 @@ public class Joueur implements Serializable {
 	}
 	
 	/**
-	 * Essaie de rejoindre une partie déjà créé
+	 * Essaie de rejoindre une partie déjà créée
 	 * @param adresseIp
 	 * @param numeroPort
-	 * @return Vrai si la connection a réussit, faux sinon
+	 * @return Vrai si la connexion a réussi, faux sinon
 	 */
 	public boolean rejoindrePartie(String adresseIp, int numeroPort) {
 		try {
 			client = new Bataille_Client(this, adresseIp, numeroPort);
 		} catch (IOException e) {
-			System.err.println("Erreur lors de la connexion à l'adressIP" + adresseIp + " au port " + numeroPort + ": \n " + e.getMessage());
+			System.err.println("Erreur lors de la connexion à l'adressIP" + adresseIp +
+					" au port " + numeroPort + ": \n " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}

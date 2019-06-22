@@ -14,13 +14,17 @@ public class Bataille_navale_model {
 	}
 	
 	public boolean createGame(String nomJoueur, int numeroPort) {
-		utilisateur = new Joueur(nomJoueur);
+		creerJoueur(nomJoueur);
 		return utilisateur.creerPartie(numeroPort);
 	}
 	
 	public boolean joinGame(String nomJoueur, String adresseIp, int numeroPort) {
-		utilisateur = new Joueur(nomJoueur);
+		creerJoueur(nomJoueur);
 		return utilisateur.rejoindrePartie(adresseIp, numeroPort);
+	}
+	
+	public void creerJoueur(String nomJoueur) {
+		utilisateur = new Joueur(nomJoueur);
 	}
 	
 	/**

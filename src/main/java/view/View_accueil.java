@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import controller.ControlGroupAttente;
+import controller.ControlGroup_stats;
 import controller.ControlMenu;
 
 import java.io.IOException;
@@ -53,18 +54,20 @@ public class View_accueil extends JFrame {
     // les boutons connexions
     public JButton launchCreateur;
     public JButton launchInvite;
+    public JButton viewStats;
     
     //bouton pour stopper la musique;
     public JButton btnStopperLaMusique;
     
     
     protected ControlGroupAttente groupAttente; //Permet de faire apparaître la fenêtre attente
+	protected ControlGroup_stats groupStats;
     
 
 	public View_accueil(Bataille_navale_model model) {
 		
 		this.model = model;
-		
+		groupStats = new ControlGroup_stats(this, model);
 		initialize();
         createMenu();
 
@@ -72,7 +75,7 @@ public class View_accueil extends JFrame {
 		
 		setTitle("Bataille Navale");
 		setBackground(new Color(240, 240, 240));
-		setBounds(100, 100, 800, 439);
+		setBounds(100, 100, 800, 450);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
@@ -90,12 +93,12 @@ public class View_accueil extends JFrame {
 		panel_view.setLayout(null);
 		
 		panel_champs = new JPanel();
-		panel_champs.setBounds(119, 205, 260, 169);
+		panel_champs.setBounds(119, 205, 260, 200);
 		panel_view.add(panel_champs);
 		panel_champs.setLayout(null);
 		
 		panel_button = new JPanel();
-		panel_button.setBounds(451, 205, 199, 169);
+		panel_button.setBounds(451, 205, 199, 200);
 		panel_view.add(panel_button);
 		panel_button.setLayout(null);
 		
@@ -138,6 +141,10 @@ public class View_accueil extends JFrame {
 		btnStopperLaMusique.setBounds(27, 124, 149, 25);
 		panel_button.add(btnStopperLaMusique);
 		
+		viewStats = new JButton("Statistiques");
+		viewStats.setBounds(27, 162, 149, 25);
+		panel_button.add(viewStats);
+		
 		JLabel lblBatailleNavale = new JLabel("La Bataille Navale");
 		lblBatailleNavale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBatailleNavale.setFont(new Font("Script MT Bold", Font.BOLD, 52));
@@ -164,16 +171,16 @@ public class View_accueil extends JFrame {
     }
 	
     public void setButtonControler(ActionListener listener) {
-
     	btnStopperLaMusique.addActionListener(listener);
     	launchInvite.addActionListener(listener);
     	launchCreateur.addActionListener(listener);
+    	viewStats.addActionListener(listener);
     }
 
 	public void creerDialogueErreur(String messageErreur, String titreErreur) {
-	    	JOptionPane erreur = new JOptionPane();
-	    	erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
-	    	JDialog fenErreur = erreur.createDialog(this, titreErreur);
+	    JOptionPane erreur = new JOptionPane();
+	    erreur.showMessageDialog(this, messageErreur, titreErreur, JOptionPane.ERROR_MESSAGE);
+	    JDialog fenErreur = erreur.createDialog(this, titreErreur);
 	}
 	
 	  /**
@@ -261,6 +268,16 @@ public class View_accueil extends JFrame {
     private void createMenu() {
     	
     		
+    }
+    
+    public void apparitionVueStats() {
+		String nom = textUser.getText();
+		if(nom == null) {
+			creerDialogueErreur("Aucun nom n'a été trouvé.", "Erreur de nom");
+			return;
+		}
+		model.creerJoueur(nom);
+		groupStats.displayVue();
     }
     
     public void stopAllSong() {

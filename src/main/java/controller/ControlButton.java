@@ -36,6 +36,10 @@ public class ControlButton implements ActionListener {
 			//view.rejoindrePartie();
 			view.threadJoin.execute();
 			
+		} else if (e.getSource() == view.viewStats) {
+			System.out.println("Affichage des statistiques");
+			view.apparitionVueStats();
+			
 		}
 		
 	}
