@@ -11,6 +11,7 @@ import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import model.Bataille_navale_model;
+import model.Case;
 import model.Grille;
 
 import java.awt.Component;
@@ -29,8 +30,8 @@ import javax.swing.SwingConstants;
 public class View_matelot extends JFrame{
 
 	protected Bataille_navale_model model;
-    public JButton[][] buttonsGrilleEquipe;
-    public JButton[][] buttonsGrilleAdverse;
+    public Case[][] buttonsGrilleEquipe;
+    public Case[][] buttonsGrilleAdverse;
 	
 	public View_matelot(Bataille_navale_model model) {
 		this.model = model;
@@ -64,6 +65,26 @@ public class View_matelot extends JFrame{
 		panel_allie_button.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_allie_button.setLayout(new GridLayout(10, 10, 0, 0));
 		
+		//Initialisation des tableaux de boutons
+		
+		buttonsGrilleEquipe = new Case[Grille.getLines()][Grille.getColumns()];
+		for(int x = 0; x < Grille.getLines(); x++) {
+			for(int y = 0; y < Grille.getColumns(); y++) {
+				buttonsGrilleEquipe[x][y] = new Case(x, y);
+				//panel_allie_button.add(buttonsGrilleEquipe[x][y]); à réactiver quand tous le reste sera viré
+				buttonsGrilleEquipe[x][y].setAlignmentY(0.0f);
+			}
+		}
+		
+		buttonsGrilleAdverse = new Case[Grille.getLines()][Grille.getColumns()];
+		for(int x = 0; x < Grille.getLines(); x++) {
+			for(int y = 0; y < Grille.getColumns(); y++) {
+				buttonsGrilleAdverse[x][y] = new Case(x, y);
+				//panel_3.add(button_150); à réactiver quand tous le reste sera viré
+				buttonsGrilleAdverse[x][y].setAlignmentY(0.0f);
+			}
+		}
+		
 		JButton button = new JButton("");
 		button.setBackground(new Color(255, 255, 255));
 		button.setBorder(new LineBorder(new Color(153, 255, 255)));
@@ -75,22 +96,6 @@ public class View_matelot extends JFrame{
 		button_2.setBorder(new LineBorder(new Color(153, 255, 255)));
 		panel_allie_button.add(button_2);
 		button_2.setAlignmentY(0.0f);
-		
-		//Initialisation des tableaux de boutons
-		
-		buttonsGrilleEquipe = new JButton[Grille.getLines()][Grille.getColumns()];
-		for(int x = 0; x < Grille.getLines(); x++) {
-			for(int y = 0; y < Grille.getColumns(); y++) {
-				
-			}
-		}
-		
-		buttonsGrilleAdverse = new JButton[Grille.getLines()][Grille.getColumns()];
-		for(int x = 0; x < Grille.getLines(); x++) {
-			for(int y = 0; y < Grille.getColumns(); y++) {
-				
-			}
-		}
 		
 		JButton button_1 = new JButton("");
 		button_1.setBackground(new Color(255, 255, 255));

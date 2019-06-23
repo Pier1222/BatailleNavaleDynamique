@@ -15,6 +15,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 
 import model.Bataille_navale_model;
+import model.Case;
 import model.Grille;
 
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ import java.awt.Font;
 public class View_amiral extends JFrame{
 	
 	protected Bataille_navale_model model;
-    public JButton[][] buttonsGrille;
+    public Case[][] buttonsGrille;
 
 	public View_amiral(Bataille_navale_model model) {
         this.model = model;
@@ -63,12 +64,12 @@ public class View_amiral extends JFrame{
 		int[] numerosBoutonsMatterBorder = new int[] {2, 6, 12, 16, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 36, 42, 46, 52, 56, 
 				60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 72, 76, 82, 86, 92, 96};
 		int numeroButtonActu = 0;
-		buttonsGrille = new JButton[Grille.getLines()][Grille.getColumns()];
-		JButton buttonActu = null;
+		buttonsGrille = new Case[Grille.getLines()][Grille.getColumns()];
+		Case buttonActu = null;
 		//Initialisation du tableau de boutons
 		for(int x = 0; x < Grille.getLines(); x++) {
 			for(int y = 0; y < Grille.getColumns(); y++) {
-				buttonActu = new JButton("");
+				buttonActu = new Case(x, y);
 				
 				if(nombreDansTabNombre(numeroButtonActu, numerosBoutonsMatterBorder))
 					buttonActu.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));

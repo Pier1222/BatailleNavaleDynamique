@@ -16,10 +16,10 @@ import model.Stats_Joueur;
 
 public class View_stats extends JDialog {
 	
-	private final static String[] TEXTES_STATISTIQUES = new String[] {"Nombre de victoires", "Nombre de défaites",
-			"Nombre de tirs touchés", "Nombre de tirs ratés", "Nombre de partie jouées en Amiral", 
-			"Nombre d'affectations en Matelot attaquant", "Nombre d'affectations en Matelot défenseur",
-			"Nombre de fois qu'un navire vous a été affectés"};
+	private final static String[] TEXTES_STATISTIQUES = new String[] {"Nombre de victoire(s)", "Nombre de défaite(s)",
+			"Nombre de tir(s) touché(s)", "Nombre de tir(s) raté(s)", "Nombre de partie(s) jouée(s) en tant qu'Amiral", 
+			"Nombre de fois où on vous a affecté le rôle 'Matelot attaquant'", "Nombre de fois où on vous a affecté le rôle 'Matelot défenseur'",
+			"Nombre de fois qu'un navire vous a été affecté"};
 	
 	protected JLabel[] labelsStatistiques;
 	protected Bataille_navale_model model;
@@ -31,7 +31,7 @@ public class View_stats extends JDialog {
 		super(parent, true); //Il devient impossible d'intérargir avec la parent tant que cette fenêtre est visible
         this.model = model;
         
-        setSize(500,800);
+        setSize(500, 300);
         initAttribut();
         
         //Centrer la fenêtre
@@ -40,7 +40,7 @@ public class View_stats extends JDialog {
         
         setResizable(false);
         
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //Car le bouton permet de couper la musique, lui
 	}
     
     private void initAttribut() {

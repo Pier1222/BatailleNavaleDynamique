@@ -4,12 +4,12 @@ import java.net.URLDecoder;
 import java.io.*;
 
 public class Stats_Joueur implements Serializable {
-	private static final String[] NOM_NAVIRES = new String[] {"Cuirassé", "Torpilleur", "Croiseur", "Sous-Marin"};
+	private static final String[] NOM_NAVIRES = new String[] {"Sous-Marin", "Torpilleur", "Croiseur", "Cuirassé"};
 	private static final int NB_TYPE_NAVIRE      = NOM_NAVIRES.length;
 	//Il s'agit du chemin permettant d'accéder au fichier .class de cet Objet
 	private static final String PATH = Stats_Joueur.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	private static final String NOM_DOSSIER_SAVE = "save";
-	private static final String FIN_NOM_FICHIER  = "_stat.save";
+	private static final String FIN_NOM_FICHIER  = "_stats.save";
 	
 	private String nomFichierSauvegarde;
 	
@@ -60,6 +60,11 @@ public class Stats_Joueur implements Serializable {
 			oos.writeInt(nbFoisAmiral);
 			oos.writeInt(nbRoleAttaque);
 			oos.writeInt(nbRoleDefense);
+			
+			for(int i = 0; i < nbUtilisationsNavires.length; i++) {
+				oos.writeInt(nbUtilisationsNavires[i]);
+			}
+			oos.flush(); //Pour être sûr que tout à bien été envoyé
 		} catch (FileNotFoundException e) {
 			System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour la sauvegarde");
 			e.printStackTrace();
@@ -82,6 +87,10 @@ public class Stats_Joueur implements Serializable {
 			nbFoisAmiral  = ois.readInt();
 			nbRoleAttaque = ois.readInt();
 			nbRoleDefense = ois.readInt();
+			
+			for(int i = 0; i < nbUtilisationsNavires.length; i++) {
+				nbUtilisationsNavires[i] = ois.readInt();
+			}
         } catch (FileNotFoundException e) {
 			System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour le chargement");
 			e.printStackTrace();

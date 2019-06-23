@@ -86,8 +86,6 @@ public class View_accueil extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
-
 		panel_view = new JPanel();
 		panel_view.setBounds(12, 162, 538, 409);
 		panel_view.setLayout(null);

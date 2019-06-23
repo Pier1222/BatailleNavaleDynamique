@@ -152,8 +152,22 @@ public class Game implements Serializable {
 	}
 	
 	//Si jamais on trouve marrant de mettre des noms d'équipes easter eggs en fonction du nom de l'amiral
-	//Genre "LE PROJET" pour "Emmanuel Macron", "Gotta Go Fast" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
+	//Genre "LE PROJET" pour "Emmanuel Macron", "Sonic Team" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
 	private synchronized String trouveNomEquipeEasterEgg(String nomAmiral) {
+		if(nomAmiral.equals("Andy") || nomAmiral.equals("Max") || nomAmiral.equals("Sami"))
+			return "Avanced Wars";
+		if(nomAmiral.equals("Beat") || nomAmiral.equals("Note") || nomAmiral.equals("Froze"))
+			return "Héros de Dragon Ball";
+		if(nomAmiral.equals("Sonic") || nomAmiral.equals("Tails") || nomAmiral.equals("Knuckles"))
+			return "Sonic Team";
+		if(nomAmiral.equals("Sofian Gherabi"))
+			return "Agents de la paix";
+		if(nomAmiral.equals("Emmanuel Macron"))
+			return "LE PROJET";
+		if(nomAmiral.equals("Pierrick Girardot") || nomAmiral.equals("Rémi Rosenblatt"))
+			return "Les créateurs";
+		if(nomAmiral.equals("Mario") || nomAmiral.equals("Luigi"))
+			return "Mario Brothers";
 		return null;
 	}
 	

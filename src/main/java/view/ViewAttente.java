@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
+import controller.ControlGroup_amiral;
+import controller.ControlGroup_matelot;
 import controller.ControlTimerAttente;
 
 import java.awt.*;
@@ -19,7 +21,7 @@ public class ViewAttente extends JFrame {
 	protected Bataille_navale_model model;
 	//Classe que j'ai créé moi-même pour faire du son
 	public Son sonAttente; //Son joué de base
-	public Son sonLancementPartie; //Son lors du compte à rebours avant de début de partie
+	public Son sonLancementPartie; //Son lors qu'on est sur le point de débuter une partie
 	
     public JButton lancerPartie; //Uniquement pour celui qui a lancer la partie
     public JButton quitterPartie; //Pour tout le monde
@@ -171,7 +173,7 @@ public class ViewAttente extends JFrame {
     	Joueur joueur = model.getUtilisateur();
     	
     	sonAttente.arreter();
-    	sonLancementPartie.start();
+    	sonLancementPartie.jouer();
     	timerPanelJoueurs.stop();
     	
     	lancerPartie.setVisible(false);
@@ -202,9 +204,7 @@ public class ViewAttente extends JFrame {
     		}
     	}
     	
-    	
     	JLabel statut = new JLabel("Vous êtes dans l'équipe '" + nomEquipe + "'.");
-    	//Modifier le texte pour indiquer "Vous êtes Amiral de l'équipe rouge par exemple"
     	
     	placeNomsJoueurInLayout(idEtNomsRouge, true, panelEquipe1);
     	placeNomsJoueurInLayout(idEtNomsBleu, true, panelEquipe2);
@@ -251,19 +251,20 @@ public class ViewAttente extends JFrame {
     		return idEtNom; //C'est que cette méthode a mal été utilisé
     	
     	for(int i = 1; i < tabIdEtNom.length; i++) {
-    		resultat += tabIdEtNom[i];
+    		resultat += " " + tabIdEtNom[i];
     	}
     	return resultat;
     }
     
 	public void apparitionVueCombat() {
 		timerChangementFenetre.stop();
+    	sonLancementPartie.arreter();
 		undisplay(); //Faire disparaître cette fenêtre
 		//System.out.println("Et c'est à ce moment que la nouvelle vue doit apparaître");
-        /*if(lanceVueAmiral)
-        	//...
+        if(lanceVueAmiral)
+        	new ControlGroup_amiral(model);
         else
-        	//...*/
+        	new ControlGroup_matelot(model);
 	}
     
     public void creerDialogueErreur(String messageErreur, String titreErreur) {
