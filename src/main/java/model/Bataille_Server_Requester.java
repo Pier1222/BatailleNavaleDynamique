@@ -103,6 +103,9 @@ public class Bataille_Server_Requester extends Thread {
 		} catch(IOException e) {
 			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.err.println("Il y a une erreur de type ClassNotFoundException pendant le traitement de la requête avec l'id " + requeteId);
+			e.printStackTrace();
 		}
 	}
 	
@@ -112,8 +115,45 @@ public class Bataille_Server_Requester extends Thread {
 		oos.flush();
 	}
 	
-	private void requestMoving() throws IOException {
-		oos.writeObject("A virer");
+	//Se charge du placement ET déplacement du navire (en fonction du type de joueur ayant créé la requête)
+	private void requestMoving() throws IOException, ClassNotFoundException {
+		int idJoueur      = ois.readInt();
+		String nomNavire  = (String) ois.readObject();
+		int positionXTete = ois.readInt();
+		int positionYTete = ois.readInt();
+		
+		Matelot matelot = game.getMatelot(idJoueur);
+		Amiral amiral   = game.getAmiral(idJoueur);
+		if(matelot == null && amiral == null) {
+			oos.writeBoolean(false);
+			oos.flush();
+			return;
+		}
+		
+		Navire navire = null;
+		if(matelot != null) {
+		    navire = game.getNavire(matelot.getEquipe(), nomNavire);
+		    if(navire == null) {
+			    oos.writeBoolean(false);
+			    oos.flush();
+			    return;
+		    }
+		
+		    matelot.setNavireSelectionne(navire);
+		    matelot.deplaceNavire(positionXTete, positionYTete);
+	    } else {
+		    navire = game.getNavire(amiral.getEquipe(), nomNavire);
+		    if(navire == null) {
+			    oos.writeBoolean(false);
+			    oos.flush();
+			    return;
+		    }
+		
+		    amiral.setNavireSelectionne(navire);
+		    amiral.placeNavire(positionXTete, positionYTete);
+	    }
+	    oos.writeBoolean(true);
+		oos.flush();
 	}
 	
 	private void requestFire() throws IOException {

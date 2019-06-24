@@ -26,9 +26,11 @@ public class ControlButton_matelot implements ActionListener {
 		for(int x = 0; x < Grille.getLines(); x++) {
 			for(int y = 0; y < Grille.getColumns(); y++) {
 				if(e.getSource() == viewMatelot.buttonsGrilleEquipe[x][y]) {
-					//Faire des trucs
+					System.out.println("Alliés: X = " + x + " Y = " + y);
+					
 				} else if(e.getSource() == viewMatelot.buttonsGrilleAdverse[x][y]) {
-					//Faire d'autres trucs
+					System.out.println("Ennemi: X = " + x + " Y = " + y);
+					
 				}
 			}
 		}

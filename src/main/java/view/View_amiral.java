@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
@@ -14,8 +15,10 @@ import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 
+import model.Amiral;
 import model.Bataille_navale_model;
 import model.Case;
+import model.Game;
 import model.Grille;
 
 import javax.swing.JLabel;
@@ -36,6 +39,19 @@ public class View_amiral extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Récupérer la partie
+		model.actualisePartieActu();
+		Game gameDebut = model.getPartieActu();
+		Amiral amiralTrouve = gameDebut.getAmiral(model.getUtilisateur().getId());
+		if(amiralTrouve == null)
+			return;
+		
+		Grille grilleDebut = amiralTrouve.getEquipe().getGrille();
+		
+		setPreferredSize(new Dimension(1600, 900));
+		setSize(new Dimension(1600, 900));
+		setResizable(false);
+		setTitle("Partie (amiral)");
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -59,29 +75,17 @@ public class View_amiral extends JFrame{
 		panel_2.add(panelGrille);
 		panelGrille.setLayout(new GridLayout(Grille.getLines(), Grille.getColumns(), 0, 0));
 		
-		
-		//Tous les index de boutons dans la grille avec un matteBorder
-		int[] numerosBoutonsMatterBorder = new int[] {2, 6, 12, 16, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 36, 42, 46, 52, 56, 
-				60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 72, 76, 82, 86, 92, 96};
-		int numeroButtonActu = 0;
-		buttonsGrille = new Case[Grille.getLines()][Grille.getColumns()];
+		buttonsGrille = grilleDebut.getCases();
 		Case buttonActu = null;
 		//Initialisation du tableau de boutons
 		for(int x = 0; x < Grille.getLines(); x++) {
 			for(int y = 0; y < Grille.getColumns(); y++) {
-				buttonActu = new Case(x, y);
-				
-				if(nombreDansTabNombre(numeroButtonActu, numerosBoutonsMatterBorder))
-					buttonActu.setBorder(new CompoundBorder(new LineBorder(new Color(153, 255, 255)), new MatteBorder(0, 0, 0, 5, (Color) new Color(0, 0, 0))));
-				else
-				    buttonActu.setBorder(new LineBorder(new Color(153, 255, 255)));
-				
+				buttonActu = buttonsGrille[x][y];
+				buttonActu.changeBorderToDefault();
 				
 				buttonActu.setBackground(Color.WHITE);
 				buttonActu.setAlignmentY(0.0f);
 				panelGrille.add(buttonActu);
-				buttonsGrille[x][y] = buttonActu;
-				numeroButtonActu++;
 			}
 		}
 		
@@ -143,10 +147,7 @@ public class View_amiral extends JFrame{
 		label_9.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_9.setHorizontalAlignment(SwingConstants.CENTER);
 		label_9.setBounds(552, 13, 41, 35);
-		panel_2.add(label_9);
-		
-		
-		
+		panel_2.add(label_9);	
 		
 		JLabel label_10 = new JLabel("1");
 		label_10.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -214,10 +215,10 @@ public class View_amiral extends JFrame{
 		panel_4.setBounds(0, 0, 135, 256);
 		panel_1.add(panel_4);
 		
-		JLabel lblAlli = new JLabel("Allié");
+		JLabel lblAlli = new JLabel(amiralTrouve.getEquipe().getNom());
 		lblAlli.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAlli.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlli.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblAlli.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblAlli.setBounds(12, 13, 111, 16);
 		panel_4.add(lblAlli);
 		
@@ -227,8 +228,8 @@ public class View_amiral extends JFrame{
 		panel_5.setBounds(0, 321, 135, 259);
 		panel_1.add(panel_5);
 		
-		JLabel lblNewLabel = new JLabel("Adversaire");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		JLabel lblNewLabel = new JLabel(amiralTrouve.getEquipe().getEquipeAdverse().getNom());
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 13, 111, 16);
@@ -266,14 +267,6 @@ public class View_amiral extends JFrame{
 		lblNavire.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_9.add(lblNavire);
 		
-	}
-	
-	private boolean nombreDansTabNombre(int nombre, int[] tabNombre) {
-		for(int i = 0; i < tabNombre.length; i++) {
-			if(nombre == tabNombre[i])
-				return true;
-		}
-		return false;
 	}
 	
 	public void setControlButton(ActionListener listener) {

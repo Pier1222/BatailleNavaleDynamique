@@ -1,6 +1,8 @@
 package model;
 
-public class PieceNavire {
+import java.io.Serializable;
+
+public class PieceNavire implements Serializable {
 	
 	private Case position;
 	private boolean estEndommage;

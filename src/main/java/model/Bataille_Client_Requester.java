@@ -93,7 +93,7 @@ public class Bataille_Client_Requester {
 			    doMoving(requeteDecoupe);
 			    needToShow = true;
 		    } else if(titreRequete.equals(FIRE_REQ)) {
-			    requestFire();
+			    doFire(requeteDecoupe);
 			    needToShow = true;
 		    } else if(titreRequete.equals(DISPLAY_REQ)) {
 			    requestDisplay();
@@ -116,6 +116,9 @@ public class Bataille_Client_Requester {
 		} catch(ClassNotFoundException e) {
 			System.err.println("Une classe non connue a été révélée durant le traitement de la requête '" + requete + "'");
 			e.printStackTrace();
+		} catch(NumberFormatException e) {
+			System.err.println("Un des éléments de la '" + requete + "' n'est pas un entier alors qu'il devrait en être un");
+			e.printStackTrace();
 		}
 	}
 	
@@ -132,17 +135,19 @@ public class Bataille_Client_Requester {
 		 * - Eventuellemennt, mémorise l'état du jeu
 		 */
 		oos.writeInt(SHOWING_ID);
+		oos.flush();
 		etatPartie = (Game) ois.readObject();
 	}
 	
-	private void doMoving(String[] requeteDecoupe) {
+	private void doMoving(String[] requeteDecoupe) throws IOException, NumberFormatException {
 		if(requeteDecoupe.length < 4) {
 			return;
 		}
 		
-		
-		
-		//requestMoving();
+		String nomNavire = requeteDecoupe[1];
+		int positionXTete = Integer.parseInt(requeteDecoupe[2]);
+		int positionYTete = Integer.parseInt(requeteDecoupe[3]);
+		requestMoving(nomNavire, positionXTete, positionYTete);
 	}
 	
 	private void requestMoving(String nomNavire, int positionXTete, int positionYTete) throws IOException {
@@ -152,7 +157,12 @@ public class Bataille_Client_Requester {
 		 * mouvement)
 		 */
 		oos.writeInt(MOVING_ID);
+		oos.writeInt(joueurClient.getId());
+		oos.writeObject(nomNavire);
+		oos.writeInt(positionXTete);
+		oos.writeInt(positionYTete);
 		oos.flush();
+		ois.readBoolean();
 	}
 	
 	private void doFire(String[] requeteDecoupe) {
@@ -161,7 +171,7 @@ public class Bataille_Client_Requester {
 		}
 	}
 	
-	private void requestFire() throws IOException {
+	private void requestFire(String nomNavire, int positionXCible, int positionYCible) throws IOException {
 		/*
 		 * Envoie au client destinataire cible connu de Vector, le message Fire donnant la
 		 * position du tir
@@ -179,7 +189,7 @@ public class Bataille_Client_Requester {
 		oos.flush();
 	}
 	
-	private void requestDestroy(Navire navireADetruire) throws IOException {
+	private void requestDestroy(String nomNavireADetruire) throws IOException {
 	    /*
 	     * Envoie au client destinataire cible et à l'Amiral, tous les 2 connus de Vector, le
 	     * message Destroyed donnant la position du navire à effacer	

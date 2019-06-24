@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.swing.JButton;
 import javax.swing.border.Border;
@@ -8,7 +9,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-public class Case extends JButton {
+public class Case extends JButton implements Serializable {
 	
 	private final static int TAILLE_MATTER_BORDER = 5;
 

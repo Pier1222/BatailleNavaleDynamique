@@ -216,6 +216,17 @@ public class Game implements Serializable {
 		return equipeRouge.getAMatelotParId(idMatelot);
 	}
 	
+	public synchronized Amiral getAmiral(int idAmiral) {
+		Amiral amiralTrouve = null;
+		Amiral amiralBleu = equipeBleu.getAmiral();
+		Amiral amiralRouge = equipeRouge.getAmiral();
+		if(amiralBleu.getId() == idAmiral)
+			amiralTrouve = amiralBleu;
+		else if(amiralRouge.getId() == idAmiral)
+			amiralTrouve = amiralRouge;
+		return amiralTrouve;
+	}
+	
 	/**
 	 * Permet de rechercher un Navire qui est dans la partie via son équipe et son nom
 	 * @param equipeNavire
