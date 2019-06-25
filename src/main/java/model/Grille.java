@@ -15,12 +15,17 @@ public class Grille implements Serializable {
     
     /*private final static int[] NUMERO_MATTER_ALL = new int[] {2, 6, 12, 16, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 32, 36, 42, 46, 52, 56, 
 			60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 72, 76, 82, 86, 92, 96};*/
-	private final static int[] NUMERO_MATTER_BORDER_DROITE = new int[] {2, 6, 12, 16, 22, 23, 24, 25, 26, 27, 28, 29, 32, 36, 42, 46, 52, 56, 
-			60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 72, 76, 82, 86, 92, 96};
+	private final static int[] NUMERO_MATTER_BORDER_DROITE = new int[] {2, 6, 12, 16, 42, 46, 52, 56, 82, 86, 92, 96};
 	
-	private final static int[] NUMERO_MATTER_BORDER_BAS = new int[] {20, 21};
+	private final static int[] NUMERO_MATTER_BORDER_BAS = new int[] {20, 21, 24, 25, 28, 29, 60, 61, 64, 65, 68, 69};
 	
-	private static int[] NUMERO_MATTER_BORDER_GAUCHE = getNumeroBorderAutre(NUMERO_MATTER_BORDER_DROITE, 1);
+	private final static int[] NUMERO_MATTER_BORDER_BAS_DROITE = new int[] {22, 26, 62, 66};
+	
+	private static int[] NUMERO_MATTER_BORDER_GAUCHE      = getNumeroBorderAutre(NUMERO_MATTER_BORDER_DROITE, 1);
+	private static int[] NUMERO_MATTER_BORDER_HAUT        = getNumeroBorderAutre(NUMERO_MATTER_BORDER_BAS, LINES);
+	private static int[] NUMERO_MATTER_BORDER_BAS_GAUCHE  = getNumeroBorderAutre(NUMERO_MATTER_BORDER_BAS_DROITE, 1);
+	private static int[] NUMERO_MATTER_BORDER_HAUT_DROITE = getNumeroBorderAutre(NUMERO_MATTER_BORDER_BAS_DROITE, LINES);
+	private static int[] NUMERO_MATTER_BORDER_HAUT_GAUCHE = getNumeroBorderAutre(NUMERO_MATTER_BORDER_BAS_GAUCHE, LINES);
 	
 	/**
 	 * Permet d'avoir, par exemple, les index des cases qui doivent avoir une bordure à gauche par rapport aux index de celles qui sont à droite
@@ -37,8 +42,6 @@ public class Grille implements Serializable {
 		return numeroBorderAutre;
 	}
 	
-	
-	
 	private Case[][] cases;
 
     public Grille() {
@@ -54,6 +57,20 @@ public class Grille implements Serializable {
     			numeroBordureActu = Case.getBORDURE_SANS();
     			if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_DROITE))
     				numeroBordureActu = Case.getBORDURE_DROITE();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_GAUCHE))
+    				numeroBordureActu = Case.getBORDURE_GAUCHE();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_BAS))
+    				numeroBordureActu = Case.getBORDURE_BAS();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_HAUT))
+    				numeroBordureActu = Case.getBORDURE_HAUT();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_BAS_DROITE))
+    				numeroBordureActu = Case.getBORDURE_BAS_DROITE();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_BAS_GAUCHE))
+    				numeroBordureActu = Case.getBORDURE_BAS_GAUCHE();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_HAUT_DROITE))
+    				numeroBordureActu = Case.getBORDURE_HAUT_DROITE();
+    			else if(nombreDansTabNombre(numeroCaseActu, NUMERO_MATTER_BORDER_HAUT_GAUCHE))
+    				numeroBordureActu = Case.getBORDURE_HAUT_GAUCHE();
     			
         		cases[x][y] = new Case(x, y, numeroBordureActu);
     			numeroCaseActu++;

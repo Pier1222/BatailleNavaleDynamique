@@ -13,6 +13,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import model.Amiral;
 import model.Bataille_navale_model;
 import model.Case;
+import model.Equipe;
 import model.Game;
 import model.Grille;
 import model.Matelot;
@@ -31,7 +32,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class View_matelot extends JFrame{
-
+    private final static int ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE = 99;
+	
+	
 	protected Bataille_navale_model model;
     public Case[][] buttonsGrilleEquipe;
     public Case[][] buttonsGrilleAdverse;
@@ -39,7 +42,6 @@ public class View_matelot extends JFrame{
 	public View_matelot(Bataille_navale_model model) {
 		this.model = model;
 		initialize();
-		//display();
 	}
 
 	/**
@@ -53,13 +55,16 @@ public class View_matelot extends JFrame{
 		if(matelotTrouve == null)
 			return;
 		
-		Grille grilleEquipeDebut = matelotTrouve.getEquipe().getGrille();
-		Grille grilleAdverseDebut = matelotTrouve.getEquipe().getEquipeAdverse().getGrille();
+		Equipe equipeMatelot = matelotTrouve.getEquipe();
+		Equipe equipeAdverse = equipeMatelot.getEquipeAdverse();
+		
+		Grille grilleEquipeDebut = equipeMatelot.getGrille();
+		Grille grilleAdverseDebut = equipeAdverse.getGrille();
 		
 		setPreferredSize(new Dimension(1600, 900));
 		setSize(new Dimension(1600, 900));
 		setResizable(false);
-		setTitle("Partie (matelot)");
+		setTitle("Partie (matelot '" + matelotTrouve.getNom() + "')");
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -73,7 +78,7 @@ public class View_matelot extends JFrame{
 		panel_zone_grille.setLayout(null);
 		
 		JPanel panel_allie_button = new JPanel();
-		panel_allie_button.setBounds(99, 48, 524, 504);
+		panel_allie_button.setBounds(ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 48, 524, 504);
 		panel_zone_grille.add(panel_allie_button);
 		panel_allie_button.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_allie_button.setLayout(new GridLayout(10, 10, 0, 0));
@@ -222,16 +227,16 @@ public class View_matelot extends JFrame{
 		panel_1.setBounds(796, 56, 798, 547);
 		getContentPane().add(panel_1);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBounds(0, 0, 655, 615);
-		panel_1.add(panel_2);
+		JPanel panel_zone_adversaire = new JPanel();
+		panel_zone_adversaire.setLayout(null);
+		panel_zone_adversaire.setBounds(0, 0, 655, 615);
+		panel_1.add(panel_zone_adversaire);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_3.setBounds(99, 48, 524, 504);
-		panel_2.add(panel_3);
-		panel_3.setLayout(new GridLayout(10, 10, 0, 0));
+		JPanel panel_adversaire_button = new JPanel();
+		panel_adversaire_button.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_adversaire_button.setBounds(ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 48, 524, 504);
+		panel_zone_adversaire.add(panel_adversaire_button);
+		panel_adversaire_button.setLayout(new GridLayout(10, 10, 0, 0));
 		
 		buttonsGrilleAdverse = grilleAdverseDebut.getCases();
 		Case caseAdverse = null;
@@ -241,7 +246,7 @@ public class View_matelot extends JFrame{
 				caseAdverse.setBackground(Color.WHITE);
 				caseAdverse.changeBorderToDefault();
 				caseAdverse.setAlignmentY(0.0f);
-				panel_3.add(caseAdverse);
+				panel_adversaire_button.add(caseAdverse);
 			}
 		}
 		
@@ -249,121 +254,121 @@ public class View_matelot extends JFrame{
 		label_10.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_10.setHorizontalAlignment(SwingConstants.CENTER);
 		label_10.setBounds(102, 13, 53, 35);
-		panel_2.add(label_10);
+		panel_zone_adversaire.add(label_10);
 		
 		JLabel label_11 = new JLabel("B");
 		label_11.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_11.setHorizontalAlignment(SwingConstants.CENTER);
 		label_11.setBounds(152, 13, 53, 35);
-		panel_2.add(label_11);
+		panel_zone_adversaire.add(label_11);
 		
 		JLabel label_12 = new JLabel("C");
 		label_12.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_12.setHorizontalAlignment(SwingConstants.CENTER);
 		label_12.setBounds(201, 13, 53, 35);
-		panel_2.add(label_12);
+		panel_zone_adversaire.add(label_12);
 		
 		JLabel label_13 = new JLabel("D");
 		label_13.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_13.setHorizontalAlignment(SwingConstants.CENTER);
 		label_13.setBounds(253, 13, 53, 35);
-		panel_2.add(label_13);
+		panel_zone_adversaire.add(label_13);
 		
 		JLabel label_14 = new JLabel("E");
 		label_14.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_14.setHorizontalAlignment(SwingConstants.CENTER);
 		label_14.setBounds(309, 13, 53, 35);
-		panel_2.add(label_14);
+		panel_zone_adversaire.add(label_14);
 		
 		JLabel label_15 = new JLabel("F");
 		label_15.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_15.setHorizontalAlignment(SwingConstants.CENTER);
 		label_15.setBounds(363, 13, 53, 35);
-		panel_2.add(label_15);
+		panel_zone_adversaire.add(label_15);
 		
 		JLabel label_16 = new JLabel("G");
 		label_16.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_16.setHorizontalAlignment(SwingConstants.CENTER);
 		label_16.setBounds(410, 13, 53, 35);
-		panel_2.add(label_16);
+		panel_zone_adversaire.add(label_16);
 		
 		JLabel label_17 = new JLabel("H");
 		label_17.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_17.setHorizontalAlignment(SwingConstants.CENTER);
 		label_17.setBounds(462, 13, 53, 35);
-		panel_2.add(label_17);
+		panel_zone_adversaire.add(label_17);
 		
 		JLabel label_18 = new JLabel("I");
 		label_18.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_18.setHorizontalAlignment(SwingConstants.CENTER);
 		label_18.setBounds(515, 13, 53, 35);
-		panel_2.add(label_18);
+		panel_zone_adversaire.add(label_18);
 		
 		JLabel label_19 = new JLabel("J");
 		label_19.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_19.setHorizontalAlignment(SwingConstants.CENTER);
 		label_19.setBounds(569, 13, 53, 35);
-		panel_2.add(label_19);
+		panel_zone_adversaire.add(label_19);
 		
 		JLabel label_20 = new JLabel("1");
 		label_20.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_20.setHorizontalAlignment(SwingConstants.CENTER);
 		label_20.setBounds(58, 47, 42, 51);
-		panel_2.add(label_20);
+		panel_zone_adversaire.add(label_20);
 		
 		JLabel label_21 = new JLabel("2");
 		label_21.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_21.setHorizontalAlignment(SwingConstants.CENTER);
 		label_21.setBounds(58, 102, 42, 51);
-		panel_2.add(label_21);
+		panel_zone_adversaire.add(label_21);
 		
 		JLabel label_22 = new JLabel("3");
 		label_22.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_22.setHorizontalAlignment(SwingConstants.CENTER);
 		label_22.setBounds(58, 149, 42, 51);
-		panel_2.add(label_22);
+		panel_zone_adversaire.add(label_22);
 		
 		JLabel label_23 = new JLabel("4");
 		label_23.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_23.setHorizontalAlignment(SwingConstants.CENTER);
 		label_23.setBounds(58, 198, 42, 51);
-		panel_2.add(label_23);
+		panel_zone_adversaire.add(label_23);
 		
 		JLabel label_24 = new JLabel("5");
 		label_24.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_24.setHorizontalAlignment(SwingConstants.CENTER);
 		label_24.setBounds(58, 249, 42, 51);
-		panel_2.add(label_24);
+		panel_zone_adversaire.add(label_24);
 		
 		JLabel label_25 = new JLabel("6");
 		label_25.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_25.setHorizontalAlignment(SwingConstants.CENTER);
 		label_25.setBounds(58, 297, 42, 51);
-		panel_2.add(label_25);
+		panel_zone_adversaire.add(label_25);
 		
 		JLabel label_26 = new JLabel("7");
 		label_26.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_26.setHorizontalAlignment(SwingConstants.CENTER);
 		label_26.setBounds(58, 350, 42, 51);
-		panel_2.add(label_26);
+		panel_zone_adversaire.add(label_26);
 		
 		JLabel label_27 = new JLabel("8");
 		label_27.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_27.setHorizontalAlignment(SwingConstants.CENTER);
 		label_27.setBounds(58, 399, 42, 51);
-		panel_2.add(label_27);
+		panel_zone_adversaire.add(label_27);
 		
 		JLabel label_28 = new JLabel("9");
 		label_28.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_28.setHorizontalAlignment(SwingConstants.CENTER);
 		label_28.setBounds(58, 446, 42, 51);
-		panel_2.add(label_28);
+		panel_zone_adversaire.add(label_28);
 		
 		JLabel label_29 = new JLabel("10");
 		label_29.setHorizontalTextPosition(SwingConstants.CENTER);
 		label_29.setHorizontalAlignment(SwingConstants.CENTER);
 		label_29.setBounds(58, 498, 42, 51);
-		panel_2.add(label_29);
+		panel_zone_adversaire.add(label_29);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new LineBorder(Color.RED, 3));
@@ -371,12 +376,14 @@ public class View_matelot extends JFrame{
 		panel_4.setBounds(660, 0, 135, 240);
 		panel_1.add(panel_4);
 		
-		JLabel lblNewLabel = new JLabel("Le camp adverse");
-		lblNewLabel.setBounds(1110, 616, 123, 16);
-		getContentPane().add(lblNewLabel);
+		JLabel lblCampAdverse = new JLabel(equipeAdverse.getNom() + " (camp adverse)", SwingConstants.CENTER);
+		lblCampAdverse.setBounds(panel_1.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_adversaire.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
+		lblCampAdverse.setBorder(new LineBorder(Color.RED));
+		getContentPane().add(lblCampAdverse);
 		
-		JLabel lblVotreCamp = new JLabel("Votre camp");
-		lblVotreCamp.setBounds(477, 616, 123, 16);
+		JLabel lblVotreCamp = new JLabel(equipeMatelot.getNom() + " (Votre camp)", SwingConstants.CENTER);
+		lblVotreCamp.setBounds(panel_zone_grille.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_grille.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
+		lblVotreCamp.setBorder(new LineBorder(Color.RED));
 		getContentPane().add(lblVotreCamp);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel_allie_button, getContentPane()}));
 	}

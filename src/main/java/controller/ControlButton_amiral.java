@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
 import model.Grille;
+import model.Navire;
+import model.PieceNavire;
 import view.View_amiral;
 
 public class ControlButton_amiral implements ActionListener {
@@ -24,13 +26,45 @@ public class ControlButton_amiral implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    //Recherche si la source est un des boutons
+		if(e.getSource() == viewAmiral.tourneNavire) {
+			
+		}
+		
+		for(int i = 0; i < viewAmiral.boutonsNavires.length; i++) {
+			if(e.getSource() == viewAmiral.boutonsNavires[i]) {
+				viewAmiral.changeNomNavire(viewAmiral.boutonsNavires[i].getText());
+			}
+		}
+		
+		for(int i = 0; i < viewAmiral.nbMatelots; i++) {
+			if(e.getSource() == viewAmiral.buttonsMatelots[i]) {
+				viewAmiral.changeIdMatelot(i);
+				System.out.println("Matelot n°" + i + " (id: " + viewAmiral.idMatelotSelect + ")");
+			}
+		}
+		
 		for(int x = 0; x < Grille.getLines(); x++) {
 			for(int y = 0; y < Grille.getColumns(); y++) {
 				if(e.getSource() == viewAmiral.buttonsGrille[x][y]) {
 					System.out.println("Grille amiral: X = " + x + " Y = " + y);
-					//Faire des trucs
+					//On vérifie si il  y a un navire ou pas
+					PieceNavire piecePose = viewAmiral.buttonsGrille[x][y].getPiecePose();
+					Navire navirePresent = null;
+					if(piecePose != null)
+						navirePresent = piecePose.getNavireAttache();
+					
+					if(navirePresent == null) {
+						
+					} else {
+						
+					}
+					
 				}
 			}
+		}
+		
+		if(e.getSource() == viewAmiral.boutonPret) {
+			
 		}
 	}
 }

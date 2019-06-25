@@ -11,7 +11,7 @@ import javax.swing.border.MatteBorder;
 
 public class Case extends JButton implements Serializable {
 	
-	private final static int TAILLE_MATTER_BORDER = 5;
+	private final static int TAILLE_MATTER_BORDER = 2;
 
 	private final static int BORDURE_SANS        = 0;
 	private final static int BORDURE_DROITE      = 1;

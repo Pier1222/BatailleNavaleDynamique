@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
@@ -18,20 +19,52 @@ import javax.swing.border.MatteBorder;
 import model.Amiral;
 import model.Bataille_navale_model;
 import model.Case;
+import model.Equipe;
 import model.Game;
 import model.Grille;
+import model.Matelot;
+import model.Navire;
+import model.PieceNavire;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
 public class View_amiral extends JFrame{
+	private final static Color COULEUR_FOND_BOUTON      = Color.WHITE;
+	private final static Color COULEUR_BORDURE_MATELOTS = Color.BLACK;
+	private final static Color COULEUR_FOND_MATELOTS    = Color.WHITE;
+	private final static Color COULEUR_FOND_NON_SELECT  = Color.LIGHT_GRAY;
+	private final static Color COULEUR_FOND_SELECT      = Color.GREEN;
+	
+	private final static String TOURNE_HORIZONTAL = "Horizontal";
+	private final static String TOURNE_VERTICAL   = "Vertical";
 	
 	protected Bataille_navale_model model;
     public Case[][] buttonsGrille;
+    
+    private String nomNavireSelectionne;
+    public JButton[] buttonsNavire; //Pour placer les navires en début de partie
+    public JButton tourneNavire;
+    
+    //Pour montrer les matelots
+    public int nbMatelots;
+    private int[] idMatelots;
+    public JButton[] buttonsMatelots;
+    protected JLabel[] labelsRoles;
+    protected JLabel[] labelsNavires;
+    
+    private int placeMatelotSelect;
+    public int idMatelotSelect;
+    
+    public JButton[] boutonsNavires;
+    public JButton boutonPret;
 
 	public View_amiral(Bataille_navale_model model) {
-        this.model = model;
+        this.model           = model;
+        nomNavireSelectionne = null;
+        placeMatelotSelect   = -1;
+        idMatelotSelect      = -1;
 		initialize();
 	}
 
@@ -46,25 +79,29 @@ public class View_amiral extends JFrame{
 		if(amiralTrouve == null)
 			return;
 		
-		Grille grilleDebut = amiralTrouve.getEquipe().getGrille();
+		Equipe equipeAmiral = amiralTrouve.getEquipe();
 		
-		setPreferredSize(new Dimension(1600, 900));
-		setSize(new Dimension(1600, 900));
+		Grille grilleDebut = equipeAmiral.getGrille();
+		nbMatelots = equipeAmiral.getNBMatelots();
+		
+		
+		setPreferredSize(new Dimension(1100, 900));
+		setSize(new Dimension(1100, 900));
 		setResizable(false);
-		setTitle("Partie (amiral)");
+		setTitle("Partie (amiral '" + amiralTrouve.getNom() + "' )");
 		getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 74, 1010, 614);
-		getContentPane().add(panel);
-		panel.setLayout(null);
+		JPanel general = new JPanel();
+		general.setBounds(10, 74, 1010, 800);
+		getContentPane().add(general);
+		general.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 745, 593);
-		panel.add(panel_1);
+		general.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JPanel panel_2 = new JPanel();
+		JPanel panel_2 = new JPanel( );
 		panel_2.setLayout(null);
 		panel_2.setBounds(139, 0, 605, 580);
 		panel_1.add(panel_2);
@@ -83,7 +120,7 @@ public class View_amiral extends JFrame{
 				buttonActu = buttonsGrille[x][y];
 				buttonActu.changeBorderToDefault();
 				
-				buttonActu.setBackground(Color.WHITE);
+				buttonActu.setBackground(COULEUR_FOND_BOUTON);
 				buttonActu.setAlignmentY(0.0f);
 				panelGrille.add(buttonActu);
 			}
@@ -215,7 +252,7 @@ public class View_amiral extends JFrame{
 		panel_4.setBounds(0, 0, 135, 256);
 		panel_1.add(panel_4);
 		
-		JLabel lblAlli = new JLabel(amiralTrouve.getEquipe().getNom());
+		JLabel lblAlli = new JLabel(equipeAmiral.getNom());
 		lblAlli.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblAlli.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlli.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -228,7 +265,7 @@ public class View_amiral extends JFrame{
 		panel_5.setBounds(0, 321, 135, 259);
 		panel_1.add(panel_5);
 		
-		JLabel lblNewLabel = new JLabel(amiralTrouve.getEquipe().getEquipeAdverse().getNom());
+		JLabel lblNewLabel = new JLabel(equipeAmiral.getEquipeAdverse().getNom());
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -237,36 +274,87 @@ public class View_amiral extends JFrame{
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBounds(746, 0, 264, 614);
-		panel.add(panel_7);
+		general.add(panel_7);
 		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JPanel panel_6 = new JPanel();
-		panel_7.add(panel_6);
-		panel_6.setLayout(new GridLayout(24, 1, 0, 0));
+		JPanel colonneMatelot = new JPanel();
+		panel_7.add(colonneMatelot);
+		colonneMatelot.setLayout(new GridLayout(24, 1, 0, 0));
+		
+		
+		//Création de la liste des matelots
+	    idMatelots = new int[nbMatelots];
+	    buttonsMatelots = new JButton[nbMatelots];
+	    labelsRoles = new JLabel[nbMatelots];
+	    labelsNavires = new JLabel[nbMatelots];
 		
 		JLabel lblNewLabel_1 = new JLabel("Matelot");
-		lblNewLabel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblNewLabel_1.setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_6.add(lblNewLabel_1);
+		colonneMatelot.add(lblNewLabel_1);
 		
-		JPanel panel_8 = new JPanel();
-		panel_7.add(panel_8);
-		panel_8.setLayout(new GridLayout(24, 1, 0, 0));
+		JPanel colonneRole = new JPanel();
+		panel_7.add(colonneRole);
+		colonneRole.setLayout(new GridLayout(24, 1, 0, 0));
 		
 		JLabel lblRle = new JLabel("Rôle");
-		lblRle.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblRle.setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
 		lblRle.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_8.add(lblRle);
+		colonneRole.add(lblRle);
 		
-		JPanel panel_9 = new JPanel();
-		panel_7.add(panel_9);
-		panel_9.setLayout(new GridLayout(24, 1, 0, 0));
+		JPanel colonneNavire = new JPanel();
+		panel_7.add(colonneNavire);
+		colonneNavire.setLayout(new GridLayout(24, 1, 0, 0));
 		
 		JLabel lblNavire = new JLabel("Navire");
-		lblNavire.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lblNavire.setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
 		lblNavire.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_9.add(lblNavire);
+		colonneNavire.add(lblNavire);
 		
+		Matelot matelotActu = null;
+		for(int i = 0; i < nbMatelots; i++) {
+			matelotActu = equipeAmiral.getAMatelotDansListe(i);
+			//Initialisation
+			idMatelots[i]      = matelotActu.getId();
+			buttonsMatelots[i] = new JButton(matelotActu.getNom());
+			labelsRoles[i]     = new JLabel(matelotActu.getRoleString(), SwingConstants.CENTER);
+			labelsNavires[i]   = new JLabel(matelotActu.getNomsNaviresControles(), SwingConstants.CENTER);
+			
+			//Mise en forme
+			buttonsMatelots[i].setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
+			buttonsMatelots[i].setBackground(COULEUR_FOND_NON_SELECT);
+			labelsRoles[i].setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
+			labelsRoles[i].setBackground(COULEUR_FOND_MATELOTS);
+			labelsNavires[i].setBorder(new LineBorder(COULEUR_BORDURE_MATELOTS));
+			labelsNavires[i].setBackground(COULEUR_FOND_MATELOTS);
+			
+			//Placement
+			colonneMatelot.add(buttonsMatelots[i]);
+			colonneRole.add(labelsRoles[i]);
+			colonneNavire.add(labelsNavires[i]);
+		}
+		
+		JPanel panelNavirePlacement = new JPanel();
+		panelNavirePlacement.setLayout(new BoxLayout(panelNavirePlacement, BoxLayout.X_AXIS));
+		panelNavirePlacement.setBounds(0, 600, general.getWidth(), 20);
+		general.add(panelNavirePlacement);
+		Navire[] navires = equipeAmiral.getNavires();
+		boutonsNavires = new JButton[navires.length];
+		for(int i = 0; i < navires.length; i++) {
+			//Si on a le temps, modifier la taille du bouton en fonction du type du navire
+			boutonsNavires[i] = new JButton(navires[i].getNom());
+			boutonsNavires[i].setBackground(COULEUR_FOND_NON_SELECT);
+			panelNavirePlacement.add(boutonsNavires[i]);
+		}
+		panelNavirePlacement.add(new JPanel());
+		tourneNavire = new JButton(TOURNE_HORIZONTAL);
+		panelNavirePlacement.add(tourneNavire);
+		
+		//On place le bouton pour touner les navires
+		
+		boutonPret = new JButton("Prêt à commencer la partie");
+		boutonPret.setBounds(0,625, 40, 10);
+		general.add(boutonPret);
 	}
 	
 	public void setControlButton(ActionListener listener) {
@@ -275,6 +363,14 @@ public class View_amiral extends JFrame{
 				buttonsGrille[x][y].addActionListener(listener);
 			}
 		}
+		for(int i = 0; i < nbMatelots; i++) {
+			buttonsMatelots[i].addActionListener(listener);
+		}
+		for(int i = 0; i < boutonsNavires.length; i++) {
+			boutonsNavires[i].addActionListener(listener);
+		}
+		boutonPret.addActionListener(listener);
+		tourneNavire.addActionListener(listener);
 		//Autres éléments donner
 	}
 	
@@ -286,9 +382,69 @@ public class View_amiral extends JFrame{
 	    setVisible(false);
 	}
 	
+	public void changeIdMatelot(int numeroBouton) {
+		//On en profite pour changer la couleur des boutons
+		if(placeMatelotSelect >= 0)
+		    buttonsMatelots[placeMatelotSelect].setBackground(COULEUR_FOND_NON_SELECT);
+		idMatelotSelect = idMatelots[numeroBouton];
+		buttonsMatelots[numeroBouton].setBackground(COULEUR_FOND_SELECT);
+		placeMatelotSelect = numeroBouton;
+	}
+	
+	public void changeNomNavire(String nomNavire) {
+		if(nomNavire.equals(""))
+			return;
+		nomNavireSelectionne = nomNavire;
+		
+		Game partie = model.getPartieActu();
+		Amiral amiralTrouve = partie.getAmiral(model.getUtilisateur().getId());
+		if(amiralTrouve == null)
+			return;
+		changeAffichageNavire(amiralTrouve.getEquipe().getGrille());
+	}
+	
 	private void changeVue() {
 		
-		
 	}
-
+	
+	private void changeAffichageNavire(Grille grille) {
+		for(int i = 0; i < boutonsNavires.length; i++) {
+			if(boutonsNavires[i].getText().equals(nomNavireSelectionne))
+				boutonsNavires[i].setBackground(COULEUR_FOND_SELECT);
+			else
+				boutonsNavires[i].setBackground(COULEUR_FOND_NON_SELECT);
+		}
+		
+		//Modification de la grille de boutons (inspiré de printGrille)
+		Navire navireActu      = null;
+    	String etatActu        = "";
+    	Case caseGrilleActu    = null;
+    	Case caseGraphiqueActu = null;
+    	PieceNavire pieceActu  = null;
+    	
+    	for(int x = 0; x < Grille.getLines(); x++) {
+    		for(int y = 0; y < Grille.getColumns(); y++) {
+    			caseGraphiqueActu = buttonsGrille[x][y];
+    			caseGrilleActu    = grille.getCases()[x][y];
+    			
+    			if(caseGrilleActu == null) {
+    				navireActu = null;
+    			} else {
+    				pieceActu = caseGrilleActu.getPiecePose();
+    				//Si il existe une pièce sur la case et si on recherche par matelot, ce dernier possède le navire qui y est attaché
+    				if(pieceActu != null) {
+    					navireActu = pieceActu.getNavireAttache();
+    					if(pieceActu.getNavireAttache().isEstCoule())
+    						etatActu = "(D)"; //D pour "Dead"
+    					else if(pieceActu.isEstEndommage())
+    						etatActu = "(X)"; //La pièce est endommagée
+    					else
+    						etatActu = "(O)"; //La pièce est en bon état
+    				} else {
+    					navireActu = null; //Aucun Navire, la case est vide
+    				}
+    			}
+    		}
+    	}
+	}
 }
