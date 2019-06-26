@@ -177,6 +177,12 @@ public class Equipe implements Serializable {
 	    return true;	
 	}
 	
+	public void reduitRechargementTirFlotte() {
+		for(int i = 0; i < navires.length; i++) {
+			navires[i].decrementeTempsRechargement();
+		}
+	}
+	
 	public void abandonne() {
 		aAbandonne = true;
 	}

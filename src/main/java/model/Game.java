@@ -155,7 +155,7 @@ public class Game implements Serializable {
 	//Genre "LE PROJET" pour "Emmanuel Macron", "Sonic Team" pour Sonic ou encore "Agents de la paix" pour "Sofian Gherabi"
 	private synchronized String trouveNomEquipeEasterEgg(String nomAmiral) {
 		if(nomAmiral.equals("Andy") || nomAmiral.equals("Max") || nomAmiral.equals("Sami"))
-			return "Avanced Wars";
+			return "Advanced Wars";
 		if(nomAmiral.equals("Beat") || nomAmiral.equals("Note") || nomAmiral.equals("Froze"))
 			return "Héros de Dragon Ball";
 		if(nomAmiral.equals("Sonic") || nomAmiral.equals("Tails") || nomAmiral.equals("Knuckles"))
@@ -239,6 +239,11 @@ public class Game implements Serializable {
 		else if(equipeNavire.equals(equipeRouge))
 			return equipeRouge.getANavireParNom(nomNavire);
 		return null;
+	}
+	
+	public synchronized void decrementeRechargementTirs() {
+		equipeRouge.reduitRechargementTirFlotte();
+		equipeBleu.reduitRechargementTirFlotte();
 	}
 	
 	private void doPrintLn(String message) {

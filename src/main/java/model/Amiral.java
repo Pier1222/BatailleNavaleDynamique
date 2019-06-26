@@ -83,6 +83,7 @@ public class Amiral extends Joueur {
      * @param posYTete Position Y où on veut placer la tête du navire
      */
     public void placeNavire(int posXTete, int posYTete) {
+    	System.out.println("Place Navire");
     	if(navireSelectionne == null || !peutPreparer()) {
     		System.out.println("Impossible de placer le navire");
     		return;

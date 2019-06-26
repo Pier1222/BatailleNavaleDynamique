@@ -17,6 +17,7 @@ public class Bataille_Client_Requester {
 	private final static String PLAYERS_NAME_REQ = "Names";
 	private final static String CREATE_TEAMS_REQ = "CreateTeams";
 	private final static String INFOS_TEAMS_REQ  = "InfosTeams";
+	private final static String DECHARGE_REQ     = "Decharge";
 	
 	private final static int SHOWING_ID     = 1;
 	private final static int MOVING_ID      = 2;
@@ -27,6 +28,7 @@ public class Bataille_Client_Requester {
 	private final static int PLAYERS_NAMES_ID = 6;
 	private final static int CREATE_TEAMS_ID  = 7;
 	private final static int INFOS_TEAMS_ID   = 8;
+	private final static int DECHARGE_ID      = 9;
 	
 	
 	private String ipServeur;
@@ -40,6 +42,7 @@ public class Bataille_Client_Requester {
 	
 	private String[] tabStringActu; //Si on a besoin de récupérer la liste dde chaîne de caractères
 	private String[][] tabDeTabDeStringActu;
+	private String stringActu;
 	
 	public Bataille_Client_Requester(Joueur joueur, String ipServeur, int portServeur) throws IOException {
 		this.joueurClient= joueur;
@@ -58,6 +61,7 @@ public class Bataille_Client_Requester {
 	    oos = new ObjectOutputStream(commReq.getOutputStream());
 	    oos.flush();
 	    ois = new ObjectInputStream(commReq.getInputStream());
+	    stringActu = "Aucun message à afficher...";
 	}
 	
 	public void handshake() throws IOException {
@@ -76,12 +80,12 @@ public class Bataille_Client_Requester {
 	
 	public void getRequete(String requete) {
 		if(requete == null) {
-			System.err.println("Requête invalide");
+			System.err.println("Requête null");
 			return;
 		}
 		
-		//String[] requeteDecoupe = requete.split(" ");
-		String[] requeteDecoupe = requete.split(";");
+		String[] requeteDecoupe = requete.split(" ");
+		//String[] requeteDecoupe = requete.split(";");
 		String titreRequete     = requeteDecoupe[0];
 		
 		boolean needToShow      = false; //Permet de savoir si on doit relancer une requête "Showing" juste après celle qu'on a exécuté
@@ -107,6 +111,8 @@ public class Bataille_Client_Requester {
 		    	requestCreateTeams();
 		    } else if(titreRequete.equals(INFOS_TEAMS_REQ)) {
 		    	requestTeamsInfos();
+		    } else if(titreRequete.equals(DECHARGE_REQ)) {
+		    	requestDecharge();
 		    }
 		    if(needToShow)
 			    getRequete(SHOWING_REQ); //
@@ -139,8 +145,9 @@ public class Bataille_Client_Requester {
 		etatPartie = (Game) ois.readObject();
 	}
 	
-	private void doMoving(String[] requeteDecoupe) throws IOException, NumberFormatException {
+	private void doMoving(String[] requeteDecoupe) throws IOException, NumberFormatException, ClassNotFoundException {
 		if(requeteDecoupe.length < 4) {
+			stringActu = ("Imposibble de faire le déplacement, la requête est de longueur " + requeteDecoupe.length);
 			return;
 		}
 		
@@ -150,7 +157,7 @@ public class Bataille_Client_Requester {
 		requestMoving(nomNavire, positionXTete, positionYTete);
 	}
 	
-	private void requestMoving(String nomNavire, int positionXTete, int positionYTete) throws IOException {
+	private void requestMoving(String nomNavire, int positionXTete, int positionYTete) throws IOException, ClassNotFoundException {
 		/*
 		 * Envoie au client destinataire cible connu de Vector, le message Moving donnant
 		 * la position du nouveau navire (éventuellement, sa position de départ en cas de
@@ -162,11 +169,11 @@ public class Bataille_Client_Requester {
 		oos.writeInt(positionXTete);
 		oos.writeInt(positionYTete);
 		oos.flush();
-		ois.readBoolean();
+		stringActu = (String) ois.readObject();
 	}
 	
 	private void doFire(String[] requeteDecoupe) {
-		if(requeteDecoupe.length < 3) {
+		if(requeteDecoupe.length < 4) {
 			return;
 		}
 	}
@@ -209,7 +216,7 @@ public class Bataille_Client_Requester {
 	
 	private void requestCreateTeams() throws IOException {
 		/*
-		 * Requête que j'ai créé pour créer les équipes
+		 * Requête que j'ai créée pour créer les équipes
 		 */
 		oos.writeInt(CREATE_TEAMS_ID);
 		oos.flush();
@@ -219,11 +226,21 @@ public class Bataille_Client_Requester {
 	
 	private void requestTeamsInfos() throws IOException, ClassNotFoundException {
 	  /*
-	   * Requête que j'ai créé pour récupérer le noms des équipes ainsi que ceux des joueurs prrésents
+	   * Requête que j'ai créée pour récupérer le noms des équipes ainsi que ceux des joueurs prrésents
 	   */
 		oos.writeInt(INFOS_TEAMS_ID);
 		oos.flush();
 		tabDeTabDeStringActu = (String[][]) ois.readObject();
+	}
+	
+	private void requestDecharge() throws IOException {
+		/*
+		 * Requête que j'ai créée pour que l'hôte envoie un signal pour décrementer la valeur de
+		 * rechargement de tir des navires de 1
+		 */
+		oos.writeInt(DECHARGE_ID);
+		oos.flush();
+		ois.readBoolean();
 	}
 
 	public static String getShowingReq() {
@@ -258,12 +275,20 @@ public class Bataille_Client_Requester {
 		return INFOS_TEAMS_REQ;
 	}
 
+	public static String getDechargeReq() {
+		return DECHARGE_REQ;
+	}
+
 	public String[] getTabStringActu() {
 		return tabStringActu;
 	}
 
 	public String[][] getTabDeTabDeStringActu() {
 		return tabDeTabDeStringActu;
+	}
+
+	public String getStringActu() {
+		return stringActu;
 	}
 
 	public Game getEtatPartie() {

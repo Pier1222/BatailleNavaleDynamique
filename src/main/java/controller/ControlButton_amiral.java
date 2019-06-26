@@ -54,9 +54,13 @@ public class ControlButton_amiral implements ActionListener {
 						navirePresent = piecePose.getNavireAttache();
 					
 					if(navirePresent == null) {
-						
+						//Avec aucun navire sur la case, on place celui qui est sélectionné
+						System.out.println("On place le navire");
+						viewAmiral.demandePlacement(x, y);
 					} else {
-						
+						//Sinon, ce navire est sélectionné
+						System.out.println("On change le navire sélectionné");
+						viewAmiral.changeNomNavire(navirePresent.getNom());
 					}
 					
 				}

@@ -4,11 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -16,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 
+import controller.ControlTimer_amiral;
 import model.Amiral;
 import model.Bataille_navale_model;
 import model.Case;
@@ -28,6 +27,8 @@ import model.PieceNavire;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
 import java.awt.Font;
 
 public class View_amiral extends JFrame{
@@ -36,6 +37,8 @@ public class View_amiral extends JFrame{
 	private final static Color COULEUR_FOND_MATELOTS    = Color.WHITE;
 	private final static Color COULEUR_FOND_NON_SELECT  = Color.LIGHT_GRAY;
 	private final static Color COULEUR_FOND_SELECT      = Color.GREEN;
+	
+	private final static Color COULEUR_BORDURE_NAVIRE = new Color(0, 0, 255);
 	
 	private final static String TOURNE_HORIZONTAL = "Horizontal";
 	private final static String TOURNE_VERTICAL   = "Vertical";
@@ -59,13 +62,24 @@ public class View_amiral extends JFrame{
     
     public JButton[] boutonsNavires;
     public JButton boutonPret;
+    
+    protected ControlTimer_amiral ct;
+    public Timer timerDechargement; //Utilisé uniquement par l'hôte
+    public Timer timerAffichage; //Permet de mettre à jour la vue
 
 	public View_amiral(Bataille_navale_model model) {
         this.model           = model;
         nomNavireSelectionne = null;
         placeMatelotSelect   = -1;
         idMatelotSelect      = -1;
+        initTimer();
 		initialize();
+	}
+	
+	private void initTimer() {
+		ct = new ControlTimer_amiral(model, this);
+		timerDechargement = new Timer(1000, ct); //Activé toutes les secondes si hôte
+		timerAffichage = new Timer(500, ct);
 	}
 
 	/**
@@ -355,6 +369,11 @@ public class View_amiral extends JFrame{
 		boutonPret = new JButton("Prêt à commencer la partie");
 		boutonPret.setBounds(0,625, 40, 10);
 		general.add(boutonPret);
+		
+		//On démarre les timers
+		if(amiralTrouve.getId() == Game.getID_HOTE())
+			timerDechargement.start();
+		timerAffichage.start();
 	}
 	
 	public void setControlButton(ActionListener listener) {
@@ -403,11 +422,18 @@ public class View_amiral extends JFrame{
 		changeAffichageNavire(amiralTrouve.getEquipe().getGrille());
 	}
 	
-	private void changeVue() {
-		
+	public void changeVue() {
+		model.actualisePartieActu();
+		Game partie = model.getPartieActu();
+		Amiral amiralTrouve = partie.getAmiral(model.getUtilisateur().getId());
+		if(amiralTrouve == null)
+			return;
+		changeAffichageNavire(amiralTrouve.getEquipe().getGrille());
+		//Autres modifications
 	}
 	
 	private void changeAffichageNavire(Grille grille) {
+		grille.printGrille(true);
 		for(int i = 0; i < boutonsNavires.length; i++) {
 			if(boutonsNavires[i].getText().equals(nomNavireSelectionne))
 				boutonsNavires[i].setBackground(COULEUR_FOND_SELECT);
@@ -444,7 +470,20 @@ public class View_amiral extends JFrame{
     					navireActu = null; //Aucun Navire, la case est vide
     				}
     			}
+    			
+    			//Modification
+    			if(navireActu == null) {
+    				caseGraphiqueActu.setText("");
+    				caseGraphiqueActu.changeBorderToDefault();
+    			} else {
+    				caseGraphiqueActu.setText(navireActu.getNom() + " " + etatActu);
+    				caseGraphiqueActu.setBorder(new CompoundBorder(new LineBorder(COULEUR_BORDURE_NAVIRE), new MatteBorder(2, 2, 2, 2, (Color) COULEUR_BORDURE_NAVIRE)));	
+    			}
     		}
     	}
+	}
+
+	public void demandePlacement(int posX, int posY) {
+		model.placeDeplaceNavire(nomNavireSelectionne, posX, posY);
 	}
 }

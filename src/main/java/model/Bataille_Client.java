@@ -33,4 +33,8 @@ public class Bataille_Client {
 	public Game getRequesterEtatPartie() {
 		return requester.getEtatPartie();
 	}
+	
+	public String getRequesterStringActu() {
+		return requester.getStringActu();
+	}
 }

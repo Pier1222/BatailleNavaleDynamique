@@ -24,7 +24,6 @@ public class ControlTimerAttente implements ActionListener {
 			viewAttente.preparationGame();
 		} else if(e.getSource() == viewAttente.timerChangementFenetre) {
 			viewAttente.apparitionVueCombat();
-		}
-		
+		}	
 	}
 }

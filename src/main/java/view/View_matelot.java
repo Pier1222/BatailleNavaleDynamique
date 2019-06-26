@@ -33,7 +33,8 @@ import javax.swing.SwingConstants;
 
 public class View_matelot extends JFrame{
     private final static int ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE = 99;
-	
+    
+	private final static Color COULEUR_BORDURE_NAVIRE = new Color(0, 0, 255);
 	
 	protected Bataille_navale_model model;
     public Case[][] buttonsGrilleEquipe;
@@ -378,12 +379,12 @@ public class View_matelot extends JFrame{
 		
 		JLabel lblCampAdverse = new JLabel(equipeAdverse.getNom() + " (camp adverse)", SwingConstants.CENTER);
 		lblCampAdverse.setBounds(panel_1.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_adversaire.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
-		lblCampAdverse.setBorder(new LineBorder(Color.RED));
+		//lblCampAdverse.setBorder(new LineBorder(Color.RED));
 		getContentPane().add(lblCampAdverse);
 		
 		JLabel lblVotreCamp = new JLabel(equipeMatelot.getNom() + " (Votre camp)", SwingConstants.CENTER);
 		lblVotreCamp.setBounds(panel_zone_grille.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_grille.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
-		lblVotreCamp.setBorder(new LineBorder(Color.RED));
+		//lblVotreCamp.setBorder(new LineBorder(Color.RED));
 		getContentPane().add(lblVotreCamp);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel_allie_button, getContentPane()}));
 	}

@@ -114,7 +114,7 @@ public class Stats_Joueur implements Serializable {
             if(!dernierCharacter.equals("/") && !dernierCharacter.equals("\\")) {
                 toReturn += "/"; //Rajoute un / puisque si le fichier est un jar il ne le fait pas mais si c'est un dossier, c'est fait automatiquement
             }
-            toReturn += ".." + "/" + NOM_DOSSIER_SAVE; //Permet de remonter d'un cran dans l'arborescence
+            toReturn += "../../" + NOM_DOSSIER_SAVE; //Permet de remonter de deux crans dans l'arborescence
         } catch (UnsupportedEncodingException e) {
             System.err.println("Problème avec le décodage de '" + PATH + "'");
             return "";
