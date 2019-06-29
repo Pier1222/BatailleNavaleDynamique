@@ -130,7 +130,7 @@ public class Bataille_Client_Requester {
 	
 	private void requestShowing() throws IOException, ClassNotFoundException {
 		/*
-		 * - Envoie au client destnaitre connu de Vector, le message Showing du nouvel état du jeu
+		 * - Envoie au client destinatre connu de Vector, le message Showing du nouvel état du jeu
 		 * - Compte le nombre de navires dans chaque camp
 		 * - Si le nombre de navires d'un camp tombe à zéro navire, il envoie à chaque camp un message Showing comportant l'information:
 		 *   => "Perdant" au camp qui est à zéro
@@ -142,7 +142,43 @@ public class Bataille_Client_Requester {
 		 */
 		oos.writeInt(SHOWING_ID);
 		oos.flush();
+		//Case recu = (Case) ois.readObject();
+		
+		
 		etatPartie = (Game) ois.readObject();
+		System.out.println("Reçu: ");
+		etatPartie.getEquipeRouge().getGrille().printGrille(true);
+		
+		//Permet de récupérer les pièces
+		String[][] tetesRouges = (String[][]) ois.readObject();
+		String[][] tetesBleues = (String[][]) ois.readObject();
+		recreateGrille(etatPartie.getEquipeRouge(), tetesRouges);
+		recreateGrille(etatPartie.getEquipeBleu(), tetesBleues);
+		
+		//etatPartie = new Game((Game) ois.readObject());
+	}
+	
+	/*Méthode créée pour détourner l'impossibilité pour le serveur d'envoyer
+	 les pièces posés sur les cases (pour une raison inconnue) */
+	private void recreateGrille(Equipe equipe, String[][] tetesPoses) {
+		Navire[] navires = equipe.getNavires();
+		Grille grille = equipe.getGrille();
+		int positionNavireActu = -1;
+		for(int x = 0; x < tetesPoses.length; x++) {
+		    for(int y = 0; y < tetesPoses[x].length; y++) {
+                positionNavireActu = getNavireAvecNom(navires, tetesPoses[x][y]);
+                if(positionNavireActu >= 0)
+                	navires[positionNavireActu].changePositionPieces(grille, x, y);
+		    }
+		}
+	}
+	
+	private int getNavireAvecNom(Navire[] navires, String nomNavire) {
+		for(int i = 0; i < navires.length; i++) {
+	    	if(navires[i].getNom().equals(nomNavire))
+	    		return i;
+		}
+		return -1;
 	}
 	
 	private void doMoving(String[] requeteDecoupe) throws IOException, NumberFormatException, ClassNotFoundException {

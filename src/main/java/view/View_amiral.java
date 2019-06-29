@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -48,7 +49,13 @@ public class View_amiral extends JFrame{
     
     private String nomNavireSelectionne;
     public JButton[] buttonsNavire; //Pour placer les navires en début de partie
+    
+    public JButton retireNavire;
     public JButton tourneNavire;
+    public JButton affecteNavire;
+    
+    public JButton affecteRoleAttaque;
+    public JButton affecteRoleDefenseur;
     
     //Pour montrer les matelots
     public int nbMatelots;
@@ -66,6 +73,12 @@ public class View_amiral extends JFrame{
     protected ControlTimer_amiral ct;
     public Timer timerDechargement; //Utilisé uniquement par l'hôte
     public Timer timerAffichage; //Permet de mettre à jour la vue
+    
+    /*L'idée est qu'à chaque tir, on donne la/les cases modifiés à la deuxième arrayList et on
+     * va créer un nouveau timer, le controlTimer va donc rechercher le tableau de cases qui est à
+     * la même index que la position où on a trouvé le timer pour retirer l'animation (avant de les retirer de leur liste) */
+    public ArrayList<Timer> timersResultatsTirs;
+    public ArrayList<Case[]> casesResultatsTirs; 
 
 	public View_amiral(Bataille_navale_model model) {
         this.model           = model;
@@ -99,8 +112,8 @@ public class View_amiral extends JFrame{
 		nbMatelots = equipeAmiral.getNBMatelots();
 		
 		
-		setPreferredSize(new Dimension(1100, 900));
-		setSize(new Dimension(1100, 900));
+		setPreferredSize(new Dimension(1100, 800));
+		setSize(new Dimension(1100, 800));
 		setResizable(false);
 		setTitle("Partie (amiral '" + amiralTrouve.getNom() + "' )");
 		getContentPane().setLayout(null);
@@ -360,18 +373,31 @@ public class View_amiral extends JFrame{
 			boutonsNavires[i].setBackground(COULEUR_FOND_NON_SELECT);
 			panelNavirePlacement.add(boutonsNavires[i]);
 		}
-		panelNavirePlacement.add(new JPanel());
+		retireNavire = new JButton("Retirer Navire");
+		panelNavirePlacement.add(retireNavire);
 		tourneNavire = new JButton(TOURNE_HORIZONTAL);
 		panelNavirePlacement.add(tourneNavire);
+		affecteNavire = new JButton("Affecter navire au matelot");
+		panelNavirePlacement.add(affecteNavire);
 		
-		//On place le bouton pour touner les navires
 		
 		boutonPret = new JButton("Prêt à commencer la partie");
-		boutonPret.setBounds(0,625, 40, 10);
+		boutonPret.setBounds(0, 625, 200, 50);
 		general.add(boutonPret);
 		
-		//On démarre les timers
-		if(amiralTrouve.getId() == Game.getID_HOTE())
+		affecteRoleAttaque = new JButton("Affectation attaque");
+		affecteRoleAttaque.setBounds(210, 625, 200, 50);
+		general.add(affecteRoleAttaque);
+		affecteRoleDefenseur = new JButton("Affectation défense");
+		affecteRoleDefenseur.setBounds(420, 625, 200, 50);
+		general.add(affecteRoleDefenseur);
+		
+		
+		launchTimers(amiralTrouve.getId());
+	}
+	
+	private void launchTimers(int idJoueur) {
+		if(idJoueur == Game.getID_HOTE())
 			timerDechargement.start();
 		timerAffichage.start();
 	}
@@ -389,7 +415,13 @@ public class View_amiral extends JFrame{
 			boutonsNavires[i].addActionListener(listener);
 		}
 		boutonPret.addActionListener(listener);
+		
+		retireNavire.addActionListener(listener);
 		tourneNavire.addActionListener(listener);
+		affecteNavire.addActionListener(listener);
+		
+		affecteRoleAttaque.addActionListener(listener);
+		affecteRoleDefenseur.addActionListener(listener);
 		//Autres éléments donner
 	}
 	
@@ -415,6 +447,7 @@ public class View_amiral extends JFrame{
 			return;
 		nomNavireSelectionne = nomNavire;
 		
+		model.actualisePartieActu();
 		Game partie = model.getPartieActu();
 		Amiral amiralTrouve = partie.getAmiral(model.getUtilisateur().getId());
 		if(amiralTrouve == null)
@@ -428,12 +461,16 @@ public class View_amiral extends JFrame{
 		Amiral amiralTrouve = partie.getAmiral(model.getUtilisateur().getId());
 		if(amiralTrouve == null)
 			return;
+		
+		//amiralTrouve.placeTousLesNavires();
+		//System.out.println("Equipe adverse");
+		//amiralTrouve.getEquipe().getEquipeAdverse().getGrille().printGrille(true);
 		changeAffichageNavire(amiralTrouve.getEquipe().getGrille());
 		//Autres modifications
 	}
 	
 	private void changeAffichageNavire(Grille grille) {
-		grille.printGrille(true);
+		//grille.printGrille(true);
 		for(int i = 0; i < boutonsNavires.length; i++) {
 			if(boutonsNavires[i].getText().equals(nomNavireSelectionne))
 				boutonsNavires[i].setBackground(COULEUR_FOND_SELECT);
@@ -475,9 +512,14 @@ public class View_amiral extends JFrame{
     			if(navireActu == null) {
     				caseGraphiqueActu.setText("");
     				caseGraphiqueActu.changeBorderToDefault();
+			    	caseGraphiqueActu.setBackground(COULEUR_FOND_BOUTON);
     			} else {
     				caseGraphiqueActu.setText(navireActu.getNom() + " " + etatActu);
     				caseGraphiqueActu.setBorder(new CompoundBorder(new LineBorder(COULEUR_BORDURE_NAVIRE), new MatteBorder(2, 2, 2, 2, (Color) COULEUR_BORDURE_NAVIRE)));	
+    			    if(navireActu.getNom().equals(nomNavireSelectionne))
+    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_SELECT); //Met en évidence le bouton sélectionné
+    			    else
+    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_BOUTON);
     			}
     		}
     	}

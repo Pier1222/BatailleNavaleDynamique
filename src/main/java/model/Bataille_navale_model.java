@@ -52,8 +52,11 @@ public class Bataille_navale_model {
 	
 	//Contrairement aux autres, cette information n'est pas directement retourné car cela permettera au modèle d'être utilisé si on souhaite faire une version 1 joueur du jeu
 	public void actualisePartieActu() {
+		//System.out.println("Début demande actualisation");
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getShowingReq());
 		partieActu = utilisateur.getClient().getRequesterEtatPartie();
+		//return utilisateur.getClient().getRequesterEtatPartie();
+		//System.out.println("Fin demandeActualisation");
 	}
 	
 	public void placeDeplaceNavire(String nomNavire, int posX, int posY) {

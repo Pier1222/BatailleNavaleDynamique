@@ -1,5 +1,9 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 public class Amiral extends Joueur {
     private Navire navireSelectionne;
     private Matelot matelotSelectionne;
@@ -86,9 +90,11 @@ public class Amiral extends Joueur {
     	System.out.println("Place Navire");
     	if(navireSelectionne == null || !peutPreparer()) {
     		System.out.println("Impossible de placer le navire");
+    		//return ("Impossible de placer le navire");
     		return;
     	}
     	Grille grilleEquipe = getEquipe().getGrille();
+    	//return navireSelectionne.placeNavire(grilleEquipe, posXTete, posYTete);
     	navireSelectionne.placeNavire(grilleEquipe, posXTete, posYTete);
     }
     

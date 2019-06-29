@@ -1,5 +1,8 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.io.Serializable;
 
 public abstract class Navire implements Serializable {
@@ -70,9 +73,12 @@ public abstract class Navire implements Serializable {
 	}
 	
 	/**
-	 * Change l'orientation du Navire (peut seulement être utilisé par l'Amiral)
+	 * Change l'orientation du Navire (peut seulement être utilisé par l'Amiral quand le navire n'est pas posé)
 	 */
 	public void tourne() {
+		if(tete.getPosition() != null)
+			return;
+		
 		estHorizontal = !estHorizontal;
 	}
 	
@@ -118,9 +124,24 @@ public abstract class Navire implements Serializable {
 		if(!verificationChangementPosition(grille, posXTete, posYTete, deplacement))
 			return;
 		
+		/*String test = verificationChangementPosition(grille, posXTete, posYTete, deplacement);
+		if(test != null)
+			return test;*/
+		retireNavire(); //Empêche que les pièces du navire se gène (déplacement à gauche avec navire à l'horizontal par exemple)
+		changePositionPieces(grille, posXTete, posYTete);
+		
+		grille.printGrille(true);
+		//return "No problem";
+	}
+	
+	/**
+	 * Permet d'effectuer le déplacement sans faire de vérification
+	 * @param posXTete
+	 * @param posYTete
+	 */
+	public void changePositionPieces(Grille grille, int posXTete, int posYTete) {
 		int posXActu = posXTete;
 		int posYActu = posYTete;
-		retireNavire(); //Empêche que les pièces du navire se gène (déplacement à gauche avec navire à l'horizontal par exemple)
 		for(int i = 0; i < getNBPieces(); i++) {
 			pieces[i].changePosition(grille.getCases()[posXActu][posYActu]);
 			
@@ -137,12 +158,14 @@ public abstract class Navire implements Serializable {
 		//+Vérification 0: Est-ce que la tête a été placé si on souhaite déplacer le navrire ?
 		if(deplacement && tete.getPosition() == null) {
 			System.out.println("Navire '" + nom + "' non placé, cela va être dur de la déplacer alors...");
+			//return ("Navire '" + nom + "' non placé, cela va être dur de la déplacer alors...");
 			return false;
 		}
 		
 		//Vérification 1: Est-ce que le navire est endommagé ?
 		if(estEndommage()) {
 			System.out.println("Navire '" + nom + "' endommagé, déplacement impossible");
+			//return ("Navire '" + nom + "' endommagé, déplacement impossible");
     		return false;
 		}
 		
@@ -158,6 +181,7 @@ public abstract class Navire implements Serializable {
     		if(differenceX > 1 || differenceY > 1 || (differenceX == 1 && differenceY == 1)) { //Interdiction de se déplacer de plus d'une case en X/Y ou en diagonale
     			System.out.println("Déplacement de plus d'une case non autorisé: " + 
     		    "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: " + positionDeplacement + " menant à une différence de [" + differenceX + ", " + differenceY +"]");
+    			//return ("Déplacement de plus d'une case non autorisé: " + "\nDépart: [" + positionXTeteActu + ", " + positionYTeteActu + "]. Arrivé: " + positionDeplacement + " menant à une différence de [" + differenceX + ", " + differenceY +"]");
     			return false;
     		}
     		
@@ -174,16 +198,19 @@ public abstract class Navire implements Serializable {
 			positionActu = "[" + posXActu + ", " + posYActu + "]";
     	    if(!grille.ifPostionValide(posXActu, posYActu)) {
     	    	System.out.println("Position " + positionActu + " invalide");
+    	    	//return ("Position " + positionActu + " invalide");
     		    return false;
     	    }
     	    pieceOccupante = grille.getCases()[posXActu][posYActu].getPiecePose();
     	    if(pieceOccupante != null && !isPiecePresente(pieceOccupante)) {
     	    	System.out.println("La position " + positionActu + " est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
+    	    	//return ("La position " + positionActu + " est déjà occupé par une pièce de '" + pieceOccupante.getNavireAttache().getNom() + "'");
     	    	return false;
     	    }
     	    
     	    if(!deplacement && grille.ifNavireAutourCase(posXActu, posYActu, this)) { //Si on souhaite placer le navire mais qu'il y en a déjà un autre autour
     	    	System.out.println("Il y a un navire autour de la position " + positionActu);
+    	    	//return ("Il y a un navire autour de la position " + positionActu);
     	    	return false;
     	    }
     	    
@@ -193,6 +220,7 @@ public abstract class Navire implements Serializable {
 				posXActu++; //On décale d'un cran vers le bas
     	    
     	}
+		//return null;
     	return true;
 	}
 	

@@ -8,8 +8,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
 public class Grille implements Serializable {
-	
-    private final static int LINES = 10;
+	private final static int LINES = 10;
     private final static int COLUMNS = 10;
     private final static int CODE_ASCII_A = 65;
     
@@ -199,6 +198,33 @@ public class Grille implements Serializable {
     		System.out.println(); //On change de ligne
     	}
     	System.out.println();
+    }
+    
+    /**
+     * Transforme le tableau de case en chaîne de caractère avec les têtes de navires posés (car
+     * ne me demandez pas pourquoi mais quand le serveur envoie une pièce sur le client
+     * le client reçoit TOUJOURS un objet null)
+     * @return Un tableau de même taille que cases avec le nom des navires uniquement sur la tête
+     */
+    public String[][] getPiecesPosesTab() {
+    	String[][] nomPieces = new String[LINES][COLUMNS];
+    	PieceNavire pieceActu = null;
+    	Navire navireActu     = null;
+    	for(int x = 0; x < LINES; x++) {
+    		for(int y = 0; y < COLUMNS; y++) {
+    			pieceActu = cases[x][y].getPiecePose();
+    			if(pieceActu == null)
+    				navireActu = null;
+    			else
+    				navireActu = pieceActu.getNavireAttache();
+    			
+    			if(navireActu == null || !navireActu.getTete().equals((pieceActu)))
+    				nomPieces[x][y] = "";
+    			else
+    				nomPieces[x][y] = navireActu.getNom();
+    		}
+    	}
+    	return nomPieces;
     }
     
     /**

@@ -112,9 +112,18 @@ public class Bataille_Server_Requester extends Thread {
 		}
 	}
 	
-	//Voir la version "Bateille_Client_Requester pour les descriptions
+	//Voir la version "Bataille_Client_Requester pour les descriptions
 	private void requestShowing() throws IOException {
+		//Case envoye = game.getEquipeRouge().getGrille().getCases()[5][5];
+		//oos.writeObject(envoye);
+		
 		oos.writeObject(game);
+		System.out.println("Envoyé:");
+		game.getEquipeRouge().getGrille().printGrille(true);
+		
+		//Permet d'envoyer la référence aux pièces
+		oos.writeObject(game.getEquipeRouge().getGrille().getPiecesPosesTab());
+		oos.writeObject(game.getEquipeBleu().getGrille().getPiecesPosesTab());
 		oos.flush();
 	}
 	
@@ -148,6 +157,7 @@ public class Bataille_Server_Requester extends Thread {
 		    int positionYTete = nouvellePositionTete[1];
 		    matelot.setNavireSelectionne(navire);
 		    matelot.deplaceNavire(positionXTete, positionYTete);
+		    oos.writeObject("Requête effectuée (matelot)");
 	    } else {
 		    navire = game.getNavire(amiral.getEquipe(), nomNavire);
 		    if(navire == null) {
@@ -158,8 +168,8 @@ public class Bataille_Server_Requester extends Thread {
 		
 		    amiral.setNavireSelectionne(navire);
 		    amiral.placeNavire(positionX, positionY);
+		    oos.writeObject("Requête effectuée (amiral)");
 	    }
-	    oos.writeObject("Requête effectuée");
 		oos.flush();
 	}
 	

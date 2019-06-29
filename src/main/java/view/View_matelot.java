@@ -10,6 +10,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import controller.ControlTimer_amiral;
+import controller.ControlTimer_matelot;
 import model.Amiral;
 import model.Bataille_navale_model;
 import model.Case;
@@ -17,6 +19,8 @@ import model.Equipe;
 import model.Game;
 import model.Grille;
 import model.Matelot;
+import model.Navire;
+import model.PieceNavire;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,25 +28,51 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 public class View_matelot extends JFrame{
-    private final static int ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE = 99;
-    
+	private final static Color COULEUR_FOND_BOUTON      = Color.WHITE;
+	private final static Color COULEUR_FOND_NON_SELECT  = Color.LIGHT_GRAY;
+	private final static Color COULEUR_FOND_SELECT      = Color.GREEN;
+	
 	private final static Color COULEUR_BORDURE_NAVIRE = new Color(0, 0, 255);
 	
+    private final static int ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE = 99;
+    
+	
 	protected Bataille_navale_model model;
+	private String nomNavireSelectionne;
     public Case[][] buttonsGrilleEquipe;
     public Case[][] buttonsGrilleAdverse;
 	
+    protected ControlTimer_matelot ct;
+    public Timer timerDechargement; //Utilisé uniquement par l'hôte
+    public Timer timerAffichage; //Permet de mettre à jour la vue
+    
+    /*L'idée est qu'à chaque tir, on donne la/les cases modifiés à la deuxième arrayList et on
+     * va créer un nouveau timer, le controlTimer va donc rechercher le tableau de cases qui est à
+     * la même index que la position où on a trouvé le timer pour retirer l'animation (avant de les retirer de leur liste) */
+    public ArrayList<Timer> timersResultatsTirs;
+    public ArrayList<Case[]> casesResultatsTirs; 
+    
 	public View_matelot(Bataille_navale_model model) {
 		this.model = model;
+		nomNavireSelectionne = null;
+        initTimer();
 		initialize();
+	}
+	
+	private void initTimer() {
+		ct = new ControlTimer_matelot(model, this);
+		timerDechargement = new Timer(1000, ct); //Activé toutes les secondes si hôte
+		timerAffichage = new Timer(500, ct);
 	}
 
 	/**
@@ -62,14 +92,14 @@ public class View_matelot extends JFrame{
 		Grille grilleEquipeDebut = equipeMatelot.getGrille();
 		Grille grilleAdverseDebut = equipeAdverse.getGrille();
 		
-		setPreferredSize(new Dimension(1600, 900));
-		setSize(new Dimension(1600, 900));
+		setPreferredSize(new Dimension(1600, 800));
+		setSize(new Dimension(1600, 800));
 		setResizable(false);
 		setTitle("Partie (matelot '" + matelotTrouve.getNom() + "')");
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(12, 56, 772, 547);
+		panel.setBounds(12, 56, 772, 560);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -225,7 +255,7 @@ public class View_matelot extends JFrame{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBounds(796, 56, 798, 547);
+		panel_1.setBounds(796, 56, 798, 560);
 		getContentPane().add(panel_1);
 		
 		JPanel panel_zone_adversaire = new JPanel();
@@ -387,6 +417,13 @@ public class View_matelot extends JFrame{
 		//lblVotreCamp.setBorder(new LineBorder(Color.RED));
 		getContentPane().add(lblVotreCamp);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel_allie_button, getContentPane()}));
+		launchTimers(matelotTrouve.getId());
+	}
+	
+	private void launchTimers(int idJoueur) {
+		if(idJoueur == Game.getID_HOTE())
+			timerDechargement.start();
+		timerAffichage.start();
 	}
 	
 	public void setControlButton(ActionListener listener) {
@@ -406,4 +443,64 @@ public class View_matelot extends JFrame{
 	 public void undisplay() {
 	     setVisible(false);
 	 }
+	 
+	public void changeVue() {
+		model.actualisePartieActu();
+		Game partie = model.getPartieActu();
+		Matelot amiralTrouve = partie.getMatelot(model.getUtilisateur().getId());
+		if(amiralTrouve == null)
+			return;
+		changeAffichageNavire(buttonsGrilleEquipe, amiralTrouve.getEquipe().getGrille(), amiralTrouve);
+		//Autres modifications
+	}
+		
+	private void changeAffichageNavire(Case[][] buttonsGrille, Grille grille, Matelot matelot) {
+		//grille.printGrille(true);
+			
+		//Modification de la grille de boutons (inspiré de printGrille)
+		Navire navireActu      = null;
+	    String etatActu        = "";
+	    Case caseGrilleActu    = null;
+	    Case caseGraphiqueActu = null;
+	    PieceNavire pieceActu  = null;
+	    	
+	    for(int x = 0; x < Grille.getLines(); x++) {
+	    	for(int y = 0; y < Grille.getColumns(); y++) {
+	    		caseGraphiqueActu = buttonsGrille[x][y];
+	    		caseGrilleActu    = grille.getCases()[x][y];
+	    		
+	    		if(caseGrilleActu == null) {
+	    			navireActu = null;
+	    		} else {
+	    			pieceActu = caseGrilleActu.getPiecePose();
+	    			//Si il existe une pièce sur la case et si on recherche par matelot, ce dernier possède le navire qui y est attaché
+	    			if(pieceActu != null) {
+	    				navireActu = pieceActu.getNavireAttache();
+	    				if(pieceActu.getNavireAttache().isEstCoule())
+	    					etatActu = "(D)"; //D pour "Dead"
+	    				else if(pieceActu.isEstEndommage())
+	    					etatActu = "(X)"; //La pièce est endommagée
+	    				else
+	    					etatActu = "(O)"; //La pièce est en bon état
+	    			} else {
+	    				navireActu = null; //Aucun Navire, la case est vide
+	    			}
+	    		}
+	    			
+	    		//Modification
+	    		if(navireActu == null) {
+	    			caseGraphiqueActu.setText("");
+	    			caseGraphiqueActu.changeBorderToDefault();
+			    	caseGraphiqueActu.setBackground(COULEUR_FOND_BOUTON);
+	    		} else {
+	    			caseGraphiqueActu.setText(navireActu.getNom() + " " + etatActu);
+	    			caseGraphiqueActu.setBorder(new CompoundBorder(new LineBorder(COULEUR_BORDURE_NAVIRE), new MatteBorder(2, 2, 2, 2, (Color) COULEUR_BORDURE_NAVIRE)));	
+	    			if(navireActu.getNom().equals(nomNavireSelectionne))
+    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_SELECT); //Met en évidence le bouton sélectionné
+    			    else
+    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_BOUTON);
+	    		}
+	    	}
+	    }
+	}
 }

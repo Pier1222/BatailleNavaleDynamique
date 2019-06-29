@@ -33,6 +33,14 @@ public class Game implements Serializable {
 		//ajouteJoueur(createur);
 	}
 	
+	public Game(Game game) {
+		equipeRouge       = game.equipeRouge;
+		equipeBleu        = game.equipeBleu;
+		hote              = game.hote;
+		joueursEnAttentes = game.joueursEnAttentes;
+		peutCommencer     = game.peutCommencer;
+	}
+	
 	public synchronized void ajouteJoueur(Joueur joueur) {
 		if(peutCommencer) {
 			joueur.setId(ID_ERROR);
