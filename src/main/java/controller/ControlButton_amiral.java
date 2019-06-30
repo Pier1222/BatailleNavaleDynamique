@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import model.Bataille_navale_model;
 import model.Grille;
+import model.Matelot;
 import model.Navire;
 import model.PieceNavire;
 import view.View_amiral;
@@ -27,12 +28,34 @@ public class ControlButton_amiral implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 	    //Recherche si la source est un des boutons
 		if(e.getSource() == viewAmiral.tourneNavire) {
-			
+			viewAmiral.demandeTournoiement();
+			return; //Afin qu'il n'effectue pas tous les for
+		}
+		
+		if(e.getSource() == viewAmiral.retireNavire) {
+			viewAmiral.demandeRetirement();
+			return;
+		}
+		
+		if(e.getSource() == viewAmiral.affecteRoleAttaque) {
+			viewAmiral.demandeAffectationRole(Matelot.getRoleAttaquant());
+			return;
+		}
+		
+		if(e.getSource() == viewAmiral.affecteRoleDefenseur) {
+			viewAmiral.demandeAffectationRole(Matelot.getRoleDefenseur());
+			return;
+		}
+		
+		if(e.getSource() == viewAmiral.affecteNavire) {
+			viewAmiral.demandeAffectationNavire();
+			return;
 		}
 		
 		for(int i = 0; i < viewAmiral.boutonsNavires.length; i++) {
 			if(e.getSource() == viewAmiral.boutonsNavires[i]) {
 				viewAmiral.changeNomNavire(viewAmiral.boutonsNavires[i].getText());
+				return;
 			}
 		}
 		
@@ -40,6 +63,7 @@ public class ControlButton_amiral implements ActionListener {
 			if(e.getSource() == viewAmiral.buttonsMatelots[i]) {
 				viewAmiral.changeIdMatelot(i);
 				System.out.println("Matelot n°" + i + " (id: " + viewAmiral.idMatelotSelect + ")");
+				return;
 			}
 		}
 		
@@ -62,13 +86,13 @@ public class ControlButton_amiral implements ActionListener {
 						System.out.println("On change le navire sélectionné");
 						viewAmiral.changeNomNavire(navirePresent.getNom());
 					}
-					
+					return;
 				}
 			}
 		}
 		
 		if(e.getSource() == viewAmiral.boutonPret) {
-			
+			viewAmiral.demandeFinPreparation();
 		}
 	}
 }

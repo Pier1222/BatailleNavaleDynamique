@@ -4,6 +4,8 @@ import java.net.URLDecoder;
 import java.io.*;
 
 public class Stats_Joueur implements Serializable {
+	private static final boolean DO_MESSAGE = false; //Empêche les messages utilisé à la création d'un joueur polluent la sortie des test
+	
 	private static final String[] NOM_NAVIRES = new String[] {"Sous-Marin", "Torpilleur", "Croiseur", "Cuirassé"};
 	private static final int NB_TYPE_NAVIRE      = NOM_NAVIRES.length;
 	//Il s'agit du chemin permettant d'accéder au fichier .class de cet Objet
@@ -66,11 +68,15 @@ public class Stats_Joueur implements Serializable {
 			}
 			oos.flush(); //Pour être sûr que tout à bien été envoyé
 		} catch (FileNotFoundException e) {
-			System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour la sauvegarde");
-			e.printStackTrace();
+			if(DO_MESSAGE) {
+			    System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour la sauvegarde");
+			    e.printStackTrace();
+			}
 		} catch (IOException e) {
-			System.err.println("Il y a eu une erreur de type IOException pendant la sauvegarde dans le fichier " + nomFichierSauvegarde);
-			e.printStackTrace();
+		    if(DO_MESSAGE) {
+			    System.err.println("Il y a eu une erreur de type IOException pendant la sauvegarde dans le fichier " + nomFichierSauvegarde);
+			    e.printStackTrace();
+		    }
 		}
 	}
 	
@@ -92,11 +98,15 @@ public class Stats_Joueur implements Serializable {
 				nbUtilisationsNavires[i] = ois.readInt();
 			}
         } catch (FileNotFoundException e) {
-			System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour le chargement");
-			e.printStackTrace();
+        	if(DO_MESSAGE) {
+			    System.err.println("Le fichier " + nomFichierSauvegarde + " est introuvable pour le chargement");
+			    e.printStackTrace();
+        	}
 		} catch (IOException e) {
-			System.err.println("Il y a eu une erreur de type IOException pendant le chargement dans le fichier " + nomFichierSauvegarde);
-			e.printStackTrace();
+			if(DO_MESSAGE) {
+			    System.err.println("Il y a eu une erreur de type IOException pendant le chargement dans le fichier " + nomFichierSauvegarde);
+			    e.printStackTrace();
+			}
 		}
 	}
 	
@@ -129,7 +139,8 @@ public class Stats_Joueur implements Serializable {
             return "";
         }
         
-        System.out.println("Chemin menant aux sauvegardes: " + toReturn);
+        if(DO_MESSAGE)
+            System.out.println("Chemin menant aux sauvegardes: " + toReturn);
         return toReturn;
     }
 	

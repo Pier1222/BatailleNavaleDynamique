@@ -82,7 +82,14 @@ public abstract class Navire implements Serializable {
 		estHorizontal = !estHorizontal;
 	}
 	
-	
+	public boolean isEstHorizontal() {
+		return estHorizontal;
+	}
+
+	public void setEstHorizontal(boolean estHorizontal) {
+		this.estHorizontal = estHorizontal;
+	}
+
 	//Méthodes de changement de position
 	/**
 	 * Permet de "poser" un navire (utilisé par l'Amiral)
@@ -384,9 +391,8 @@ public abstract class Navire implements Serializable {
 	 */
 	public int[] getCasePourDeplacementTete(int positionX, int positionY) {
 		if(estHorizontal)
-			return getCasePourDeplacementTeteVertical(positionX, positionY);
-		return getCasePourDeplacementTeteHorizontal(positionX, positionY);
-			
+			return getCasePourDeplacementTeteHorizontal(positionX, positionY);
+		return getCasePourDeplacementTeteVertical(positionX, positionY);
 	}
 	
 	private int[] getCasePourDeplacementTeteVertical(int positionX, int positionY) {
@@ -398,12 +404,12 @@ public abstract class Navire implements Serializable {
 		
 		//Premier cas: à gauche ou à droite d'une des pièces du navire
 		if((positionYTeteActu-1 == positionY || positionYTeteActu+1 == positionY)  && getCorrespondanceX(positionX))
-			positionX = positionXTeteActu; //La position est désormais juste à gauche ou à droite de la tête
+			positionXTeteDeplacement = positionXTeteActu; //La position est désormais juste à gauche ou à droite de la tête
 		//Deuxième cas: en dessous de la dernière pièce
 		else {
 		   PieceNavire dernierePiece = pieces[pieces.length - 1];
 		   if(dernierePiece.getPosition().getPositionX()+1 == positionX && dernierePiece.getPosition().getPositionY() == positionY)
-			   positionX = positionXTeteActu+1; //La position est désormais juste en dessous de la tête
+			   positionXTeteDeplacement = positionXTeteActu+1; //La position est désormais juste en dessous de la tête
 		}
 		
 		return new int[] {positionXTeteDeplacement, positionYTeteDeplacement};
@@ -418,12 +424,12 @@ public abstract class Navire implements Serializable {
 
 		//Premier cas: au dessus ou en dessous d'une des pièces du navire
 		if((positionXTeteActu-1 == positionX || positionXTeteActu+1 == positionX)  && getCorrespondanceY(positionY))
-			positionY = positionYTeteActu; //La position est désormais juste au dessus ou en dessus de la tête
+			positionYTeteDeplacement = positionYTeteActu; //La position est désormais juste au dessus ou en dessus de la tête
 		//Deuxième cas: à la gauche de la dernière pièce
 		else {
 		   PieceNavire dernierePiece = pieces[pieces.length - 1];
 		   if(dernierePiece.getPosition().getPositionX() == positionX && dernierePiece.getPosition().getPositionY()-1 == positionY)
-			   positionY = positionYTeteActu-1; //La position est désormais juste à gauche de la tête
+			   positionYTeteDeplacement = positionYTeteActu-1; //La position est désormais juste à gauche de la tête
 		}
 		
 		return new int[] {positionXTeteDeplacement, positionYTeteDeplacement};

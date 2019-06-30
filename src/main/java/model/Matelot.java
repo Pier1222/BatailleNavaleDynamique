@@ -126,7 +126,15 @@ public class Matelot extends Joueur {
 	    	deselectNavireSelectionne(); //Si il contrôlait ce navire, on lui enlève le contrôle
 	    
 	    if(navireRetire && naviresControles.isEmpty())
-	    	aUnRole = false; //Le matelot perd son rôle si il a perdu un navire et qu'il en a plus
+	    	perdRole(); //Le matelot perd son rôle si il a perdu un navire et qu'il en a plus
+	}
+	
+	/**
+	 * Méthode qui fait perdre tous ses navires au matelot sans faire perdre son rôle
+	 */
+	public void perdTousLesNavires() {
+		naviresControles.clear();
+		perdRole();
 	}
 	
 	/**
@@ -151,6 +159,10 @@ public class Matelot extends Joueur {
 			getStatistiques().incrementeNbRoleAttaque();
 		else
 			getStatistiques().incrementeNbRoleDefense();
+	}
+	
+	private void perdRole() {
+		aUnRole = false;
 	}
 	
 	/**
@@ -183,6 +195,16 @@ public class Matelot extends Joueur {
 			naviresToString += n.getNom();
 		}
 		return naviresToString;
+	}
+	
+	public String[] getTabNaviresControles() {
+		String[] naviresTab = new String[naviresControles.size()];
+		int placeActu = 0;
+		for(Navire n: naviresControles) {
+			naviresTab[placeActu] = n.getNom();
+			placeActu++;
+		}
+		return naviresTab;
 	}
 	
 	public ArrayList<Navire> getNaviresControles() {

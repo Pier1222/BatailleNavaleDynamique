@@ -15,6 +15,11 @@ public class Bataille_Server_Requester extends Thread {
 	private final static int CREATE_TEAMS_ID  = 7;
 	private final static int INFOS_TEAMS_ID   = 8;
 	private final static int DECHARGE_ID      = 9;
+	private final static int REMOVE_ID         = 10;
+	private final static int ROTATE_ID         = 11;
+	private final static int AFFECTE_ROLE_ID   = 12;
+	private final static int AFFECTE_NAVIRE_ID = 13;
+	private final static int READY_ID          = 14;
 	
     private Socket commReq;
 	private Socket commInfo;
@@ -103,6 +108,16 @@ public class Bataille_Server_Requester extends Thread {
 	        	requestTeamsInfos();
 	        else if(requeteId == DECHARGE_ID)
 	        	requestDecharge();
+	        else if(requeteId == REMOVE_ID)
+	        	requestRemove();
+	        else if(requeteId == ROTATE_ID)
+	        	requestRotate();
+	        else if(requeteId == AFFECTE_ROLE_ID)
+	        	requestAffecteRole();
+	        else if(requeteId == AFFECTE_NAVIRE_ID)
+	        	requestAffecteNavire();
+	        else if(requeteId == READY_ID)
+	        	requestReady();
 		} catch(IOException e) {
 			System.err.println("Il y a eu une erreur pendant le traitement de la requête avec l'id " + requeteId);
 			e.printStackTrace();
@@ -118,12 +133,30 @@ public class Bataille_Server_Requester extends Thread {
 		//oos.writeObject(envoye);
 		
 		oos.writeObject(game);
-		System.out.println("Envoyé:");
-		game.getEquipeRouge().getGrille().printGrille(true);
+		//System.out.println("Envoyé:");
+		//game.getEquipeRouge().getGrille().printGrille(true);
+		
+		
+		Equipe rouge = game.getEquipeRouge();
+		Equipe bleu  = game.getEquipeBleu();
+		//Permet d'envoyer les orientations
+		oos.writeObject(rouge.getOrientationNavires());
+		oos.writeObject(bleu.getOrientationNavires());
 		
 		//Permet d'envoyer la référence aux pièces
-		oos.writeObject(game.getEquipeRouge().getGrille().getPiecesPosesTab());
-		oos.writeObject(game.getEquipeBleu().getGrille().getPiecesPosesTab());
+		oos.writeObject(rouge.getGrille().getPiecesPosesTab());
+		oos.writeObject(bleu.getGrille().getPiecesPosesTab());
+		
+		//Permet d'envoyer les rôles des matelots (car même ça, il ne réussit pas à envoyer correctement)
+		oos.writeObject(rouge.getRoleMatelots());
+		oos.writeObject(bleu.getRoleMatelots());
+		
+		//En fait, je me demande ce qu'il envoie correctement au final...
+		oos.writeObject(rouge.getNaviresMatelots());
+		oos.writeObject(bleu.getNaviresMatelots());
+		
+		oos.writeBoolean(rouge.isEstPret());
+		oos.writeBoolean(bleu.isEstPret());
 		oos.flush();
 	}
 	
@@ -157,7 +190,7 @@ public class Bataille_Server_Requester extends Thread {
 		    int positionYTete = nouvellePositionTete[1];
 		    matelot.setNavireSelectionne(navire);
 		    matelot.deplaceNavire(positionXTete, positionYTete);
-		    oos.writeObject("Requête effectuée (matelot)");
+		    oos.writeObject("Requête effectuée (matelot) [" + positionX + ", " + positionY + "] => [" + positionXTete + ", " + positionYTete + "]");
 	    } else {
 		    navire = game.getNavire(amiral.getEquipe(), nomNavire);
 		    if(navire == null) {
@@ -207,6 +240,107 @@ public class Bataille_Server_Requester extends Thread {
     private void requestDecharge() throws IOException {
     	game.decrementeRechargementTirs();
     	oos.writeBoolean(true);
+    	oos.flush();
+    }
+    
+    private void requestRemove() throws IOException, ClassNotFoundException {
+    	int idAmiral     = ois.readInt();
+    	String nomNavire = (String) ois.readObject();
+    	Amiral amiral = game.getAmiral(idAmiral);
+    	if(amiral == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	Navire navireToRemove = game.getNavire(amiral.getEquipe(), nomNavire);
+    	if(navireToRemove == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	amiral.setNavireSelectionne(navireToRemove);
+    	amiral.retireNavire();
+    	oos.writeBoolean(true);
+    	oos.flush();
+    }
+    
+    private void requestRotate() throws IOException, ClassNotFoundException {
+    	int idAmiral     = ois.readInt();
+    	String nomNavire = (String) ois.readObject();
+    	Amiral amiral = game.getAmiral(idAmiral);
+    	if(amiral == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	Navire navireToRemove = game.getNavire(amiral.getEquipe(), nomNavire);
+    	if(navireToRemove == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	amiral.setNavireSelectionne(navireToRemove);
+    	amiral.tourneNavire();
+    	oos.writeBoolean(true);
+    	oos.flush();
+    }
+    
+    private void requestAffecteRole() throws IOException {
+    	int idAmiral         = ois.readInt();
+    	int idMatelot        = ois.readInt();
+    	boolean estAttaquant = ois.readBoolean();
+    	Amiral amiral        = game.getAmiral(idAmiral);
+    	Matelot matelot      = game.getMatelot(idMatelot);
+    	if(amiral == null || matelot == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	amiral.setMatelotSelectionne(matelot);
+    	amiral.affecteRole(estAttaquant);
+    	oos.writeBoolean(true);
+    	oos.flush();
+    }
+    
+    private void requestAffecteNavire() throws IOException, ClassNotFoundException {
+    	int idAmiral     = ois.readInt();
+    	int idMatelot    = ois.readInt();
+    	String nomNavire = (String) ois.readObject();
+    	Amiral amiral    = game.getAmiral(idAmiral);
+    	Matelot matelot  = game.getMatelot(idMatelot);
+    	if(amiral == null || matelot == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	Navire navireToAffect = game.getNavire(amiral.getEquipe(), nomNavire);
+    	if(navireToAffect == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	amiral.setNavireSelectionne(navireToAffect);
+    	
+    	//Permet d'éviter de recréer une requête juste pour la désaffectation
+    	amiral.setMatelotSelectionne(matelot);
+    	if(!matelot.possedeNavire(navireToAffect))
+    	    amiral.affecteNavire();
+    	else
+    		amiral.desaffecteNavire();
+    	oos.writeBoolean(true);
+    	oos.flush();
+    }
+    
+    private void requestReady() throws IOException {
+    	int idAmiral = ois.readInt();
+    	Amiral amiral = game.getAmiral(idAmiral);
+    	if(amiral == null) {
+    		oos.writeBoolean(false);
+    		oos.flush();
+    		return;
+    	}
+    	//Pour un coup que c'est une méthode qu'on a déjà conçu avec un booléen en retour
+    	oos.writeBoolean(amiral.getEquipe().setEquipeToPret());
     	oos.flush();
     }
 }

@@ -68,6 +68,36 @@ public class Bataille_navale_model {
 	public void reduitTempsDeChargementTirPartie() {
 		utilisateur.getClient().envoieRequete(Bataille_Client_Requester.getDechargeReq());
 	}
+	
+	public void retireNavire(String nomNavire) {
+		String requeteRem = Bataille_Client_Requester.getRemoveReq() + " " + nomNavire;
+		utilisateur.getClient().envoieRequete(requeteRem);
+		System.out.println("Résultat requête '" + requeteRem + "': " + utilisateur.getClient().getRequesterBooleenActu());
+	}
+	
+	public void tourneNavire(String nomNavire) {
+		String requeteTourne = Bataille_Client_Requester.getRotateReq() + " " + nomNavire;
+		utilisateur.getClient().envoieRequete(requeteTourne);
+		System.out.println("Résultat requête '" + requeteTourne + "': " + utilisateur.getClient().getRequesterBooleenActu());
+	}
+	
+	public void affecteRole(int idMatelot, String role) {
+		String requeteRole = Bataille_Client_Requester.getAffecteRoleReq() + " " + idMatelot + " " + role;
+		utilisateur.getClient().envoieRequete(requeteRole);
+		System.out.println("Résultat requête '" + requeteRole + "': " + utilisateur.getClient().getRequesterBooleenActu());
+	}
+	
+	public void affecteNavire(int idMatelot, String nomNavire) {
+		String requeteNav = Bataille_Client_Requester.getAffecteNavireReq() + " " + idMatelot + " " + nomNavire;
+		utilisateur.getClient().envoieRequete(requeteNav);
+		System.out.println("Résultat requête '" + requeteNav + "': " + utilisateur.getClient().getRequesterBooleenActu());
+	}
+	
+	public void rendEquipePrete() {
+		String requeteReady = Bataille_Client_Requester.getReadyReq();
+		utilisateur.getClient().envoieRequete(requeteReady);
+		System.out.println("Résultat requête '" + requeteReady + "': " + utilisateur.getClient().getRequesterBooleenActu());
+	}
 	//Fin des méthodes utilisant le serveur
 
 	public Game getPartieActu() {

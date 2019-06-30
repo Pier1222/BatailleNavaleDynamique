@@ -37,4 +37,8 @@ public class Bataille_Client {
 	public String getRequesterStringActu() {
 		return requester.getStringActu();
 	}
+	
+	public boolean getRequesterBooleenActu() {
+		return requester.isBooleenActu();
+	}
 }

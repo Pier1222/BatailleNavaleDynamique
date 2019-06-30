@@ -25,6 +25,7 @@ import model.Grille;
 import model.Matelot;
 import model.Navire;
 import model.PieceNavire;
+import model.Son;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -78,13 +79,18 @@ public class View_amiral extends JFrame{
      * va créer un nouveau timer, le controlTimer va donc rechercher le tableau de cases qui est à
      * la même index que la position où on a trouvé le timer pour retirer l'animation (avant de les retirer de leur liste) */
     public ArrayList<Timer> timersResultatsTirs;
-    public ArrayList<Case[]> casesResultatsTirs; 
+    public ArrayList<Case[]> casesResultatsTirs;
+    
+    protected boolean sonLance; //Permet d'éviter de lancer le son de début de partie à plusieurs reprises
+    protected Son sonPartie;
 
 	public View_amiral(Bataille_navale_model model) {
         this.model           = model;
         nomNavireSelectionne = null;
         placeMatelotSelect   = -1;
         idMatelotSelect      = -1;
+        sonLance  = false;
+        sonPartie = new Son("Hydrocity.wav");
         initTimer();
 		initialize();
 	}
@@ -112,14 +118,14 @@ public class View_amiral extends JFrame{
 		nbMatelots = equipeAmiral.getNBMatelots();
 		
 		
-		setPreferredSize(new Dimension(1100, 800));
-		setSize(new Dimension(1100, 800));
+		setPreferredSize(new Dimension(1150, 800));
+		setSize(new Dimension(1150, 800));
 		setResizable(false);
 		setTitle("Partie (amiral '" + amiralTrouve.getNom() + "' )");
 		getContentPane().setLayout(null);
 		
 		JPanel general = new JPanel();
-		general.setBounds(10, 74, 1010, 800);
+		general.setBounds(10, 74, 1150, 800);
 		getContentPane().add(general);
 		general.setLayout(null);
 		
@@ -300,7 +306,7 @@ public class View_amiral extends JFrame{
 		panel_5.add(lblNewLabel);
 		
 		JPanel panel_7 = new JPanel();
-		panel_7.setBounds(746, 0, 264, 614);
+		panel_7.setBounds(746, 0, 264, 600);
 		general.add(panel_7);
 		panel_7.setLayout(new GridLayout(0, 3, 0, 0));
 		
@@ -375,9 +381,10 @@ public class View_amiral extends JFrame{
 		}
 		retireNavire = new JButton("Retirer Navire");
 		panelNavirePlacement.add(retireNavire);
-		tourneNavire = new JButton(TOURNE_HORIZONTAL);
+		tourneNavire = new JButton();
+		changeBoutonTourne(gameDebut, equipeAmiral);
 		panelNavirePlacement.add(tourneNavire);
-		affecteNavire = new JButton("Affecter navire au matelot");
+		affecteNavire = new JButton("Affecter/Désaffecter navire au matelot");
 		panelNavirePlacement.add(affecteNavire);
 		
 		
@@ -465,8 +472,51 @@ public class View_amiral extends JFrame{
 		//amiralTrouve.placeTousLesNavires();
 		//System.out.println("Equipe adverse");
 		//amiralTrouve.getEquipe().getEquipeAdverse().getGrille().printGrille(true);
-		changeAffichageNavire(amiralTrouve.getEquipe().getGrille());
+		
+		Equipe equipe = amiralTrouve.getEquipe();
+		changeBoutonTourne(partie, equipe);
+		changeAffichageBoutonPret(equipe.isEstPret(), equipe.getEquipeAdverse().isEstPret());
+		changeAffichageMatelot(equipe);
+		changeAffichageNavire(equipe.getGrille());
+		
+		
 		//Autres modifications
+	}
+	
+	private void changeAffichageBoutonPret(boolean equipePrete, boolean adversairePret) {
+		if(sonLance)
+			return;
+		
+		if(equipePrete && !adversairePret) { //Texte pour demander d'attendre + désactivation bouton
+			boutonPret.setText("Attente de l'adversaire...");
+			boutonPret.setEnabled(false);
+		} else if(equipePrete && adversairePret) { //Disparition bouton + lancement musique de partie
+			boutonPret.setVisible(false);
+			sonPartie.jouerEnBoucle();
+			sonLance = true;
+		}
+	}
+	
+	private void changeAffichageMatelot(Equipe equipeAmiral) {
+		Matelot matelotActu = null;
+		for(int i = 0; i < nbMatelots; i++) {
+			matelotActu = equipeAmiral.getAMatelotDansListe(i);
+		    labelsRoles[i].setText(matelotActu.getRoleString());
+		    labelsNavires[i].setText(matelotActu.getNomsNaviresControles());
+		}
+	}
+	
+	private void changeBoutonTourne(Game game, Equipe equipe) {
+		Navire navireActu = game.getNavire(equipe, nomNavireSelectionne);
+		if(navireActu == null) {
+			tourneNavire.setText("..."); //On ne peut pas connaître son orientation
+			return;
+		}
+		
+    	if(navireActu.isEstHorizontal())
+    		tourneNavire.setText(TOURNE_HORIZONTAL);
+    	else
+    		tourneNavire.setText(TOURNE_VERTICAL);
 	}
 	
 	private void changeAffichageNavire(Grille grille) {
@@ -494,7 +544,7 @@ public class View_amiral extends JFrame{
     				navireActu = null;
     			} else {
     				pieceActu = caseGrilleActu.getPiecePose();
-    				//Si il existe une pièce sur la case et si on recherche par matelot, ce dernier possède le navire qui y est attaché
+    				//Si il existe une pièce sur la case
     				if(pieceActu != null) {
     					navireActu = pieceActu.getNavireAttache();
     					if(pieceActu.getNavireAttache().isEstCoule())
@@ -516,9 +566,9 @@ public class View_amiral extends JFrame{
     			} else {
     				caseGraphiqueActu.setText(navireActu.getNom() + " " + etatActu);
     				caseGraphiqueActu.setBorder(new CompoundBorder(new LineBorder(COULEUR_BORDURE_NAVIRE), new MatteBorder(2, 2, 2, 2, (Color) COULEUR_BORDURE_NAVIRE)));	
-    			    if(navireActu.getNom().equals(nomNavireSelectionne))
-    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_SELECT); //Met en évidence le bouton sélectionné
-    			    else
+    			    if(navireActu.getNom().equals(nomNavireSelectionne)) {
+    			    	caseGraphiqueActu.setBackground(COULEUR_FOND_SELECT); //Met en évidence du navire sélectionné
+    			    } else
     			    	caseGraphiqueActu.setBackground(COULEUR_FOND_BOUTON);
     			}
     		}
@@ -527,5 +577,25 @@ public class View_amiral extends JFrame{
 
 	public void demandePlacement(int posX, int posY) {
 		model.placeDeplaceNavire(nomNavireSelectionne, posX, posY);
+	}
+	
+	public void demandeRetirement() {
+		model.retireNavire(nomNavireSelectionne);
+	}
+	
+	public void demandeTournoiement() {
+		model.tourneNavire(nomNavireSelectionne);
+	}
+	
+	public void demandeAffectationRole(String role) {
+		model.affecteRole(idMatelotSelect, role);
+	}
+	
+	public void demandeAffectationNavire() {
+		model.affecteNavire(idMatelotSelect, nomNavireSelectionne);
+	}
+	
+	public void demandeFinPreparation() {
+		model.rendEquipePrete();
 	}
 }

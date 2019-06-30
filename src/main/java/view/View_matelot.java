@@ -21,6 +21,7 @@ import model.Grille;
 import model.Matelot;
 import model.Navire;
 import model.PieceNavire;
+import model.Son;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -42,6 +43,10 @@ public class View_matelot extends JFrame{
 	private final static Color COULEUR_FOND_NON_SELECT  = Color.LIGHT_GRAY;
 	private final static Color COULEUR_FOND_SELECT      = Color.GREEN;
 	
+	private final static String TEXTE_ATTAQUANT = "Vous êtes attaquant";
+	private final static String TEXTE_DEFENSEUR = "Vous êtes défenseur";
+	private final static String TEXTE_INCONNU   = "Vous n'avez aucun rôle";
+	
 	private final static Color COULEUR_BORDURE_NAVIRE = new Color(0, 0, 255);
 	
     private final static int ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE = 99;
@@ -51,12 +56,18 @@ public class View_matelot extends JFrame{
 	private String nomNavireSelectionne;
     public Case[][] buttonsGrilleEquipe;
     public Case[][] buttonsGrilleAdverse;
+    
+    protected JLabel labelRole;
+    protected JLabel labelEquipesPretes;
 	
     protected ControlTimer_matelot ct;
     public Timer timerDechargement; //Utilisé uniquement par l'hôte
     public Timer timerAffichage; //Permet de mettre à jour la vue
     
-    /*L'idée est qu'à chaque tir, on donne la/les cases modifiés à la deuxième arrayList et on
+    protected boolean sonLance; //Permet d'éviter de lancer le son de début de partie à plusieurs reprises
+    protected Son sonPartie;
+    
+    /* L'idée est qu'à chaque tir, on donne la/les cases modifiés à la deuxième arrayList et on
      * va créer un nouveau timer, le controlTimer va donc rechercher le tableau de cases qui est à
      * la même index que la position où on a trouvé le timer pour retirer l'animation (avant de les retirer de leur liste) */
     public ArrayList<Timer> timersResultatsTirs;
@@ -65,6 +76,8 @@ public class View_matelot extends JFrame{
 	public View_matelot(Bataille_navale_model model) {
 		this.model = model;
 		nomNavireSelectionne = null;
+		sonLance = false;
+		sonPartie = new Son("Hydrocity.wav");
         initTimer();
 		initialize();
 	}
@@ -98,9 +111,14 @@ public class View_matelot extends JFrame{
 		setTitle("Partie (matelot '" + matelotTrouve.getNom() + "')");
 		getContentPane().setLayout(null);
 		
+		JPanel general = new JPanel();
+		general.setBounds(0, 0, 1600, 800);
+		getContentPane().add(general);
+		general.setLayout(null);
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(12, 56, 772, 560);
-		getContentPane().add(panel);
+		general.add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_zone_grille = new JPanel();
@@ -256,7 +274,7 @@ public class View_matelot extends JFrame{
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBounds(796, 56, 798, 560);
-		getContentPane().add(panel_1);
+		general.add(panel_1);
 		
 		JPanel panel_zone_adversaire = new JPanel();
 		panel_zone_adversaire.setLayout(null);
@@ -410,14 +428,52 @@ public class View_matelot extends JFrame{
 		JLabel lblCampAdverse = new JLabel(equipeAdverse.getNom() + " (camp adverse)", SwingConstants.CENTER);
 		lblCampAdverse.setBounds(panel_1.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_adversaire.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
 		//lblCampAdverse.setBorder(new LineBorder(Color.RED));
-		getContentPane().add(lblCampAdverse);
+		general.add(lblCampAdverse);
 		
 		JLabel lblVotreCamp = new JLabel(equipeMatelot.getNom() + " (Votre camp)", SwingConstants.CENTER);
 		lblVotreCamp.setBounds(panel_zone_grille.getX() + ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 616, panel_zone_grille.getWidth() - ESPACE_NOMBRE_PREMIERE_COLONNE_GRILLE, 16);
 		//lblVotreCamp.setBorder(new LineBorder(Color.RED));
-		getContentPane().add(lblVotreCamp);
+	    general.add(lblVotreCamp);
 		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panel_allie_button, getContentPane()}));
+		
+		labelRole = new JLabel();
+		changeLabelRole(matelotTrouve);
+		labelRole.setBounds(0, 630, general.getWidth(), 16);
+		general.add(labelRole);
+		
+		labelEquipesPretes = new JLabel();
+		changeEquipesPretesLabel(equipeMatelot.isEstPret(), equipeAdverse.isEstPret());
+		labelEquipesPretes.setBounds(0, 650, general.getWidth(), 16);
+		general.add(labelEquipesPretes);
+		
 		launchTimers(matelotTrouve.getId());
+	}
+	
+	private void changeLabelRole(Matelot matelot) {
+		if(matelot.getRoleString().equals(Matelot.getRoleAttaquant()))
+			labelRole.setText(TEXTE_ATTAQUANT);
+		else if(matelot.getRoleString().equals(Matelot.getRoleDefenseur()))
+			labelRole.setText(TEXTE_DEFENSEUR);
+		else //Par défaut, c'est inconnu
+			labelRole.setText(TEXTE_INCONNU);
+	}
+	
+	private void changeEquipesPretesLabel(boolean equipePrete, boolean adversairePret) {
+		if(sonLance)
+			return;
+		
+		int nbPret = 0;
+		if(equipePrete)
+			nbPret++;
+		if(adversairePret)
+			nbPret++;
+		if(nbPret < 2) { //La partie ne peut pas commencer
+			labelEquipesPretes.setText("Nombre d'équipe(s) prêtes: " + nbPret + "/2");
+		} else { //On démarre la musique de la partie
+			labelEquipesPretes.setVisible(false);
+			sonPartie.jouerEnBoucle();
+			sonLance = true;
+		}
 	}
 	
 	private void launchTimers(int idJoueur) {
@@ -436,6 +492,19 @@ public class View_matelot extends JFrame{
 		//Autres éléments donner
 	}
 	
+	public void changeNomNavire(String nomNavire) {
+		if(nomNavire.equals(""))
+			return;
+		nomNavireSelectionne = nomNavire;
+		
+		model.actualisePartieActu();
+		Game partie = model.getPartieActu();
+		Matelot matelotTrouve = partie.getMatelot(model.getUtilisateur().getId());
+		if(matelotTrouve == null)
+			return;
+		changeAffichageNavire(buttonsGrilleEquipe, matelotTrouve.getEquipe().getGrille(), matelotTrouve);
+	}
+	
 	 public void display() {
 	     setVisible(true);
 	 }
@@ -447,10 +516,13 @@ public class View_matelot extends JFrame{
 	public void changeVue() {
 		model.actualisePartieActu();
 		Game partie = model.getPartieActu();
-		Matelot amiralTrouve = partie.getMatelot(model.getUtilisateur().getId());
-		if(amiralTrouve == null)
+		Matelot matelotTrouve = partie.getMatelot(model.getUtilisateur().getId());
+		if(matelotTrouve == null)
 			return;
-		changeAffichageNavire(buttonsGrilleEquipe, amiralTrouve.getEquipe().getGrille(), amiralTrouve);
+		
+		changeEquipesPretesLabel(matelotTrouve.getEquipe().isEstPret(), matelotTrouve.getEquipe().getEquipeAdverse().isEstPret());
+		changeLabelRole(matelotTrouve);
+		changeAffichageNavire(buttonsGrilleEquipe, matelotTrouve.getEquipe().getGrille(), matelotTrouve);
 		//Autres modifications
 	}
 		
@@ -474,7 +546,7 @@ public class View_matelot extends JFrame{
 	    		} else {
 	    			pieceActu = caseGrilleActu.getPiecePose();
 	    			//Si il existe une pièce sur la case et si on recherche par matelot, ce dernier possède le navire qui y est attaché
-	    			if(pieceActu != null) {
+	    			if(pieceActu != null && (matelot == null || matelot.possedeNavire(pieceActu.getNavireAttache()))) {
 	    				navireActu = pieceActu.getNavireAttache();
 	    				if(pieceActu.getNavireAttache().isEstCoule())
 	    					etatActu = "(D)"; //D pour "Dead"
@@ -502,5 +574,18 @@ public class View_matelot extends JFrame{
 	    		}
 	    	}
 	    }
+	}
+	
+	public void demandeAction(int positionX, int positionY) {
+		Game partieActu = model.getPartieActu();
+		Matelot matelotTrouve = partieActu.getMatelot(model.getUtilisateur().getId());
+		if(matelotTrouve == null)
+			return;
+		
+		if(matelotTrouve.getRoleString().equals(Matelot.getRoleAttaquant())) {
+			//Non fait, on ne peut pas encore tirer
+		} else if(matelotTrouve.getRoleString().equals(Matelot.getRoleDefenseur())) {
+			model.placeDeplaceNavire(nomNavireSelectionne, positionX, positionY);
+		}
 	}
 }

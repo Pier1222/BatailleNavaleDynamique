@@ -63,6 +63,34 @@ public class Equipe implements Serializable {
 		}
 	}
 	
+	public String[] getRoleMatelots() {
+		String[] rolesMatelots = new String[matelots.size()];
+		int placeActu = 0;
+		for(Matelot m: matelots) {
+			rolesMatelots[placeActu] = m.getRoleString();
+			placeActu++;
+		}
+		return rolesMatelots;
+	}
+	
+	public String[][] getNaviresMatelots() {
+		String[][] naviresMatelots = new String[matelots.size()][];
+		int placeActu = 0;
+		for(Matelot m: matelots) {
+			naviresMatelots[placeActu] = m.getTabNaviresControles();
+			placeActu++;
+		}
+		return naviresMatelots;
+	}
+	
+	public boolean[] getOrientationNavires() {
+		boolean[] orientationsNavires = new boolean[navires.length];
+		for(int i = 0; i < navires.length; i++) {
+			orientationsNavires[i] = navires[i].isEstHorizontal();
+		}
+		return orientationsNavires;
+	}
+	
 	public void ajouteMatelot(Matelot matelot) {
 		matelots.add(matelot);
 		matelot.setEquipe(this);
@@ -177,6 +205,10 @@ public class Equipe implements Serializable {
 	    return true;	
 	}
 	
+	public void setEstPret(boolean estPret) {
+		this.estPret = estPret;
+	}
+
 	public void reduitRechargementTirFlotte() {
 		for(int i = 0; i < navires.length; i++) {
 			navires[i].decrementeTempsRechargement();
